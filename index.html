@@ -1,0 +1,2288 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0e14">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>MBAPPE OS</title>
+<style>
+:root{
+  --bg:#0a0e14;--bg2:#0f141c;--card:#131a24;--card2:#1a2330;--line:#222d3c;--line2:#2c3a4d;
+  --text:#e7edf5;--muted:#8b98a9;--dim:#566376;
+  --accent:#8ea6ff;--good:#3ddc97;--bad:#ff6b6b;--warn:#f5c451;--info:#7cc4ff;
+  --VIT:#3ddc97;--STR:#ff8a5c;--INT:#5aa9ff;--RSC:#b794ff;--GLD:#f5c451;--CHA:#ff8fc7;
+  --NORMAL:#2dd4bf;--JAGA:#a78bfa;--PASCA:#60a5fa;--LIBUR:#fbbf24;
+  --r:14px;color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-padding-bottom:calc(84px + env(safe-area-inset-bottom));scroll-padding-top:90px}
+body{background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;min-height:100vh;padding-bottom:calc(74px + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+body.noscroll{overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;font-size:16px;color:var(--text);background:var(--bg2);border:1px solid var(--line2);border-radius:10px;padding:10px 12px;width:100%;min-height:44px}
+textarea{min-height:76px;resize:vertical}
+input[type=checkbox]{width:22px;height:22px;min-height:0;accent-color:var(--accent);flex:none}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#app{max-width:560px;margin:0 auto;padding:4px 16px 24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:12px 0}
+h1{font-size:21px;line-height:1.2;letter-spacing:-.01em}
+h2{font-size:16px;line-height:1.3}
+h3{font-size:14px}
+p{margin:6px 0}
+.muted{color:var(--muted)}.dim{color:var(--dim)}.small{font-size:13px}.tiny{font-size:11.5px}
+.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.row{display:flex;align-items:center;gap:8px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.col{display:flex;flex-direction:column;gap:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.lbl{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow{font-size:12px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 14px;border-radius:12px;background:var(--card2);border:1px solid var(--line2);font-weight:650;font-size:14.5px;text-align:center}
+.btn svg{width:18px;height:18px}
+.btn.primary{background:var(--accent);color:#0a0e14;border-color:transparent}
+.btn.danger{background:rgba(255,107,107,.1);color:var(--bad);border-color:rgba(255,107,107,.35)}
+.btn.ghost{background:transparent}
+.btn.sm{min-height:36px;padding:0 11px;font-size:13px;border-radius:10px}
+.btn.block{width:100%;margin-top:8px}
+.btn:disabled{opacity:.45}
+.btn.locked{color:var(--muted);border-style:dashed}
+.x{width:40px;height:40px;border-radius:10px;font-size:18px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:999px;background:var(--card2);color:var(--muted);white-space:nowrap}
+.chip.warn{color:var(--warn);background:rgba(245,196,81,.12)}
+.chip.good{color:var(--good);background:rgba(61,220,151,.12)}
+.chip.bad{color:var(--bad);background:rgba(255,107,107,.12)}
+.s-VIT{color:var(--VIT);background:rgba(61,220,151,.12)}.s-STR{color:var(--STR);background:rgba(255,138,92,.13)}.s-INT{color:var(--INT);background:rgba(90,169,255,.13)}.s-RSC{color:var(--RSC);background:rgba(183,148,255,.14)}.s-GLD{color:var(--GLD);background:rgba(245,196,81,.13)}.s-CHA{color:var(--CHA);background:rgba(255,143,199,.13)}
+.tc-NORMAL{color:var(--NORMAL)}.tc-JAGA{color:var(--JAGA)}.tc-PASCA{color:var(--PASCA)}.tc-LIBUR{color:var(--LIBUR)}
+/* banner */
+.banner{background:#3b1c1f;color:#ffd9d9;padding:10px 16px;font-size:13px;border-bottom:1px solid #6d2c31;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.banner .btn{min-height:34px;font-size:12.5px;padding:0 10px;flex:none}
+.notice{border-radius:12px;padding:11px 12px;font-size:13px;margin:10px 0;display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--line2);background:var(--card2)}
+.notice.info{background:rgba(124,196,255,.08);border-color:rgba(124,196,255,.3)}
+.notice.warn{background:rgba(245,196,81,.08);border-color:rgba(245,196,81,.35)}
+.notice .btn{flex:none}
+/* header */
+.hdr{padding:10px 0 4px}
+.nav{width:34px;height:44px;border-radius:10px;font-size:26px;line-height:1;color:var(--muted)}
+.nav:disabled{opacity:.2}
+.streak{display:flex;align-items:center;gap:4px;font-weight:800;font-size:18px;color:#ffb35c;background:rgba(255,179,92,.1);padding:6px 10px;border-radius:12px}
+.streak svg{width:18px;height:18px}
+.streak small{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+/* xp bar */
+.xpbar{position:sticky;top:0;z-index:5;margin:6px -16px 0;padding:9px 16px 10px;background:rgba(10,14,20,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.xpn{font-size:28px;font-weight:850;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.xpn.neg{color:var(--bad)}
+.passchip{font-size:12.5px;font-weight:750;padding:4px 10px;border-radius:999px;background:var(--card2);color:var(--muted)}
+.passchip.ok{background:rgba(61,220,151,.14);color:var(--good)}
+.formula{font-size:12.5px;color:var(--muted);margin-top:1px}
+.pbar{position:relative;height:6px;border-radius:6px;background:var(--card2);margin-top:7px}
+.pbar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--good)}
+.pbar b{position:absolute;top:-3px;width:2px;height:12px;background:var(--text);opacity:.55;border-radius:2px}
+/* type picker */
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.type{min-height:62px;border-radius:12px;background:var(--bg2);border:1.5px solid var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 2px}
+.type b{font-size:12.5px;letter-spacing:.04em}.type span{font-size:10.5px;color:var(--muted)}
+.type.on.t-NORMAL{border-color:var(--NORMAL);background:rgba(45,212,191,.13)}.type.on.t-NORMAL b{color:var(--NORMAL)}
+.type.on.t-JAGA{border-color:var(--JAGA);background:rgba(167,139,250,.14)}.type.on.t-JAGA b{color:var(--JAGA)}
+.type.on.t-PASCA{border-color:var(--PASCA);background:rgba(96,165,250,.14)}.type.on.t-PASCA b{color:var(--PASCA)}
+.type.on.t-LIBUR{border-color:var(--LIBUR);background:rgba(251,191,36,.12)}.type.on.t-LIBUR b{color:var(--LIBUR)}
+.type.sug:not(.on){border-style:dashed;border-color:var(--PASCA)}
+/* sleep */
+.sleep{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0 10px}
+.step{width:54px;height:54px;border-radius:14px;background:var(--card2);border:1px solid var(--line2);font-size:28px;line-height:1;flex:none}
+.sv{font-size:14px;color:var(--muted);text-align:center}.sv b{display:block;font-size:30px;line-height:1.1;color:var(--text);font-variant-numeric:tabular-nums}
+.chips{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.cp{min-height:42px;border-radius:10px;background:var(--bg2);border:1px solid var(--line2);font-weight:650;font-size:14px}
+.cp.on{background:var(--accent);color:#0a0e14;border-color:transparent}
+.pill{font-weight:800;font-size:13px;padding:4px 10px;border-radius:999px;background:var(--card2);white-space:nowrap}
+.pill.hi{background:rgba(61,220,151,.15);color:var(--good)}.pill.mid{color:var(--text)}.pill.lo{background:rgba(245,196,81,.13);color:var(--warn)}.pill.vlo{background:rgba(255,107,107,.14);color:var(--bad)}
+/* effects */
+.fx{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.fxc{font-size:12px;font-weight:650;padding:5px 10px;border-radius:999px;border:1px solid var(--line2);background:var(--card2)}
+.fxc.bad{color:var(--bad);border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.08)}
+.fxc.warn{color:var(--warn);border-color:rgba(245,196,81,.4);background:rgba(245,196,81,.07)}
+.fxc.info{color:var(--info);border-color:rgba(124,196,255,.35);background:rgba(124,196,255,.07)}
+.fxc.muted{color:var(--muted)}
+/* quests */
+.q{border-top:1px solid var(--line)}
+.quests .q:first-of-type{border-top:0}
+.qbtn{width:100%;display:flex;align-items:center;gap:12px;min-height:58px;padding:9px 0;text-align:left}
+.qbtn.static{cursor:default}
+.box{flex:none;width:32px;height:32px;border-radius:9px;border:2px solid var(--dim);display:grid;place-items:center;color:#06140d}
+.box svg{width:20px;height:20px;stroke-width:3.2}
+.q.on .box{background:var(--good);border-color:var(--good)}
+.q.auto .box{border-style:dashed}
+.q.auto.on .box{border-style:solid}
+.q.late .box{border-color:var(--bad)}
+.qt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.qn{font-weight:620;line-height:1.3}
+.q.on .qn{color:var(--muted)}
+.qm{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.qx{font-weight:750;font-size:13px;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
+.q.on .qx{color:var(--good)}
+.q.locked{opacity:.55}
+.q.locked .box{border-style:dotted;color:var(--muted)}
+.q.locked .box svg{stroke-width:2;width:16px;height:16px}
+.q.other .qn{color:var(--muted)}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 0 10px 44px}
+.yn button{min-height:42px;border-radius:10px;background:var(--bg2);border:1px solid var(--line2);font-weight:650;font-size:13.5px}
+.yn button.on{background:rgba(61,220,151,.14);border-color:var(--good);color:var(--good)}
+.yn button.on.bad{background:rgba(255,107,107,.13);border-color:var(--bad);color:var(--bad)}
+.debuff{margin:0 0 10px 44px;padding:9px 10px;border-radius:10px;background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.3);font-size:12.5px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.debuff.ok{background:var(--card2);border-color:var(--line2);color:var(--muted)}
+.ministep{display:flex;align-items:center;gap:6px;flex:none}
+.ministep button{width:40px;height:40px;border-radius:10px;background:var(--card2);border:1px solid var(--line2);font-size:20px;line-height:1}
+.ministep b{min-width:44px;text-align:center;font-variant-numeric:tabular-nums}
+.subrow{display:flex;align-items:center;justify-content:space-between;padding:0 0 10px 44px;font-size:13px;color:var(--muted)}
+.logbtn{flex:none;font-size:12px;font-weight:700;color:var(--accent);padding:8px 4px 8px 10px;min-height:44px}
+.qrow{display:flex;align-items:center}
+.qrow .qbtn{flex:1}
+.section-foot{border-top:1px solid var(--line);padding-top:10px;margin-top:2px;font-size:12.5px;color:var(--muted)}
+/* mutabaah */
+.mut .mi{display:flex;align-items:center;gap:12px;min-height:50px;width:100%;text-align:left;border-top:1px solid var(--line)}
+.mut .mi:first-of-type{border-top:0}
+.mb{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--dim);display:grid;place-items:center;color:#0a0e14}
+.mb svg{width:15px;height:15px;stroke-width:3}
+.mi.on .mb{background:#c5ced9;border-color:#c5ced9}
+.mi .mc{margin-left:auto;font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
+.phi{font-size:12px;color:var(--warn);margin-top:6px;display:flex;gap:6px;align-items:flex-start}
+.phi svg{width:14px;height:14px;flex:none;margin-top:2px}
+.phi.hit{color:var(--bad);font-weight:650}
+/* karakter */
+.lvl{display:flex;align-items:center;gap:14px}
+.lvbadge{flex:none;width:70px;height:70px;border-radius:18px;background:linear-gradient(145deg,#2a3550,#1a2232);border:1px solid var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.lvbadge small{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.08em}
+.lvbadge b{font-size:28px;line-height:1}
+.bar{height:9px;border-radius:9px;background:var(--card2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px;background:var(--accent)}
+.radar{display:block;margin:4px auto 0;width:100%;max-width:300px;height:auto}
+.statrow{display:grid;grid-template-columns:48px 1fr auto;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+.statrow:first-child{border-top:0}
+.statrow .bar{height:7px}
+.kv{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.kvi{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px}
+.kvi b{display:block;font-size:20px;line-height:1.2}
+.kvi span{font-size:12px;color:var(--muted)}
+.mq{border-top:1px solid var(--line);padding:10px 0}
+.mq:first-of-type{border-top:0}
+.mqh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mqa{margin-top:8px;gap:6px}
+.frozen{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px dashed var(--line2);font-size:13.5px}
+.rw{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.rw:first-of-type{border-top:0}
+/* boss */
+.hp{height:16px;border-radius:8px;background:#2a1418;overflow:hidden;border:1px solid #4a2128}
+.hp i{display:block;height:100%;background:linear-gradient(90deg,#ff5c6c,#ff8a5c)}
+.sh{height:12px;border-radius:7px;background:#11202e;overflow:hidden;border:1px solid #1f3a52}
+.sh i{display:block;height:100%;background:linear-gradient(90deg,#3aa0ff,#7cc4ff)}
+.big{font-size:24px;font-weight:850;letter-spacing:-.01em}
+.ms{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.ms:first-of-type{border-top:0}
+.msb{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--dim);display:grid;place-items:center;color:#06140d}
+.ms.done .msb{background:var(--good);border-color:var(--good)}
+.msb svg{width:16px;height:16px;stroke-width:3}
+.dmg{display:grid;grid-template-columns:62px 1fr 70px;gap:8px;align-items:center;font-size:12px;color:var(--muted);padding:3px 0}
+.dmg i{display:block;height:8px;border-radius:4px;background:#ff7a6c}
+.calc output{font-weight:800;font-size:18px}
+/* raid */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 11px;min-height:84px}
+.tile .tl{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.02em}
+.tile .tv{font-size:19px;font-weight:800;line-height:1.25;margin-top:3px;word-break:break-word}
+.tile .ts{font-size:11.5px;color:var(--muted)}
+.tile.ok{border-color:rgba(61,220,151,.35)}.tile.ko{border-color:rgba(255,107,107,.4)}
+.timer{font-variant-numeric:tabular-nums;font-weight:750;color:var(--muted);font-size:13px}
+/* history */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}
+.cal .dh{font-size:11px;color:var(--muted);text-align:center;font-weight:700}
+.c{aspect-ratio:1;border-radius:9px;display:flex;align-items:flex-start;justify-content:flex-start;padding:4px 5px;font-size:11.5px;font-weight:700;background:#151c27;border:1.5px solid transparent;position:relative;color:var(--dim);min-height:0}
+.c.empty{background:#141a24}
+.c.future{background:transparent;border:1px dashed var(--line)}
+.c.pass.t-NORMAL{background:var(--NORMAL);color:#04221d}
+.c.pass.t-JAGA{background:var(--JAGA);color:#1a1036}
+.c.pass.t-PASCA{background:var(--PASCA);color:#071a36}
+.c.pass.t-LIBUR{background:var(--LIBUR);color:#2a1d00}
+.c.fail.t-NORMAL{background:rgba(45,212,191,.1);border-color:rgba(45,212,191,.55);color:var(--NORMAL)}
+.c.fail.t-JAGA{background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.55);color:var(--JAGA)}
+.c.fail.t-PASCA{background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.55);color:var(--PASCA)}
+.c.fail.t-LIBUR{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.5);color:var(--LIBUR)}
+.c.today{outline:2px solid var(--text);outline-offset:1px}
+.c .shi{position:absolute;right:3px;bottom:3px;width:13px;height:13px;color:inherit}
+.c .shi svg{width:13px;height:13px;stroke-width:2.4}
+.legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:10px;font-size:11.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.sw{width:13px;height:13px;border-radius:4px;display:inline-block}
+.wo{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}
+.wo:first-of-type{border-top:0}
+.dots{display:flex;gap:3px;margin-top:4px}
+.dots i{width:10px;height:10px;border-radius:3px;background:#1b2330}
+.dots i.on{background:#aab5c3}
+.seg{display:inline-grid;grid-auto-flow:column;gap:4px;background:var(--bg2);border:1px solid var(--line2);border-radius:12px;padding:3px}
+.seg button{min-height:36px;padding:0 12px;border-radius:9px;font-size:13px;font-weight:650;color:var(--muted)}
+.seg button.on{background:var(--card2);color:var(--text)}
+.det-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13.5px}
+.det-item .ic{width:18px;text-align:center;font-weight:800}
+/* settings */
+details.set{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin:10px 0}
+details.set>summary{list-style:none;padding:14px;font-weight:700;display:flex;justify-content:space-between;align-items:center;cursor:pointer;min-height:52px}
+details.set>summary::-webkit-details-marker{display:none}
+details.set>summary::after{content:"+";font-size:20px;color:var(--muted);font-weight:400}
+details.set[open]>summary::after{content:"−"}
+details.set>.body{padding:0 14px 14px}
+.form label{display:block;font-size:12.5px;color:var(--muted);margin-top:10px}
+.form label>input,.form label>select,.form label>textarea{margin-top:4px}
+.form .ck{display:flex;align-items:flex-start;gap:10px;color:var(--text);font-size:14px;margin-top:10px}
+.form .ck input{margin-top:1px}
+fieldset{border:1px solid var(--line2);border-radius:12px;padding:8px 12px 12px;margin-top:10px}
+fieldset legend{font-size:12.5px;color:var(--muted);padding:0 4px}
+fieldset .ck{margin-top:6px}
+.dows{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:6px}
+.dw{position:relative;display:block;margin:0!important}
+.dw input{position:absolute;opacity:0;width:100%;height:100%;inset:0;margin:0}
+.dw span{display:grid;place-items:center;min-height:38px;border-radius:9px;border:1px solid var(--line2);font-size:12px;font-weight:700;color:var(--muted);background:var(--bg2)}
+.dw input:checked+span{background:var(--accent);color:#0a0e14;border-color:transparent}
+.tier{display:grid;grid-template-columns:18px 1fr auto 1fr;gap:8px;align-items:center;margin-top:8px;font-size:13px}
+.err{color:var(--bad);font-size:13px;margin-top:10px}
+.qs-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
+.qs-row:first-of-type{border-top:0}
+.qs-row .nm{flex:1;min-width:0}
+.qs-row .nm b{display:block;font-weight:620;font-size:14px}
+.qs-row.off{opacity:.5}
+.ico{width:36px;height:36px;border-radius:9px;background:var(--card2);border:1px solid var(--line2);display:grid;place-items:center;font-size:14px;flex:none}
+.ico svg{width:16px;height:16px}
+.ico:disabled{opacity:.3}
+.subhead{margin:14px 0 4px;font-size:12px;font-weight:750;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+pre.json{max-height:240px;overflow:auto;background:var(--bg2);border:1px solid var(--line2);border-radius:10px;padding:10px;font-size:11px;white-space:pre-wrap;word-break:break-all}
+/* tabs */
+#tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(6,1fr);background:rgba(11,15,22,.97);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+#tabs button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 9px;font-size:10.5px;font-weight:650;color:var(--muted);min-height:58px}
+#tabs svg{width:22px;height:22px}
+#tabs button.on{color:var(--text)}#tabs button.on svg{color:var(--accent)}
+#tabs .dot{position:absolute;top:7px;right:calc(50% - 16px);width:8px;height:8px;border-radius:50%;background:var(--warn)}
+/* sheet */
+#sheet{position:fixed;inset:0;z-index:50;display:none}
+#sheet.open{display:block}
+.sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.62)}
+.sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:90vh;overflow:auto;background:var(--card);border-radius:18px 18px 0 0;padding:14px 16px calc(22px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto;border:1px solid var(--line2);border-bottom:0;-webkit-overflow-scrolling:touch}
+.cmsg{font-size:15px;margin:8px 0 14px}
+.center{text-align:center}
+.lvup{font-size:44px;font-weight:900;letter-spacing:-.02em;margin:8px 0 2px;color:var(--accent)}
+#toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translate(-50%,16px);opacity:0;transition:opacity .2s,transform .2s;background:#e7edf5;color:#0a0e14;padding:10px 14px;border-radius:12px;font-weight:650;font-size:14px;z-index:60;width:max-content;max-width:calc(100% - 32px);pointer-events:none;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="banner"></div>
+<main id="app"></main>
+<nav id="tabs" aria-label="Navigasi utama"></nav>
+<div id="sheet"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="padding:16px">MBAPPE OS butuh JavaScript.</p></noscript>
+<script>
+(() => {
+'use strict';
+
+/* =========================================================
+   KONSTANTA
+   ========================================================= */
+const STORE_KEY = 'mbappe-os';
+const META_KEY = 'mbappe-os-meta';
+const SCHEMA_VERSION = 1;
+const WIB_MS = 7 * 3600e3;   // WIB = UTC+7, tidak bergantung zona waktu HP
+const ROLL_H = 3;            // hari berganti pukul 03.00 WIB
+const TYPES = ['NORMAL', 'JAGA', 'PASCA', 'LIBUR'];
+const TYPE_INFO = {
+  NORMAL: { label: 'Normal', short: 'NORMAL', desc: 'Stase pagi' },
+  JAGA:   { label: 'Jaga', short: 'JAGA', desc: 'Jaga malam' },
+  PASCA:  { label: 'Pasca-jaga', short: 'PASCA', desc: 'Pulih' },
+  LIBUR:  { label: 'Libur', short: 'LIBUR', desc: 'Tanpa stase' },
+};
+const ND = ['NORMAL', 'LIBUR'];
+const STATS = ['VIT', 'STR', 'INT', 'RSC', 'GLD', 'CHA'];
+const STAT_NAME = { VIT: 'Pemulihan', STR: 'Fisik', INT: 'Klinis & akademik', RSC: 'Riset & karier', GLD: 'Finansial', CHA: 'Bahasa & konten' };
+const SIZES = ['kecil', 'sedang', 'besar'];
+const SPECIAL = new Set(['sleep', 'workend', 'tentir', 'sdwalk']);
+const DOW = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+const DOW_LONG = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+const MON_LONG = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+const WEIGHTS = { ringan: 'Ringan', sedang: 'Sedang', berat: 'Berat' };
+// Pola mirip identitas pasien: No. RM, angka >= 6 digit, sapaan klinis + nama (Tn./Ny./An. ...)
+const PHI_RE = /(\bno\.?\s*r\.?\s*m\b|\brm\s*[:#.]?\s*\d{3,}|\b\d{6,}\b|\b(tn|ny|nn|sdr|sdri|an|by)\.\s*[a-z]{2,})/i;
+const PHI_TEXT = 'Jangan tulis identitas pasien (nama, No. RM, alamat, tanggal lahir).';
+
+const ICON = {
+  today: '<svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M8 13l3 3 5-6"/></svg>',
+  char: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6"/></svg>',
+  boss: '<svg viewBox="0 0 24 24"><path d="M14.5 3.5H20v5.5L9.5 19.5l-5-5z"/><path d="M6.5 13.5l4 4M4 20l2.5-2.5"/></svg>',
+  raid: '<svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2.5 4.5L17 13H5"/></svg>',
+  hist: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.8"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.8"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.8"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.8"/></svg>',
+  set: '<svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>',
+  check: '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  lock: '<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  flame: '<svg viewBox="0 0 24 24"><path d="M12 2.5c.8 3.6 5.5 5.8 5.5 11a5.5 5.5 0 0 1-11 0c0-2.8 1.6-4 2.2-6 1 1 1.6 2.2 1.6 3.3.6-2.4 1.7-5 1.7-8.3z"/></svg>',
+  shield: '<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.4 8.6-7 10-3.6-1.4-7-5-7-10V6z"/></svg>',
+  warn: '<svg viewBox="0 0 24 24"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5v.01"/></svg>',
+  up: '<svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>',
+  edit: '<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>',
+  trash: '<svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+};
+
+/* =========================================================
+   UTIL
+   ========================================================= */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const pad = (n) => String(n).padStart(2, '0');
+const num = (v) => { const x = parseFloat(String(v == null ? '' : v).replace(',', '.')); return isNaN(x) ? NaN : x; };
+const nf = (x, d = 0) => (x == null || isNaN(x)) ? '–' : Number(x).toLocaleString('id-ID', { minimumFractionDigits: d, maximumFractionDigits: d });
+const nfl = (x, d = 2) => (x == null || isNaN(x)) ? '–' : Number(x).toLocaleString('id-ID', { maximumFractionDigits: d });
+const multStr = (m) => '×' + Number(m).toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 2 });
+const rp = (x) => x == null ? '–' : (x < 0 ? '−' : '') + 'Rp ' + Math.abs(Math.round(x)).toLocaleString('id-ID');
+const rpS = (x) => {
+  if (x == null || isNaN(x)) return '–';
+  const a = Math.abs(x), sg = x < 0 ? '−' : '';
+  if (a >= 1e9) return sg + 'Rp ' + nfl(a / 1e9, 2) + ' M';
+  if (a >= 1e6) return sg + 'Rp ' + nfl(a / 1e6, 1) + ' jt';
+  if (a >= 1e3) return sg + 'Rp ' + nfl(a / 1e3, 0) + ' rb';
+  return sg + 'Rp ' + nfl(a, 0);
+};
+const parseRp = (s) => { const v = String(s == null ? '' : s).replace(/[^\d]/g, ''); return v === '' ? null : parseInt(v, 10); };
+const uid = (p) => p + '_' + Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-3);
+function secStr(s) {
+  if (s == null || isNaN(s)) return '–';
+  s = Math.round(s);
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
+  return (h ? h + ':' + pad(m) : String(m)) + ':' + pad(ss);
+}
+function parseTime(str) {
+  const parts = String(str || '').trim().replace(/\./g, ':').split(':').filter((p) => p !== '');
+  if (!parts.length || parts.length > 3) return null;
+  const p = parts.map(Number);
+  if (p.some((v) => isNaN(v) || v < 0)) return null;
+  let s;
+  if (p.length === 1) s = p[0] * 60;
+  else if (p.length === 2) s = p[0] * 60 + p[1];
+  else s = p[0] * 3600 + p[1] * 60 + p[2];
+  return s > 0 ? s : null;
+}
+const e1rm = (kg, reps) => reps <= 1 ? kg : kg * (1 + reps / 30);       // Epley; 1 rep = beban aktual
+const riegel10k = (sec5k) => sec5k * Math.pow(2, 1.06);                  // Riegel: T2 = T1 × (D2/D1)^1,06
+
+/* ---------- waktu (WIB, ganti hari 03.00) ---------- */
+let nowOverride = null;
+const nowMs = () => (nowOverride != null ? nowOverride : Date.now());
+const todayKey = () => new Date(nowMs() + WIB_MS - ROLL_H * 3600e3).toISOString().slice(0, 10);
+const wibClock = () => { const d = new Date(nowMs() + WIB_MS); return pad(d.getUTCHours()) + '.' + pad(d.getUTCMinutes()); };
+const addDays = (k, n) => new Date(Date.parse(k + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10);
+const weekday = (k) => new Date(k + 'T00:00:00Z').getUTCDay();   // 0 = Minggu
+const weekStart = (k) => addDays(k, -((weekday(k) + 6) % 7));     // Senin
+const diffDays = (a, b) => Math.round((Date.parse(a + 'T00:00:00Z') - Date.parse(b + 'T00:00:00Z')) / 864e5);
+function fmtDate(k, o = {}) {
+  const [y, m, d] = k.split('-').map(Number);
+  let s = (o.wd === false ? '' : (o.shortWd ? DOW[weekday(k)] : DOW_LONG[weekday(k)]) + ', ') + d + ' ' + MON[m - 1];
+  if (o.year) s += ' ' + y;
+  return s;
+}
+const fmtMonthYear = (k) => { const [y, m] = k.split('-').map(Number); return MON_LONG[m - 1] + ' ' + y; };
+const fmtMY = (k) => { const [y, m] = k.split('-').map(Number); return MON[m - 1] + ' ' + y; };
+function weekRange(ws) {
+  const we = addDays(ws, 6);
+  const [, m1, d1] = ws.split('-').map(Number), [, m2, d2] = we.split('-').map(Number);
+  return m1 === m2 ? `${d1}–${d2} ${MON[m2 - 1]}` : `${d1} ${MON[m1 - 1]} – ${d2} ${MON[m2 - 1]}`;
+}
+function relDay(k) {
+  const d = diffDays(todayKey(), k);
+  if (d === 0) return 'Hari ini';
+  if (d === 1) return 'Kemarin';
+  if (d > 1) return d + ' hari lalu';
+  return 'Mendatang';
+}
+
+/* =========================================================
+   DEFAULT DATA
+   ========================================================= */
+function defaultSettings() {
+  return {
+    xpSize: { kecil: 5, sedang: 10, besar: 20 },
+    dailyCap: 100,
+    sleepTiers: [{ min: 6.5, mult: 1.2 }, { min: 6, mult: 1.0 }, { min: 5, mult: 0.8 }, { min: 0, mult: 0.6 }],
+    sleepDebtBelow: 5,
+    sleepQuestMin: 6,
+    overtimePenalty: 15,
+    overtimeTokensPerWeek: 1,
+    worstCaseEmpty: true,
+    passPct: 60,
+    shieldsPerWeek: 1,
+    levelBase: 150,
+    levelStep: 50,
+    statDivisor: 3,
+    jagaMult: 1.0,
+    pascaXP: 100,
+    raidXP: 50,
+    wipLimit: 3,
+    mqSize: 'sedang',
+    backfillDays: 1,
+    heavyTargetPct: 60,
+    tentirMin: 9,
+    tentirMax: 15,
+    careerMinHours: 2,
+  };
+}
+function Q(id, name, stat, size, types, extra) {
+  return Object.assign({ id, name, stat, size, types: types.slice(), days: [], freq: 'daily', tag: '', core: false, metric: '', hours: 0, active: true, sys: false }, extra || {});
+}
+function defaultQuests() {
+  return [
+    Q('q_sleep', 'Tidur malam ≥6 jam', 'VIT', 'sedang', ND, { tag: 'sleep', core: true, sys: true }),
+    Q('q_workend', 'Berhenti kerja ≤21.00', 'VIT', 'sedang', ND, { tag: 'workend', core: true, sys: true }),
+    Q('q_run_easy', 'Lari pagi easy 30 mnt', 'STR', 'sedang', ND, { days: [2, 4], metric: 'latihan' }),
+    Q('q_run_q', 'Lari kualitas (interval/tempo)', 'STR', 'besar', ND, { days: [6], tag: 'interval', metric: 'latihan' }),
+    Q('q_lift', 'Beban sore (bench + compound)', 'STR', 'besar', ND, { days: [1, 3, 5], tag: 'heavy', core: true, metric: 'latihan' }),
+    Q('q_study', 'Belajar materi stase 45 mnt', 'INT', 'sedang', ND, { core: true }),
+    Q('q_drill', 'Drill 10 kasus/soal UKMPPD', 'INT', 'sedang', ND, { core: true }),
+    Q('q_referat', 'Referat / laporan kasus 30 mnt', 'INT', 'kecil', ['NORMAL'], { days: [1, 2, 3, 4, 5] }),
+    Q('q_career', 'Blok riset/karier 30 mnt', 'RSC', 'sedang', ND, { days: [0, 2, 4, 6], metric: 'karier', hours: 0.5 }),
+    Q('q_tentir', 'Sesi tentir selesai ≤21.00', 'GLD', 'sedang', ND, { tag: 'tentir', core: true, sys: true }),
+    Q('q_english', 'Percakapan bahasa Inggris 15 mnt', 'CHA', 'kecil', ND),
+    Q('q_deposit', 'Setor Dana Jembatan', 'GLD', 'kecil', ND, { freq: 'weekly', core: true }),
+    Q('q_post', '1 post edukasi', 'CHA', 'sedang', ND, { freq: 'weekly', metric: 'konten' }),
+    Q('j_nap', 'Tidur siang pra-jaga', 'VIT', 'besar', ['JAGA'], { core: true }),
+    Q('j_finish', 'Selesaikan jaga', 'INT', 'sedang', ['JAGA'], { core: true }),
+    Q('p_rest', 'Istirahat / tidur 2–3 jam', 'VIT', 'besar', ['PASCA'], { core: true }),
+    Q('p_eat', 'Makan bergizi', 'VIT', 'sedang', ['PASCA'], { core: true }),
+    Q('p_walk', 'Jalan ringan 15 mnt', 'VIT', 'kecil', ['PASCA'], { core: true }),
+    Q('sd_walk', 'Jalan / mobilitas 20 mnt', 'STR', 'sedang', [], { tag: 'sdwalk', core: true, sys: true, metric: 'latihan' }),
+  ];
+}
+function defaultState() {
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    settings: defaultSettings(),
+    finance: { debtInitial: null, debtTargetDate: '2027-09-30', bridgeTarget: null, bridgeTargetDate: '2026-12-31' },
+    targets: { benchKg: 100, run5kBaselineSec: 1860, ieltsBand: null, koasEnd: '2027-12-31', ukmppd: '2028-02-01' },
+    milestones: { srSubmittedAt: null, ielts: [] },
+    quests: defaultQuests(),
+    mutabaah: [{ id: 'm_qiyam', name: 'Qiyamul lail' }, { id: 'm_subuh', name: 'Subuh berjamaah' }, { id: 'm_tadabbur', name: 'Tadabbur 10 ayat' }],
+    chapters: [],
+    mainQuests: [],
+    days: {},
+    weekly: {},
+    workouts: [],
+    rewards: [],
+    claims: [],
+    sampleLoaded: false,
+  };
+}
+function newDay() {
+  return { type: null, sleep: null, done: {}, workEnd: null, token: false, shield: false, tentir: { jam: 0, sesi: 1, ok: null }, mut: {}, note: '' };
+}
+function newWeek() {
+  return { debt: null, bridge: null, leads: null, priorities: ['', '', ''], raidDone: false };
+}
+function normQuest(q) {
+  const d = Q(q.id || uid('q'), q.name || 'Quest', 'VIT', 'sedang', []);
+  for (const k of Object.keys(d)) if (q[k] === undefined) q[k] = d[k];
+  return q;
+}
+function normDay(r) {
+  const d = newDay();
+  for (const k of Object.keys(d)) if (r[k] === undefined) r[k] = d[k];
+  return r;
+}
+
+/* ---------- migrasi skema ---------- */
+// MIGRATIONS[n] mengubah data dari schemaVersion n ke n+1. Tambahkan di sini saat skema berubah.
+const MIGRATIONS = {};
+function migrate(d) {
+  if (!d || typeof d !== 'object') throw new Error('Format tidak dikenal');
+  if (typeof d.schemaVersion !== 'number') d.schemaVersion = 1;
+  if (d.schemaVersion > SCHEMA_VERSION) throw new Error('Data dari versi aplikasi yang lebih baru (v' + d.schemaVersion + ')');
+  while (d.schemaVersion < SCHEMA_VERSION) {
+    const step = MIGRATIONS[d.schemaVersion];
+    if (!step) throw new Error('Tidak ada migrasi dari v' + d.schemaVersion);
+    step(d);
+    d.schemaVersion++;
+  }
+  return d;
+}
+function fillDefaults(d) {
+  const def = defaultState();
+  for (const k of Object.keys(def)) if (d[k] === undefined) d[k] = def[k];
+  for (const grp of ['settings', 'finance', 'targets', 'milestones']) {
+    if (!d[grp] || typeof d[grp] !== 'object') d[grp] = def[grp];
+    for (const k of Object.keys(def[grp])) if (d[grp][k] === undefined) d[grp][k] = def[grp][k];
+  }
+  d.quests.forEach(normQuest);
+  for (const k of Object.keys(d.days)) normDay(d.days[k]);
+  return d;
+}
+
+/* =========================================================
+   STATE & PENYIMPANAN
+   ========================================================= */
+let state = null;
+let memoryMode = false;
+let storageNote = '';
+let meta = { lastExportAt: null };
+const S = () => state.settings;
+const ui = { tab: 'today', viewKey: null, histMonth: null, woKind: 'bench', raidOpenedAt: null, seenChapterPopup: false };
+let pendingConfirm = null;
+
+function save() {
+  if (memoryMode) return;
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  } catch (e) {
+    memoryMode = true;
+    storageNote = 'Gagal menyimpan (' + (e && e.name ? e.name : 'error') + '). Aplikasi berjalan di memori — export JSON sekarang agar data tidak hilang.';
+    renderBanner();
+  }
+}
+function saveMeta() {
+  if (memoryMode) return;
+  try { localStorage.setItem(META_KEY, JSON.stringify(meta)); } catch (e) { /* meta bukan data inti */ }
+}
+let saveT = null;
+function saveSoon() { clearTimeout(saveT); saveT = setTimeout(save, 350); }
+
+/* =========================================================
+   MESIN GAME
+   ========================================================= */
+let cache = null;
+function dirty() { cache = null; }
+const sizeXP = (size) => (S().xpSize[size] != null ? S().xpSize[size] : 0);
+const zeroStat = () => ({ VIT: 0, STR: 0, INT: 0, RSC: 0, GLD: 0, CHA: 0 });
+const questById = (id) => state.quests.find((q) => q.id === id);
+const isND = (t) => t === 'NORMAL' || t === 'LIBUR';
+function isLocked(k) { return diffDays(todayKey(), k) > S().backfillDays; }
+function isEditable(k) { return !isLocked(k) && k <= todayKey(); }
+function chapterFor(k) {
+  let best = null;
+  for (const c of state.chapters) if (c.start <= k && k <= c.end && (!best || c.start > best.start)) best = c;
+  return best;
+}
+function sleepMult(h) {
+  const tiers = S().sleepTiers.slice().sort((a, b) => b.min - a.min);
+  const low = tiers[tiers.length - 1].mult;
+  if (h == null || isNaN(h)) return { mult: S().worstCaseEmpty ? low : 1, missing: true };
+  for (const t of tiers) if (h >= t.min - 1e-9) return { mult: t.mult, missing: false };
+  return { mult: low, missing: false };
+}
+function mqQuest(m) {
+  return { id: 'MQ:' + m.id, name: m.name + (m.next ? ' — ' + m.next : ''), stat: m.stat, size: S().mqSize || 'sedang', tag: '', core: true, metric: '', hours: m.stat === 'RSC' ? 0.5 : 0, mq: true, freq: 'daily', types: ND, days: [] };
+}
+function weeklyFirstDone(qid, ws) {
+  for (let i = 0; i < 7; i++) {
+    const r = state.days[addDays(ws, i)];
+    if (r && r.done && r.done[qid] && isND(r.type)) return addDays(ws, i);
+  }
+  return null;
+}
+
+// Daftar quest yang berlaku untuk satu hari & tipe tertentu.
+function buildList(key, rec, type) {
+  const wd = weekday(key);
+  const ch = chapterFor(key);
+  const heavy = !!ch && ch.weight === 'berat';
+  const done = rec.done || {};
+  const nd = isND(type);
+  const out = { items: [], weekly: [], locked: [], heavy, chapter: ch, sleepDebt: false };
+  for (const q of state.quests) {
+    if (!q.types.includes(type) || q.tag === 'sdwalk') continue;
+    if (q.freq === 'weekly') {
+      if (nd && ((q.active && (!heavy || q.core)) || done[q.id])) out.weekly.push(q);
+      continue;
+    }
+    if (q.tag === 'tentir') {
+      if (q.active && rec.tentir && rec.tentir.jam > 0) out.items.push(q);
+      continue;
+    }
+    const scheduled = q.active && (q.days.length === 0 || q.days.includes(wd)) && !(heavy && nd && !q.core);
+    const keepDone = !SPECIAL.has(q.tag) && !!done[q.id];   // yang sudah dicentang tetap dihitung
+    if (scheduled || keepDone) out.items.push(q);
+  }
+  if (nd) {
+    let act = state.mainQuests.filter((m) => m.status === 'aktif');
+    if (heavy) act = act.slice(0, 1);
+    const ids = new Set(act.map((m) => m.id));
+    for (const m of state.mainQuests) if (!ids.has(m.id) && done['MQ:' + m.id]) { act.push(m); ids.add(m.id); }
+    act.forEach((m) => out.items.push(mqQuest(m)));
+    if (rec.sleep != null && rec.sleep < S().sleepDebtBelow) {
+      out.sleepDebt = true;
+      const keep = [];
+      let insertAt = -1;
+      out.items.forEach((q) => {
+        if (q.tag === 'heavy' || q.tag === 'interval') { out.locked.push(q); if (insertAt < 0) insertAt = keep.length; } else keep.push(q);
+      });
+      const sd = state.quests.find((q) => q.tag === 'sdwalk');
+      if (out.locked.length && sd) keep.splice(insertAt, 0, sd);
+      out.items = keep;
+    }
+  }
+  return out;
+}
+
+// Hitung satu hari dari definisi saat ini. final=true: hari sudah terkunci (data kosong = skenario terburuk).
+function computeLive(key, rec, final) {
+  const s = S();
+  const type0 = rec.type;
+  const prev = state.days[addDays(key, -1)];
+  const prevType = prev ? prev.type : null;
+  let type = type0, invalidPasca = false;
+  if (type0 === 'PASCA' && prevType !== 'JAGA') { type = 'NORMAL'; invalidPasca = true; }
+  const nd = isND(type);
+  const L = buildList(key, rec, type);
+  const done = rec.done || {};
+  const isDone = (q) => {
+    if (q.tag === 'sleep') return rec.sleep != null && rec.sleep >= s.sleepQuestMin - 1e-9;
+    if (q.tag === 'workend') return rec.workEnd === 'ok';
+    if (q.tag === 'tentir') return !!(rec.tentir && rec.tentir.ok === true);
+    return !!done[q.id];
+  };
+  const items = L.items.map((q) => ({ q, d: isDone(q) }));
+  const ws = weekStart(key);
+  const weekly = L.weekly.map((q) => {
+    const first = weeklyFirstDone(q.id, ws);
+    return { q, d: !!done[q.id] && first === key, other: first && first !== key ? first : null };
+  });
+  const total = items.length;
+  const doneCount = items.filter((i) => i.d).length;
+  const ratio = total ? doneCount / total : 0;
+  const pass = total > 0 && ratio >= s.passPct / 100 - 1e-9;
+  const nightNonJaga = type0 !== 'JAGA';
+  const autoLate = !!final && s.worstCaseEmpty && nightNonJaga && rec.workEnd == null;
+  const overtime = nightNonJaga && (rec.workEnd === 'late' || autoLate);
+  const penalty = overtime && !rec.token ? s.overtimePenalty : 0;
+  const stat = zeroStat();
+  const doneQs = items.filter((i) => i.d).map((i) => i.q).concat(weekly.filter((w) => w.d).map((w) => w.q));
+  let base = 0, capped = 0, mult = 1, gross = 0, multMissing = false;
+  if (type === 'PASCA') {
+    gross = total ? Math.round(s.pascaXP * ratio) : 0;
+    base = gross; capped = gross;
+    doneQs.forEach((q) => { stat[q.stat] += s.pascaXP / total; });
+  } else {
+    base = doneQs.reduce((a, q) => a + sizeXP(q.size), 0);
+    capped = Math.min(base, s.dailyCap);
+    if (type === 'JAGA') mult = s.jagaMult;
+    else { const sm = sleepMult(rec.sleep); mult = sm.mult; multMissing = sm.missing; }
+    gross = Math.round(capped * mult);
+    const scale = base ? capped / base : 0;
+    doneQs.forEach((q) => { stat[q.stat] += sizeXP(q.size) * scale * mult; });
+  }
+  stat.VIT -= penalty;
+  for (const k of STATS) stat[k] = Math.round(stat[k] * 100) / 100;
+  const xp = gross - penalty;
+  let karier = 0, latPlan = 0, latDone = 0, konten = 0;
+  items.forEach((i) => {
+    if (i.q.metric === 'latihan') { latPlan++; if (i.d) latDone++; }
+    if (i.d && i.q.hours) karier += i.q.hours;
+  });
+  weekly.forEach((w) => {
+    if (!w.d) return;
+    if (w.q.metric === 'konten') konten++;
+    if (w.q.metric === 'latihan') { latPlan++; latDone++; }
+    if (w.q.hours) karier += w.q.hours;
+  });
+  const tj = rec.tentir && rec.tentir.jam > 0 ? rec.tentir.jam : 0;
+  const ts = tj ? (rec.tentir.sesi || 1) : 0;
+  const metrics = {
+    sleepNJ: prevType !== 'JAGA' && rec.sleep != null ? rec.sleep : null,
+    tJam: tj, tSesi: ts, tOk: tj && rec.tentir.ok === true ? ts : 0,
+    karier, latPlan, latDone, konten, ot: overtime ? 1 : 0,
+  };
+  const itemX = (q) => (type === 'PASCA' ? Math.round(s.pascaXP / total) : sizeXP(q.size));
+  return {
+    type: type0, effType: type, invalidPasca, xp, gross, base, capped, mult, multMissing, penalty, overtime, autoLate,
+    token: !!rec.token, pass, total, doneCount, ratio, stat, sleepDebt: L.sleepDebt, heavy: L.heavy,
+    chapterId: L.chapter ? L.chapter.id : null, metrics,
+    items: items.map((i) => ({ id: i.q.id, n: i.q.name, s: i.q.stat, d: i.d, tag: i.q.tag || '', x: itemX(i.q), m: i.q.metric || '' })),
+    weekly: weekly.map((w) => ({ id: w.q.id, n: w.q.name, s: w.q.stat, d: w.d, other: w.other, x: sizeXP(w.q.size) })),
+    locked: L.locked.map((q) => ({ id: q.id, n: q.name, s: q.stat })),
+  };
+}
+function emptyResult(r) {
+  return { empty: true, xp: 0, pass: false, type: null, effType: null, shield: !!(r && r.shield), stat: zeroStat(), metrics: null, items: [], weekly: [], locked: [], total: 0, doneCount: 0 };
+}
+function computeDay(k) {
+  const r = state.days[k];
+  if (!r || !r.type) return emptyResult(r);
+  if (r.frozen) return Object.assign({}, r.frozen, { frozen: true, shield: !!r.shield });
+  const res = computeLive(k, r, isLocked(k));
+  res.shield = !!r.shield;
+  return res;
+}
+function dayResult(k) {
+  if (!cache) cache = {};
+  if (!(k in cache)) cache[k] = computeDay(k);
+  return cache[k];
+}
+// Hari yang lewat jendela isi mundur dibekukan: hasilnya final, tidak berubah walau quest/mekanika diedit.
+function freezeLocked() {
+  let changed = false;
+  for (const k of Object.keys(state.days)) {
+    const r = state.days[k];
+    if (r.type && !r.frozen && isLocked(k)) { r.frozen = computeLive(k, r, true); changed = true; }
+  }
+  if (changed) { dirty(); save(); }
+}
+function dayStatus(k) {
+  const r = dayResult(k);
+  if (r.pass) return 'pass';
+  if (!r.empty && (r.effType === 'JAGA' || r.effType === 'PASCA')) return 'neutral';  // jaga tidak pernah memutus streak
+  if (r.shield) return 'neutral';
+  return 'fail';
+}
+function streakInfo() {
+  const t = todayKey();
+  const keys = Object.keys(state.days).filter((k) => k <= t && (state.days[k].type || state.days[k].shield)).sort();
+  if (!keys.length) return { cur: 0, best: 0 };
+  const first = keys[0];
+  let cur = 0;
+  let d = dayStatus(t) === 'fail' ? addDays(t, -1) : t;   // hari ini belum selesai: tidak memutus
+  while (d >= first) {
+    const st = dayStatus(d);
+    if (st === 'pass') cur++;
+    else if (st === 'fail') break;
+    d = addDays(d, -1);
+  }
+  let best = 0, run = 0;
+  for (let k = first; k <= t; k = addDays(k, 1)) {
+    const st = dayStatus(k);
+    if (st === 'pass') { run++; if (run > best) best = run; } else if (st === 'fail' && k !== t) run = 0;
+  }
+  return { cur, best: Math.max(best, cur) };
+}
+function countInWeek(ws, field) {
+  let n = 0;
+  for (let i = 0; i < 7; i++) { const r = state.days[addDays(ws, i)]; if (r && r[field]) n++; }
+  return n;
+}
+function totalXP() {
+  let x = 0;
+  for (const k of Object.keys(state.days)) x += dayResult(k).xp || 0;
+  for (const w of Object.keys(state.weekly)) { const wk = state.weekly[w]; if (wk.raidDone) x += wk.raidXP != null ? wk.raidXP : S().raidXP; }
+  return x;
+}
+function statXP() {
+  const s = zeroStat();
+  for (const k of Object.keys(state.days)) { const st = dayResult(k).stat; if (st) for (const id of STATS) s[id] += st[id] || 0; }
+  for (const id of STATS) s[id] = Math.max(0, s[id]);
+  return s;
+}
+function levelOf(xp, div) {
+  div = div || 1;
+  const b = S().levelBase, st = S().levelStep;
+  let L = 1, rem = Math.max(0, xp);
+  for (;;) {
+    const need = (b + st * L) / div;
+    if (rem < need || L > 998) return { level: L, into: rem, need };
+    rem -= need; L++;
+  }
+}
+const dailyTarget = (res) => (res.heavy ? Math.round(S().dailyCap * S().heavyTargetPct / 100) : S().dailyCap);
+
+/* ---------- agregat mingguan ---------- */
+function weekMetrics(ws) {
+  let sleepSum = 0, sleepN = 0, tJam = 0, tSesi = 0, tOk = 0, karier = 0, latPlan = 0, latDone = 0, konten = 0, lolos = 0, rec = 0, ot = 0, xp = 0;
+  for (let i = 0; i < 7; i++) {
+    const k = addDays(ws, i);
+    const r = dayResult(k);
+    if (r.empty || !r.metrics) continue;
+    rec++; if (r.pass) lolos++; xp += r.xp;
+    const m = r.metrics;
+    if (m.sleepNJ != null) { sleepSum += m.sleepNJ; sleepN++; }
+    tJam += m.tJam; tSesi += m.tSesi; tOk += m.tOk; karier += m.karier; latPlan += m.latPlan; latDone += m.latDone; konten += m.konten; ot += m.ot;
+  }
+  const w = state.weekly[ws] || newWeek();
+  const prevW = prevWeekWith(ws, 'debt'), prevB = prevWeekWith(ws, 'bridge');
+  return {
+    avgSleep: sleepN ? sleepSum / sleepN : null, sleepN,
+    bridge: w.bridge, bridgePrev: prevB, debt: w.debt, debtPrev: prevW, leads: w.leads,
+    tJam, tSesi, tOk, karier, latPlan, latDone, konten, lolos, rec, ot, xp,
+    proyek: state.mainQuests.filter((m) => m.status === 'aktif').length,
+  };
+}
+function prevWeekWith(ws, field) {
+  const ks = Object.keys(state.weekly).filter((w) => w < ws && state.weekly[w][field] != null).sort();
+  return ks.length ? state.weekly[ks[ks.length - 1]][field] : null;
+}
+function raidWindow() {
+  const t = todayKey();
+  const wd = weekday(t);
+  if (wd === 0) return { ws: weekStart(t), open: true, catchup: false };
+  if (wd === 1) {
+    const pws = addDays(weekStart(t), -7);
+    const w = state.weekly[pws];
+    if (!w || !w.raidDone) return { ws: pws, open: true, catchup: true };
+  }
+  return { ws: weekStart(t), open: false, catchup: false };
+}
+
+/* ---------- keuangan ---------- */
+function financeInfo() {
+  const t = todayKey();
+  const F = state.finance;
+  const wk = Object.keys(state.weekly).sort();
+  const debts = wk.filter((w) => state.weekly[w].debt != null).map((w) => ({ w, v: state.weekly[w].debt }));
+  const bridges = wk.filter((w) => state.weekly[w].bridge != null).map((w) => ({ w, v: state.weekly[w].bridge }));
+  const maxHP = F.debtInitial != null ? F.debtInitial : (debts.length ? debts[0].v : null);
+  const curDebt = debts.length ? debts[debts.length - 1].v : F.debtInitial;
+  const lastDmg = debts.length >= 2 ? debts[debts.length - 2].v - debts[debts.length - 1].v : null;
+  let avg = null, lunas = null, onTrack = null;
+  const recent = debts.slice(-9);
+  if (recent.length >= 2) {
+    const weeks = diffDays(recent[recent.length - 1].w, recent[0].w) / 7;
+    if (weeks > 0) avg = (recent[0].v - recent[recent.length - 1].v) / weeks;
+  }
+  const paidOff = curDebt != null && curDebt <= 0;
+  if (!paidOff && avg && avg > 0 && curDebt != null) {
+    lunas = addDays(debts[debts.length - 1].w, Math.ceil(curDebt / avg) * 7);
+    onTrack = lunas <= F.debtTargetDate;
+  }
+  const weeksToTarget = Math.max(1, diffDays(F.debtTargetDate, t) / 7);
+  const needPerWeek = curDebt != null && curDebt > 0 ? curDebt / weeksToTarget : null;
+  const curBridge = bridges.length ? bridges[bridges.length - 1].v : null;
+  const bWeeks = Math.max(1, diffDays(F.bridgeTargetDate, t) / 7);
+  const bNeed = F.bridgeTarget != null ? Math.max(0, F.bridgeTarget - (curBridge || 0)) / bWeeks : null;
+  const bridgeReached = F.bridgeTarget != null && curBridge != null && curBridge >= F.bridgeTarget;
+  const history = [];
+  for (let i = 1; i < debts.length; i++) history.push({ w: debts[i].w, dmg: debts[i - 1].v - debts[i].v });
+  return { maxHP, curDebt, lastDmg, avg, lunas, onTrack, needPerWeek, paidOff, curBridge, bNeed, bridgeReached, history, debts, bridges };
+}
+
+/* ---------- milestone ---------- */
+function milestoneList() {
+  const T = state.targets;
+  const byDate = (a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+  const bench = state.workouts.filter((w) => w.kind === 'bench').slice().sort(byDate);
+  const runs = state.workouts.filter((w) => w.kind === 'run').slice().sort(byDate);
+  const m90kg = Math.round(T.benchKg * 0.9 * 10) / 10;
+  let first = null, m90 = null, m100 = null, bestE = 0;
+  bench.forEach((b) => { const e = e1rm(b.kg, b.reps); if (!first) first = b.date; if (e >= m90kg - 1e-9 && !m90) m90 = b.date; if (e >= T.benchKg - 1e-9 && !m100) m100 = b.date; bestE = Math.max(bestE, e); });
+  let sub30 = null, sub60 = null, best5 = null, best10 = null;
+  // Waktu total lari >= 5 km adalah batas atas waktu 5K-nya (5K pertama tidak mungkin lebih lambat dari total).
+  runs.forEach((r) => {
+    if (r.km >= 4.95) { if (best5 == null || r.sec < best5) best5 = r.sec; if (r.sec < 1800 && !sub30) sub30 = r.date; }
+    if (r.km >= 9.95) { if (best10 == null || r.sec < best10) best10 = r.sec; if (r.sec < 3600 && !sub60) sub60 = r.date; }
+  });
+  const ielts = (state.milestones.ielts || []).slice().sort(byDate);
+  let ieltsDone = null, ieltsBest = null;
+  ielts.forEach((x) => { if (ieltsBest == null || x.band > ieltsBest) ieltsBest = x.band; if (T.ieltsBand != null && x.band >= T.ieltsBand && !ieltsDone) ieltsDone = x.date; });
+  const t = todayKey();
+  const lastB = bench.length ? bench[bench.length - 1] : null;
+  return {
+    bestE, best5, best10, lastKg: lastB ? lastB.kg : null, lastReps: lastB ? lastB.reps : null,
+    list: [
+      { id: 'b1', label: 'e1RM bench pertama tercatat', done: first, prog: first ? 'e1RM terbaik ' + nfl(bestE, 1) + ' kg' : 'Bench belum dites' },
+      { id: 'b90', label: 'e1RM bench ' + nfl(m90kg, 1) + ' kg', done: m90, prog: bestE ? nfl(bestE, 1) + ' / ' + nfl(m90kg, 1) + ' kg' : '' },
+      { id: 'b100', label: 'e1RM bench ' + nfl(T.benchKg, 1) + ' kg', done: m100, prog: bestE ? nfl(bestE, 1) + ' / ' + nfl(T.benchKg, 1) + ' kg' : '' },
+      { id: 'r30', label: '5K sub-30', done: sub30, prog: best5 ? 'Terbaik ' + secStr(best5) : 'Baseline ' + secStr(T.run5kBaselineSec) },
+      { id: 'r60', label: '10K sub-60', done: sub60, prog: best10 ? 'Terbaik ' + secStr(best10) : 'Prediksi Riegel ' + secStr(riegel10k(best5 || T.run5kBaselineSec)) },
+      { id: 'sr', label: 'Systematic review terkirim', done: state.milestones.srSubmittedAt, prog: '', manual: 'sr' },
+      { id: 'ielts', label: 'Mock IELTS band ' + (T.ieltsBand != null ? nfl(T.ieltsBand, 1) : '(isi target di Setelan)'), done: ieltsDone, prog: ieltsBest != null ? 'Terbaik ' + nfl(ieltsBest, 1) : 'Belum ada mock', manual: 'ielts' },
+      { id: 'koas', label: 'Koas selesai (' + fmtMY(T.koasEnd) + ')', done: t >= T.koasEnd ? T.koasEnd : null, prog: t < T.koasEnd ? diffDays(T.koasEnd, t) + ' hari lagi' : '' },
+    ],
+  };
+}
+
+/* ---------- chapter ---------- */
+function chapterSummary(ch) {
+  const t = todayKey();
+  const end = ch.end < t ? ch.end : t;
+  const o = { days: 0, lolos: 0, xp: 0, sleepS: 0, sleepN: 0, jaga: 0, ot: 0, latP: 0, latD: 0, mutDone: 0, mutDays: 0, best: 0, span: Math.max(0, diffDays(end, ch.start) + 1) };
+  let run = 0;
+  for (let k = ch.start; k <= end; k = addDays(k, 1)) {
+    const r = dayResult(k);
+    const st = dayStatus(k);
+    if (st === 'pass') { run++; o.best = Math.max(o.best, run); } else if (st === 'fail') run = 0;
+    if (r.empty) continue;
+    o.days++; if (r.pass) o.lolos++; o.xp += r.xp;
+    if (r.effType === 'JAGA') o.jaga++;
+    if (r.metrics) {
+      if (r.metrics.sleepNJ != null) { o.sleepS += r.metrics.sleepNJ; o.sleepN++; }
+      o.ot += r.metrics.ot; o.latP += r.metrics.latPlan; o.latD += r.metrics.latDone;
+    }
+    const raw = state.days[k];
+    if (raw && raw.mut && state.mutabaah.length) { o.mutDays++; o.mutDone += state.mutabaah.filter((m) => raw.mut[m.id]).length; }
+  }
+  o.avgSleep = o.sleepN ? o.sleepS / o.sleepN : null;
+  o.mutPct = o.mutDays && state.mutabaah.length ? o.mutDone / (o.mutDays * state.mutabaah.length) : null;
+  return o;
+}
+
+/* =========================================================
+   DATA CONTOH (7 hari, termasuk 1 JAGA & 1 PASCA-JAGA)
+   ========================================================= */
+function makeSample() {
+  const t = todayKey();
+  const st = state;
+  st.sampleLoaded = true;
+  st.finance.debtInitial = 25000000;
+  st.finance.bridgeTarget = 10000000;
+  st.finance.sample = true;
+  st.chapters.push({ id: 'ch_s1', name: 'Contoh: Stase Neurologi', start: addDays(t, -25), end: addDays(t, -4), weight: 'ringan', summarySeen: true, sample: true });
+  st.chapters.push({ id: 'ch_s2', name: 'Contoh: Stase IPD', start: addDays(t, -3), end: addDays(t, 38), weight: 'sedang', summarySeen: false, sample: true });
+  st.mainQuests.push(
+    { id: 'mq_s1', name: 'Systematic review ortopedi', stat: 'RSC', status: 'aktif', next: 'Screening 20 abstrak', createdAt: addDays(t, -20), doneAt: null, sample: true },
+    { id: 'mq_s2', name: 'Bank soal UKMPPD bedah', stat: 'INT', status: 'aktif', next: '1 blok 25 soal', createdAt: addDays(t, -12), doneAt: null, sample: true },
+    { id: 'mq_s3', name: 'Seri konten edukasi fraktur', stat: 'CHA', status: 'beku', next: '', createdAt: addDays(t, -30), doneAt: null, sample: true }
+  );
+  st.rewards.push(
+    { id: 'rw_s1', name: 'Tidur siang 2 jam tanpa rasa bersalah', cost: 0, sample: true },
+    { id: 'rw_s2', name: 'Kopi susu favorit', cost: 30000, sample: true },
+    { id: 'rw_s3', name: 'Sepatu lari baru', cost: 1200000, sample: true }
+  );
+  const plan = [
+    { o: -7, type: 'NORMAL', sleep: 6.5, ratio: 0.85, workEnd: 'ok', mut: 3, tentir: { jam: 2, sesi: 1, ok: true }, weekly: ['q_deposit'] },
+    { o: -6, type: 'NORMAL', sleep: 5.5, ratio: 0.3, workEnd: 'late', token: true, mut: 2, tentir: { jam: 2.5, sesi: 2, ok: false } },
+    { o: -5, type: 'JAGA', sleep: 6, ratio: 1, mut: 1 },
+    { o: -4, type: 'PASCA', ratio: 1, workEnd: 'ok', mut: 2 },
+    { o: -3, type: 'NORMAL', sleep: 4.5, ratio: 0.75, workEnd: 'ok', mut: 3 },
+    { o: -2, type: 'LIBUR', sleep: 7, ratio: 0.9, workEnd: 'ok', mut: 3, tentir: { jam: 3, sesi: 2, ok: true }, weekly: ['q_post'] },
+    { o: -1, type: 'NORMAL', sleep: 6.25, ratio: 0.8, workEnd: null, mut: 2, tentir: { jam: 1.5, sesi: 1, ok: true } },
+  ];
+  const notes = { '-2': 'Long run santai, lalu belajar fraktur ekstremitas atas.', '-4': 'Tidur 2,5 jam setelah jaga, badan jauh lebih enak.' };
+  for (const p of plan) {
+    const k = addDays(t, p.o);
+    const r = newDay();
+    r.type = p.type; r.sleep = p.sleep != null ? p.sleep : null; r.workEnd = p.workEnd || null; r.token = !!p.token;
+    if (p.tentir) r.tentir = Object.assign({}, p.tentir);
+    st.mutabaah.slice(0, p.mut).forEach((m) => { r.mut[m.id] = true; });
+    r.note = notes[String(p.o)] || '';
+    r.sample = true;
+    st.days[k] = r;
+    const L = buildList(k, r, p.type);
+    const regular = L.items.filter((q) => !SPECIAL.has(q.tag) || q.tag === 'sdwalk');
+    const n = Math.ceil(regular.length * p.ratio);
+    regular.slice(0, n).forEach((q) => { r.done[q.id] = true; });
+    (p.weekly || []).forEach((id) => { r.done[id] = true; });
+  }
+  st.workouts.push(
+    { id: 'wo_s1', date: addDays(t, -7), kind: 'bench', kg: 60, reps: 5, sets: 3, note: '', sample: true },
+    { id: 'wo_s2', date: addDays(t, -6), kind: 'run', km: 4, sec: 1680, runType: 'easy', note: '', sample: true },
+    { id: 'wo_s3', date: addDays(t, -2), kind: 'run', km: 5, sec: 1830, runType: 'tes', note: 'Tes 5K', sample: true },
+    { id: 'wo_s4', date: addDays(t, -2), kind: 'bench', kg: 62.5, reps: 6, sets: 3, note: '', sample: true }
+  );
+  const ws0 = weekStart(t);
+  const wks = [
+    { w: addDays(ws0, -21), debt: 25000000, bridge: 1500000, leads: 1 },
+    { w: addDays(ws0, -14), debt: 24400000, bridge: 2000000, leads: 2 },
+    { w: addDays(ws0, -7), debt: 23800000, bridge: 2600000, leads: 3, raid: true },
+  ];
+  wks.forEach((x) => {
+    const w = newWeek();
+    w.debt = x.debt; w.bridge = x.bridge; w.leads = x.leads; w.sample = true;
+    if (x.raid) { w.priorities = ['Kirim draf protokol SR', 'Tidur ≥6 jam di 5 malam non-jaga', '3 sesi tentir selesai ≤21.00']; }
+    st.weekly[x.w] = w;
+  });
+  dirty();
+  const lw = st.weekly[addDays(ws0, -7)];
+  lw.snapshot = weekMetrics(addDays(ws0, -7));
+  lw.raidDone = true; lw.raidXP = S().raidXP; lw.raidAt = addDays(ws0, -1);
+  dirty();
+}
+function clearSample() {
+  for (const k of Object.keys(state.days)) if (state.days[k].sample) delete state.days[k];
+  for (const k of Object.keys(state.weekly)) if (state.weekly[k].sample) delete state.weekly[k];
+  state.workouts = state.workouts.filter((x) => !x.sample);
+  state.mainQuests = state.mainQuests.filter((x) => !x.sample);
+  state.rewards = state.rewards.filter((x) => !x.sample);
+  state.claims = state.claims.filter((x) => !x.sample);
+  state.chapters = state.chapters.filter((x) => !x.sample);
+  if (state.finance.sample) { state.finance.debtInitial = null; state.finance.bridgeTarget = null; delete state.finance.sample; }
+  state.sampleLoaded = false;
+  ui.viewKey = null;
+}
+
+/* =========================================================
+   AKSI & RENDER UMUM
+   ========================================================= */
+function act(fn, opts) {
+  dirty();
+  const lv0 = levelOf(totalXP()).level;
+  fn();
+  dirty();
+  save();
+  render();
+  const lv1 = levelOf(totalXP()).level;
+  if (lv1 > lv0 && !(opts && opts.quietLevel)) celebrate(lv1);
+  return lv1 > lv0 ? lv1 : 0;
+}
+function ensureDay(k) { if (!state.days[k]) state.days[k] = newDay(); return state.days[k]; }
+function ensureWeek(ws) { if (!state.weekly[ws]) state.weekly[ws] = newWeek(); return state.weekly[ws]; }
+function editDay(fn, k) {
+  k = k || ui.viewKey || todayKey();
+  if (!isEditable(k)) { toast('Hari ini terkunci (lewat jendela isi mundur).'); return; }
+  act(() => { const r = ensureDay(k); delete r.frozen; fn(r); });
+}
+let toastT = null;
+function toast(msg) {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), 2600);
+}
+function openSheet(html) {
+  const s = $('#sheet');
+  s.innerHTML = `<div class="sheet-bg" data-act="closeSheet"></div><div class="sheet-panel" role="dialog" aria-modal="true">${html}</div>`;
+  s.classList.add('open');
+  document.body.classList.add('noscroll');
+}
+function closeSheet() {
+  const s = $('#sheet');
+  s.classList.remove('open');
+  s.innerHTML = '';
+  document.body.classList.remove('noscroll');
+}
+function confirmSheet(msg, okLabel, onOk, danger) {
+  pendingConfirm = onOk;
+  openSheet(`<p class="cmsg">${esc(msg)}</p><div class="grid2"><button class="btn" data-act="closeSheet">Batal</button><button class="btn ${danger ? 'danger' : 'primary'}" data-act="confirmOk">${esc(okLabel)}</button></div>`);
+}
+function celebrate(lv) {
+  openSheet(`<div class="center"><div class="lbl">Level up</div><div class="lvup">Level ${lv}</div><p>Kamu dapat 1 token hadiah dari daftarmu sendiri.</p><p class="small muted">Hadiah berbiaya tetap terkunci sampai Dana Jembatan mencapai target.</p><button class="btn primary block" data-act="goRewards">Lihat hadiah</button><button class="btn block" data-act="closeSheet">Nanti</button></div>`);
+}
+const phiWarn = (hit) => `<div class="phi ${hit ? 'hit' : ''}">${ICON.warn}<span>${hit ? 'Terdeteksi pola mirip identitas pasien. Hapus sebelum lanjut. ' : ''}${PHI_TEXT}</span></div>`;
+function multClass(m) { if (m >= 1.15) return 'hi'; if (m >= 0.95) return 'mid'; if (m >= 0.75) return 'lo'; return 'vlo'; }
+function tiersText() {
+  const t = S().sleepTiers.slice().sort((a, b) => b.min - a.min);
+  return `≥${nfl(t[0].min)} ${multStr(t[0].mult)} · ${nfl(t[1].min)}–${nfl(t[0].min)} ${multStr(t[1].mult)} · ${nfl(t[2].min)}–${nfl(t[1].min)} ${multStr(t[2].mult)} · &lt;${nfl(t[2].min)} ${multStr(t[3].mult)}`;
+}
+function lastExportText() {
+  if (!meta.lastExportAt) return 'belum pernah';
+  const d = Math.floor((nowMs() - meta.lastExportAt) / 864e5);
+  return d <= 0 ? 'hari ini' : d + ' hari lalu';
+}
+
+function renderBanner() {
+  const b = $('#banner');
+  b.innerHTML = memoryMode ? `<div class="banner" role="alert"><span>${esc(storageNote)}</span><button class="btn" data-act="export">Export</button></div>` : '';
+}
+function renderTabs() {
+  const R = raidWindow();
+  const w = state.weekly[R.ws];
+  const raidDot = R.open && !(w && w.raidDone);
+  const tabs = [['today', 'Hari Ini', ICON.today], ['char', 'Karakter', ICON.char], ['boss', 'Boss', ICON.boss], ['raid', 'Raid', ICON.raid], ['hist', 'Riwayat', ICON.hist], ['set', 'Setelan', ICON.set]];
+  $('#tabs').innerHTML = tabs.map(([id, l, ic]) => `<button class="${ui.tab === id ? 'on' : ''}" data-act="tab" data-tab="${id}" aria-label="${l}" ${ui.tab === id ? 'aria-current="page"' : ''}>${ic}<span>${l}</span>${id === 'raid' && raidDot ? '<i class="dot"></i>' : ''}</button>`).join('');
+}
+function render() {
+  dirty();
+  freezeLocked();
+  renderBanner();
+  const map = { today: renderToday, char: renderChar, boss: renderBoss, raid: renderRaid, hist: renderHistory, set: renderSettings };
+  $('#app').innerHTML = (map[ui.tab] || renderToday)();
+  renderTabs();
+  afterRender();
+}
+let raidTimerI = null;
+function afterRender() {
+  clearInterval(raidTimerI);
+  const el = $('#raidTimer');
+  if (el && ui.raidOpenedAt) {
+    const tick = () => { const s = Math.floor((Date.now() - ui.raidOpenedAt) / 1000); el.textContent = secStr(Math.max(1, s)) + ' / 30:00'; el.classList.toggle('bad', s > 1800); };
+    tick();
+    raidTimerI = setInterval(tick, 1000);
+  }
+  // Ringkasan chapter otomatis saat chapter berakhir (sekali).
+  if (ui.tab === 'today' && !ui.seenChapterPopup && !$('#sheet').classList.contains('open')) {
+    const t = todayKey();
+    const ended = state.chapters.find((c) => c.end < t && !c.summarySeen);
+    if (ended) {
+      ui.seenChapterPopup = true;
+      ended.summarySeen = true;
+      save();
+      openSheet(`<div class="row between"><div class="lbl">Chapter selesai</div><button class="x" data-act="closeSheet" aria-label="Tutup">✕</button></div>${chapterSummaryHTML(ended)}<button class="btn primary block" data-act="closeSheet">Lanjut</button>`);
+    }
+  }
+}
+
+/* =========================================================
+   LAYAR 1 — HARI INI
+   ========================================================= */
+function renderToday() {
+  const t = todayKey();
+  const minKey = addDays(t, -S().backfillDays);
+  if (!ui.viewKey || ui.viewKey > t || ui.viewKey < minKey) ui.viewKey = t;
+  const key = ui.viewKey;
+  const rec = state.days[key] || null;
+  const res = dayResult(key);
+  const editable = isEditable(key);
+  const ch = chapterFor(key);
+  const stk = streakInfo();
+  const dis = editable ? '' : 'disabled';
+  let h = '';
+  h += `<header class="hdr"><div class="row between">
+    <div class="row" style="gap:2px">
+      <button class="nav" data-act="dayPrev" ${key <= minKey ? 'disabled' : ''} aria-label="Hari sebelumnya">‹</button>
+      <div><div class="eyebrow">${relDay(key)} · ${wibClock()} WIB</div><h1>${fmtDate(key)}</h1></div>
+      <button class="nav" data-act="dayNext" ${key >= t ? 'disabled' : ''} aria-label="Hari berikutnya">›</button>
+    </div>
+    <div class="streak" aria-label="Streak ${stk.cur} hari">${ICON.flame}<span>${stk.cur}</span></div>
+  </div>
+  <div class="small muted" style="margin-top:2px">${ch ? `Chapter <b style="color:var(--text)">${esc(ch.name)}</b> · ${WEIGHTS[ch.weight]}` : 'Belum ada chapter aktif — atur di Setelan'}</div></header>`;
+
+  if (rec && rec.type && !res.empty) h += xpBarHTML(res);
+
+  if (state.sampleLoaded) h += `<div class="notice info"><span>Ini data contoh 7 hari (termasuk JAGA & PASCA-JAGA).</span><button class="btn sm" data-act="clearSample">Hapus data contoh</button></div>`;
+
+  if (key === t) h += closeYesterdayHTML(t);
+
+  // tipe hari
+  const prev = state.days[addDays(key, -1)];
+  const suggest = (!rec || !rec.type) && prev && prev.type === 'JAGA' ? 'PASCA' : null;
+  h += `<section class="card"><div class="row between"><div class="lbl">Tipe hari</div>${suggest ? '<span class="tiny tc-PASCA">Kemarin JAGA → PASCA?</span>' : ''}</div>
+    <div class="types">${TYPES.map((tp) => `<button class="type t-${tp} ${rec && rec.type === tp ? 'on' : ''} ${suggest === tp ? 'sug' : ''}" data-act="setType" data-type="${tp}" ${dis} aria-pressed="${!!(rec && rec.type === tp)}"><b>${TYPE_INFO[tp].short}</b><span>${TYPE_INFO[tp].desc}</span></button>`).join('')}</div></section>`;
+
+  if (!rec || !rec.type) {
+    h += `<p class="small muted" style="text-align:center;margin:18px 0">Pilih tipe hari (1 tap) untuk memunculkan quest.</p>`;
+  } else {
+    const et = res.effType;
+    if (et !== 'PASCA') h += sleepCardHTML(rec, res, dis);
+    h += effectsHTML(res, rec);
+    h += questCardHTML(key, rec, res, editable);
+    if (isND(et) && res.weekly.length) h += weeklyCardHTML(res, editable);
+    if (et === 'PASCA') h += nightCardHTML(rec, res, editable);
+  }
+  h += mutCardHTML(key, rec, editable);
+  h += noteCardHTML(key, rec, editable);
+  h += shieldRowHTML(key, rec, res);
+  h += prioritiesHTML(t);
+  return h;
+}
+function xpBarHTML(res) {
+  const s = S();
+  let f;
+  if (res.effType === 'PASCA') f = `${s.pascaXP} × ${res.doneCount}/${res.total} quest pemulihan`;
+  else {
+    const tgt = dailyTarget(res);
+    f = `dasar ${res.capped}/${tgt}${res.base > res.capped ? ` (${res.base}, dibatasi ${s.dailyCap})` : ''} ${multStr(res.mult)}${res.effType === 'JAGA' ? ' tetap' : res.multMissing ? ' (tidur kosong)' : ' tidur'}`;
+  }
+  if (res.penalty) f += ` − ${res.penalty} overtime`;
+  const pct = res.total ? (res.doneCount / res.total) * 100 : 0;
+  return `<div class="xpbar" id="xpbar"><div class="row between">
+      <div><span class="xpn ${res.xp < 0 ? 'neg' : ''}" id="xpToday">${res.xp}</span> <span class="muted small">XP</span></div>
+      <span class="passchip ${res.pass ? 'ok' : ''}" id="passChip">${res.pass ? 'Lolos' : 'Belum lolos'} · ${res.doneCount}/${res.total}</span>
+    </div><div class="formula" id="xpFormula">${esc(f)}</div>
+    <div class="pbar" aria-hidden="true"><i style="width:${pct}%"></i><b style="left:${S().passPct}%"></b></div></div>`;
+}
+function closeYesterdayHTML(t) {
+  if (S().backfillDays < 1) return '';
+  const y = addDays(t, -1);
+  const yr = state.days[y];
+  const hasHistory = Object.keys(state.days).some((k) => k < y && state.days[k].type);
+  if (!yr || !yr.type) {
+    if (!hasHistory || (yr && yr.shield)) return '';
+    return `<div class="notice warn"><span>Kemarin belum tercatat.</span><button class="btn sm" data-act="gotoDay" data-key="${y}">Isi kemarin</button></div>`;
+  }
+  if (yr.frozen) return '';
+  if (yr.type !== 'JAGA' && yr.workEnd == null) {
+    return `<div class="notice warn" style="display:block"><div><b>Tutup kemarin:</b> semalam berhenti kerja ≤21.00?</div>
+      <div class="tiny muted" style="margin:3px 0 8px">Kalau dibiarkan kosong sampai terkunci, dihitung lewat 21.00 (−${S().overtimePenalty} XP).</div>
+      <div class="grid2"><button class="btn sm" data-act="closeY" data-v="ok">Ya, ≤21.00</button><button class="btn sm" data-act="closeY" data-v="late">Lewat 21.00</button></div></div>`;
+  }
+  if (yr.type === 'JAGA') {
+    const yres = dayResult(y);
+    if (yres.doneCount < yres.total) return `<div class="notice info"><span>Jaga kemarin belum ditandai selesai.</span><button class="btn sm" data-act="gotoDay" data-key="${y}">Buka kemarin</button></div>`;
+  }
+  return '';
+}
+function sleepCardHTML(rec, res, dis) {
+  const jaga = res.effType === 'JAGA';
+  const v = rec.sleep;
+  const pill = jaga ? `<span class="pill mid">${multStr(S().jagaMult)} tetap</span>` : `<span class="pill ${multClass(res.mult)}" id="multPill">${multStr(res.mult)}</span>`;
+  return `<section class="card"><div class="row between"><div class="lbl">Tidur semalam</div>${pill}</div>
+    <div class="sleep"><button class="step" data-act="stepSleep" data-d="-0.25" ${dis} aria-label="Kurangi 15 menit">−</button>
+      <div class="sv"><b id="sleepVal">${v == null ? '—' : nfl(v, 2)}</b>jam</div>
+      <button class="step" data-act="stepSleep" data-d="0.25" ${dis} aria-label="Tambah 15 menit">+</button></div>
+    <div class="chips">${[4.5, 5, 5.5, 6, 6.5, 7].map((x) => `<button class="cp ${v === x ? 'on' : ''}" data-act="setSleep" data-v="${x}" ${dis}>${nfl(x, 1)}</button>`).join('')}</div>
+    <div class="tiny muted" style="margin-top:8px">${jaga ? 'Hari JAGA: pengali tetap. Jam tidur tetap dicatat untuk rata-rata malam non-jaga.' : 'Pengali: ' + tiersText()}</div></section>`;
+}
+function effectsHTML(res, rec) {
+  const e = [];
+  const s = S();
+  if (res.multMissing && isND(res.effType)) e.push(['warn', 'Jam tidur belum diisi → ' + multStr(res.mult)]);
+  if (res.sleepDebt) e.push(['bad', 'Sleep Debt: beban berat & interval terkunci']);
+  if (res.overtime) e.push([res.token ? 'muted' : 'bad', res.token ? 'Overtime — token dipakai' : 'Debuff Overtime −' + s.overtimePenalty + ' XP']);
+  if (res.heavy) e.push(['info', 'Chapter berat: quest inti saja, target ' + dailyTarget(res)]);
+  if (res.effType === 'PASCA') e.push(['info', 'Mode pemulihan: satu-satunya misi hari ini']);
+  if (res.invalidPasca) e.push(['bad', 'PASCA-JAGA tanpa JAGA kemarin → dihitung NORMAL']);
+  if (rec && rec.shield) e.push(['info', 'Shield dipakai']);
+  return e.length ? `<div class="fx" id="effects">${e.map(([c, x]) => `<span class="fxc ${c}">${esc(x)}</span>`).join('')}</div>` : '';
+}
+function qRow(it, editable, opts) {
+  opts = opts || {};
+  const dis = editable && !opts.disabled ? '' : 'disabled';
+  const q = questById(it.id);
+  const logKind = q && q.metric === 'latihan' ? (/lari|run/i.test(q.name) ? 'run' : (q.tag === 'heavy' ? 'bench' : '')) : '';
+  return `<div class="q ${it.d ? 'on' : ''} ${opts.cls || ''}" data-qid="${esc(it.id)}"><div class="qrow">
+    <button class="qbtn" data-act="toggleQ" data-id="${esc(it.id)}" ${dis} aria-pressed="${it.d}">
+      <span class="box">${it.d ? ICON.check : ''}</span>
+      <span class="qt"><span class="qn">${esc(it.n)}</span><span class="qm"><span class="chip s-${it.s}">${it.s}</span>${opts.sub || ''}</span></span>
+      <span class="qx">+${it.x}</span>
+    </button>${logKind && it.d && editable ? `<button class="logbtn" data-act="logWo" data-kind="${logKind}">+ log</button>` : ''}</div></div>`;
+}
+function questCardHTML(key, rec, res, editable) {
+  const s = S();
+  const dis = editable ? '' : 'disabled';
+  const nd = isND(res.effType);
+  let h = `<section class="card quests" id="questCard"><div class="row between" style="margin-bottom:2px"><div class="lbl">Quest ${esc(TYPE_INFO[res.effType].label)}</div><div class="small muted">lolos ≥${s.passPct}%</div></div>`;
+  for (const it of res.items) {
+    if (it.tag === 'sleep') {
+      h += `<div class="q auto ${it.d ? 'on' : ''}" data-qid="${it.id}"><div class="qbtn static"><span class="box">${it.d ? ICON.check : ''}</span><span class="qt"><span class="qn">${esc(it.n)}</span><span class="qm"><span class="chip s-VIT">VIT</span>otomatis dari jam tidur</span></span><span class="qx">+${it.x}</span></div></div>`;
+    } else if (it.tag === 'workend') {
+      const late = rec.workEnd === 'late';
+      h += `<div class="q ${it.d ? 'on' : ''} ${late ? 'late' : ''}" data-qid="${it.id}"><div class="qbtn static"><span class="box">${it.d ? ICON.check : ''}</span><span class="qt"><span class="qn">${esc(it.n)}</span><span class="qm"><span class="chip s-VIT">VIT</span>isi malam ini / besok pagi</span></span><span class="qx">+${it.x}</span></div></div>`;
+      h += workEndButtons(key, rec, res, editable);
+    } else if (it.tag === 'tentir') {
+      continue;
+    } else {
+      h += qRow(it, editable, { sub: it.id.startsWith('MQ:') ? '<span class="chip">MAIN QUEST</span>' : (it.tag === 'sdwalk' ? 'pengganti saat Sleep Debt' : '') });
+    }
+  }
+  if (nd) {
+    const tq = state.quests.find((q) => q.tag === 'tentir');
+    if (tq && tq.active) h += tentirRowHTML(rec, tq, editable);
+  }
+  res.locked.forEach((l) => {
+    h += `<div class="q locked"><div class="qbtn static"><span class="box">${ICON.lock}</span><span class="qt"><span class="qn">${esc(l.n)}</span><span class="qm"><span class="chip s-${l.s}">${l.s}</span>terkunci: Sleep Debt (&lt;${nfl(s.sleepDebtBelow)} jam)</span></span></div></div>`;
+  });
+  const beku = state.mainQuests.filter((m) => m.status === 'beku');
+  if (nd) h += `<div class="section-foot">Main Quest beku: ${beku.length ? beku.map((m) => esc(m.name)).join(' · ') : '—'}</div>`;
+  void dis;
+  return h + '</section>';
+}
+function workEndButtons(key, rec, res, editable) {
+  const dis = editable ? '' : 'disabled';
+  const v = rec.workEnd;
+  let h = `<div class="yn"><button data-act="setWorkEnd" data-v="ok" class="${v === 'ok' ? 'on' : ''}" ${dis}>✓ ≤21.00</button><button data-act="setWorkEnd" data-v="late" class="${v === 'late' ? 'on bad' : ''}" ${dis}>✗ Lewat 21.00</button></div>`;
+  if (v === 'late') {
+    const ws = weekStart(key);
+    const left = S().overtimeTokensPerWeek - countInWeek(ws, 'token');
+    if (rec.token) h += `<div class="debuff ok"><span>Token pengecualian dipakai: debuff dibatalkan (quest tetap tidak selesai).</span><button class="btn sm" data-act="releaseToken" ${dis}>Batal</button></div>`;
+    else h += `<div class="debuff"><span>Debuff Overtime −${S().overtimePenalty} XP. Token minggu ini: ${Math.max(0, left)}.</span><button class="btn sm" data-act="useToken" ${left > 0 && editable ? '' : 'disabled'}>Pakai token</button></div>`;
+  }
+  void res;
+  return h;
+}
+function tentirRowHTML(rec, tq, editable) {
+  const dis = editable ? '' : 'disabled';
+  const t = rec.tentir || { jam: 0, sesi: 1, ok: null };
+  const on = t.jam > 0 && t.ok === true;
+  let h = `<div class="q ${on ? 'on' : ''} ${t.ok === false ? 'late' : ''}" ${t.jam > 0 ? 'data-qid="q_tentir"' : 'data-row="tentir"'}><div class="qbtn static"><span class="box">${on ? ICON.check : ''}</span>
+    <span class="qt"><span class="qn">${t.jam > 0 ? esc(tq.name) : 'Tentir hari ini'}</span><span class="qm"><span class="chip s-GLD">GLD</span>${t.jam > 0 ? '+' + sizeXP(tq.size) + ' bila ≤21.00' : 'jam tidak memberi XP'}</span></span>
+    <span class="ministep"><button data-act="stepTentir" data-d="-0.5" ${dis} aria-label="Kurangi jam tentir">−</button><b id="tentirJam">${nfl(t.jam, 1)} j</b><button data-act="stepTentir" data-d="0.5" ${dis} aria-label="Tambah jam tentir">+</button></span></div></div>`;
+  if (t.jam > 0) {
+    h += `<div class="yn"><button data-act="setTentirOk" data-v="1" class="${t.ok === true ? 'on' : ''}" ${dis}>✓ Selesai ≤21.00</button><button data-act="setTentirOk" data-v="0" class="${t.ok === false ? 'on bad' : ''}" ${dis}>✗ Lewat 21.00</button></div>
+      <div class="subrow"><span>Jumlah sesi</span><span class="ministep"><button data-act="stepSesi" data-d="-1" ${dis} aria-label="Kurangi sesi">−</button><b>${t.sesi || 1}</b><button data-act="stepSesi" data-d="1" ${dis} aria-label="Tambah sesi">+</button></span></div>`;
+  }
+  return h;
+}
+function weeklyCardHTML(res, editable) {
+  let h = `<section class="card quests" id="weeklyCard"><div class="row between"><div class="lbl">Mingguan · 1× per minggu</div><span class="tiny muted">tidak masuk syarat lolos</span></div>`;
+  res.weekly.forEach((w) => {
+    if (w.other) h += `<div class="q on other"><div class="qbtn static"><span class="box">${ICON.check}</span><span class="qt"><span class="qn">${esc(w.n)}</span><span class="qm"><span class="chip s-${w.s}">${w.s}</span>selesai ${fmtDate(w.other, { shortWd: true })}</span></span><span class="qx">✓</span></div></div>`;
+    else h += qRow({ id: w.id, n: w.n, s: w.s, d: w.d, x: w.x }, editable);
+  });
+  return h + '</section>';
+}
+function nightCardHTML(rec, res, editable) {
+  return `<section class="card"><div class="lbl">Malam ini</div><p class="small muted">Berhenti kerja ≤21.00? Di PASCA-JAGA ini bukan quest (0 XP), tapi lewat 21.00 tetap kena debuff.</p>${workEndButtons(ui.viewKey, rec, res, editable).replace('class="yn"', 'class="yn" style="padding-left:0"').replace(/class="debuff/g, 'style="margin-left:0" class="debuff')}</section>`;
+}
+function mutCardHTML(key, rec, editable) {
+  const dis = editable ? '' : 'disabled';
+  const items = state.mutabaah;
+  if (!items.length) return '';
+  const counts = {};
+  items.forEach((m) => { counts[m.id] = 0; });
+  for (let i = 0; i < 7; i++) { const r = state.days[addDays(key, -i)]; if (r && r.mut) items.forEach((m) => { if (r.mut[m.id]) counts[m.id]++; }); }
+  return `<section class="card mut" id="mutCard"><div class="row between"><div class="lbl">Mutaba'ah</div><span class="tiny muted">catatan pribadi · tanpa XP</span></div>
+    ${items.map((m) => { const on = !!(rec && rec.mut && rec.mut[m.id]); return `<button class="mi ${on ? 'on' : ''}" data-act="toggleMut" data-id="${esc(m.id)}" ${dis} aria-pressed="${on}"><span class="mb">${on ? ICON.check : ''}</span><span>${esc(m.name)}</span><span class="mc">${counts[m.id]}/7 hari</span></button>`; }).join('')}
+  </section>`;
+}
+function noteCardHTML(key, rec, editable) {
+  const v = rec ? rec.note || '' : '';
+  return `<section class="card"><div class="lbl">Catatan</div><textarea data-input="note" placeholder="Opsional. Refleksi singkat hari ini." ${editable ? '' : 'readonly'} maxlength="600" style="margin-top:8px">${esc(v)}</textarea><div id="notePhi">${phiWarn(PHI_RE.test(v))}</div></section>`;
+}
+function shieldRowHTML(key, rec, res) {
+  if (rec && rec.shield) return `<div class="notice info"><span>Shield dipakai untuk hari ini.</span><button class="btn sm" data-act="toggleShield" data-key="${key}">Lepas</button></div>`;
+  if (res.pass || res.effType === 'JAGA' || res.effType === 'PASCA') return '';
+  const left = S().shieldsPerWeek - countInWeek(weekStart(key), 'shield');
+  return `<div class="row between small muted" style="margin:14px 2px"><span>Sakit atau darurat?</span><button class="btn sm" data-act="toggleShield" data-key="${key}" ${left > 0 ? '' : 'disabled'}>${ICON.shield} Pakai shield (${Math.max(0, left)})</button></div>`;
+}
+function prioritiesHTML(t) {
+  const pw = state.weekly[addDays(weekStart(t), -7)];
+  if (!pw || !pw.priorities || !pw.priorities.some((x) => x && x.trim())) return '';
+  return `<section class="card"><div class="lbl">Prioritas minggu ini (dari Raid)</div><ol class="small" style="margin:8px 0 0 18px">${pw.priorities.filter((x) => x && x.trim()).map((x) => `<li>${esc(x)}</li>`).join('')}</ol></section>`;
+}
+
+/* =========================================================
+   LAYAR 2 — KARAKTER
+   ========================================================= */
+function radarSVG(lv) {
+  const W = 300, c = 150, R = 96;
+  const max = Math.max(5, Math.ceil(Math.max(...STATS.map((s) => lv[s]))));
+  const pt = (i, v) => { const a = -Math.PI / 2 + (i * Math.PI) / 3; return [c + R * v * Math.cos(a), c + R * v * Math.sin(a)]; };
+  let g = '';
+  [0.25, 0.5, 0.75, 1].forEach((f) => { g += `<polygon points="${STATS.map((_, i) => pt(i, f).map((x) => x.toFixed(1)).join(',')).join(' ')}" stroke="#263244" stroke-width="1" fill="none"/>`; });
+  STATS.forEach((_, i) => { const [x, y] = pt(i, 1); g += `<line x1="${c}" y1="${c}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#263244" stroke-width="1"/>`; });
+  const poly = STATS.map((s, i) => pt(i, Math.max(0.03, lv[s] / max)).map((x) => x.toFixed(1)).join(',')).join(' ');
+  g += `<polygon points="${poly}" fill="rgba(142,166,255,.22)" stroke="#8ea6ff" stroke-width="2"/>`;
+  STATS.forEach((s, i) => {
+    const [x, y] = pt(i, Math.max(0.03, lv[s] / max));
+    g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="var(--${s})" stroke="none"/>`;
+    const [lx, ly] = pt(i, 1.24);
+    g += `<text x="${lx.toFixed(1)}" y="${(ly - 3).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--${s})" stroke="none">${s}</text><text x="${lx.toFixed(1)}" y="${(ly + 11).toFixed(1)}" text-anchor="middle" font-size="11" fill="#8b98a9" stroke="none">Lv ${Math.floor(lv[s])}</text>`;
+  });
+  return `<svg class="radar" viewBox="0 0 ${W} ${W}" role="img" aria-label="Radar enam stat">${g}</svg>`;
+}
+function renderChar() {
+  const xp = totalXP();
+  const lv = levelOf(xp);
+  const sx = statXP();
+  const stk = streakInfo();
+  const t = todayKey();
+  const ws = weekStart(t);
+  const s = S();
+  const sl = {}, slInfo = {};
+  STATS.forEach((id) => { const L = levelOf(sx[id], s.statDivisor); slInfo[id] = L; sl[id] = L.level + L.into / L.need; });
+  let h = `<header class="hdr"><h1>Karakter</h1></header>`;
+  h += `<section class="card"><div class="lvl"><div class="lvbadge"><small>LEVEL</small><b id="lvNum">${lv.level}</b></div><div style="flex:1">
+    <div class="row between small"><span>${nf(Math.floor(lv.into))} / ${nf(Math.round(lv.need))} XP</span><span class="muted">ke Lv ${lv.level + 1}</span></div>
+    <div class="bar" style="margin:6px 0"><i style="width:${(lv.into / lv.need) * 100}%"></i></div>
+    <div class="tiny muted">Total ${nf(xp)} XP · naik level butuh ${s.levelBase} + ${s.levelStep}×L</div></div></div></section>`;
+  h += `<section class="card"><div class="lbl">Stat</div>${radarSVG(sl)}<div>${STATS.map((id) => { const L = slInfo[id]; return `<div class="statrow"><span class="chip s-${id}" style="justify-content:center">${id}</span><div><div class="row between small"><span>${STAT_NAME[id]}</span><span class="muted">Lv ${L.level}</span></div><div class="bar" style="margin-top:4px"><i style="width:${(L.into / L.need) * 100}%;background:var(--${id})"></i></div></div><span class="tiny muted" style="min-width:44px;text-align:right">${nf(Math.floor(sx[id]))} XP</span></div>`; }).join('')}</div></section>`;
+  // status effects
+  const rt = dayResult(t), ry = dayResult(addDays(t, -1));
+  const fx = [];
+  if (!rt.empty && rt.sleepDebt) fx.push(['bad', 'Sleep Debt — beban berat & interval terkunci hari ini']);
+  if (!rt.empty && rt.multMissing && isND(rt.effType)) fx.push(['warn', 'Jam tidur hari ini belum diisi']);
+  if (!rt.empty && rt.overtime && !rt.token) fx.push(['bad', 'Overtime hari ini −' + s.overtimePenalty + ' XP']);
+  if (!ry.empty && ry.overtime && !ry.token) fx.push(['bad', 'Overtime kemarin −' + s.overtimePenalty + ' XP']);
+  if (!rt.empty && rt.effType === 'PASCA') fx.push(['info', 'Mode pemulihan (PASCA-JAGA)']);
+  if (!rt.empty && rt.effType === 'JAGA') fx.push(['info', 'Sedang JAGA — streak aman']);
+  const ch = chapterFor(t);
+  if (ch && ch.weight === 'berat') fx.push(['info', 'Chapter berat — quest inti saja']);
+  if (!rt.empty && !rt.empty && rt.mult >= 1.15 && isND(rt.effType)) fx.push(['muted', 'Cukup tidur ' + multStr(rt.mult)]);
+  h += `<section class="card"><div class="lbl">Status effect aktif</div>${fx.length ? `<div class="fx">${fx.map(([c, x]) => `<span class="fxc ${c}">${esc(x)}</span>`).join('')}</div>` : '<p class="small muted">Tidak ada.</p>'}</section>`;
+  const tokLeft = s.overtimeTokensPerWeek - countInWeek(ws, 'token');
+  const shLeft = s.shieldsPerWeek - countInWeek(ws, 'shield');
+  h += `<section class="card"><div class="kv">
+    <div class="kvi"><b id="streakCur">${stk.cur}</b><span>Streak (hari lolos)</span></div>
+    <div class="kvi"><b>${stk.best}</b><span>Streak terbaik</span></div>
+    <div class="kvi"><b>${Math.max(0, shLeft)}/${s.shieldsPerWeek}</b><span>Shield minggu ini</span></div>
+    <div class="kvi"><b>${Math.max(0, tokLeft)}/${s.overtimeTokensPerWeek}</b><span>Token overtime</span></div>
+  </div><p class="tiny muted" style="margin-top:8px">JAGA & PASCA-JAGA tidak pernah memutus streak. Shield & token reset tiap Senin.</p></section>`;
+  h += mqPanelHTML();
+  h += rewardsHTML(lv.level);
+  return h;
+}
+function mqPanelHTML() {
+  const s = S();
+  const act = state.mainQuests.filter((m) => m.status === 'aktif');
+  const beku = state.mainQuests.filter((m) => m.status === 'beku');
+  const sel = state.mainQuests.filter((m) => m.status === 'selesai');
+  const full = act.length >= s.wipLimit;
+  let h = `<section class="card" id="mqPanel"><div class="row between"><h2>Main Quest</h2><span class="chip ${full ? 'warn' : ''}" id="mqCount">Aktif ${act.length}/${s.wipLimit}</span></div>
+    <p class="tiny muted" style="margin-bottom:6px">Blok kerja harian tiap Main Quest muncul di Hari Ini (+${sizeXP(s.mqSize)}). Menyelesaikan proyek = 0 XP: yang dihargai eksekusinya.</p>`;
+  if (!act.length) h += `<p class="small muted">Belum ada Main Quest aktif. Isi maksimal ${s.wipLimit} proyek.</p>`;
+  act.forEach((m, i) => {
+    h += `<div class="mq"><div class="mqh"><span class="chip s-${m.stat}">${m.stat}</span><b>${esc(m.name)}</b></div>${m.next ? `<div class="small muted" style="margin-top:3px">Langkah berikut: ${esc(m.next)}</div>` : ''}
+      <div class="row wrap mqa"><button class="btn sm" data-act="mqDone" data-id="${m.id}">✓ Selesai</button><button class="btn sm" data-act="mqFreeze" data-id="${m.id}">Bekukan</button><button class="btn sm" data-act="mqEdit" data-id="${m.id}">Edit</button>${i > 0 ? `<button class="btn sm" data-act="mqUp" data-id="${m.id}" aria-label="Naikkan prioritas">${ICON.up}</button>` : ''}</div></div>`;
+  });
+  h += full
+    ? `<button class="btn block locked" data-act="mqAdd" id="mqAddBtn" data-locked="1">${ICON.lock} Main Quest ke-${act.length + 1} terkunci</button><p class="tiny muted" style="margin-top:4px">Selesaikan atau bekukan satu dulu (WIP ≤${s.wipLimit}). Ide baru boleh disimpan ke Beku.</p>`
+    : `<button class="btn block" data-act="mqAdd" id="mqAddBtn">+ Main Quest</button>`;
+  h += `<div class="subhead">Beku (${beku.length})</div>`;
+  h += beku.length ? beku.map((m) => `<div class="frozen"><span><span class="chip s-${m.stat}">${m.stat}</span> ${esc(m.name)}</span><span class="row" style="gap:6px"><button class="btn sm" data-act="mqActivate" data-id="${m.id}" ${full ? 'aria-disabled="true"' : ''}>${full ? ICON.lock : ''}Aktifkan</button><button class="ico" data-act="mqDel" data-id="${m.id}" aria-label="Hapus">${ICON.trash}</button></span></div>`).join('') : '<p class="small muted">Kosong.</p>';
+  if (sel.length) h += `<details style="margin-top:8px"><summary class="small muted">Selesai (${sel.length})</summary>${sel.map((m) => `<div class="frozen"><span>✓ ${esc(m.name)}</span><span class="tiny muted">${m.doneAt ? fmtDate(m.doneAt, { year: true }) : ''}</span></div>`).join('')}</details>`;
+  return h + '</section>';
+}
+function rewardsHTML(level) {
+  const fin = financeInfo();
+  const tokens = Math.max(0, level - 1 - state.claims.length);
+  let h = `<section class="card" id="rewards"><div class="row between"><h2>Hadiah</h2><span class="chip ${tokens ? 'good' : ''}">${tokens} token</span></div>
+    <p class="tiny muted">1 token tiap naik level. Hadiah berbiaya terkunci selama Dana Jembatan belum mencapai target${state.finance.bridgeTarget != null ? ' (' + rpS(state.finance.bridgeTarget) + ')' : ''}.</p>`;
+  if (!state.rewards.length) h += `<p class="small muted">Daftar hadiah kosong. Isi sendiri di Setelan → Hadiah.</p>`;
+  state.rewards.forEach((r) => {
+    const costLocked = r.cost > 0 && !fin.bridgeReached;
+    h += `<div class="rw"><div><div style="font-weight:620">${esc(r.name)}</div><div class="tiny muted">${r.cost > 0 ? rp(r.cost) : 'Gratis'}${costLocked ? ' · terkunci: Dana Jembatan' : ''}</div></div>
+      <button class="btn sm" data-act="claim" data-id="${r.id}" ${tokens > 0 && !costLocked ? '' : 'disabled'}>${costLocked ? ICON.lock : ''}Klaim</button></div>`;
+  });
+  if (state.claims.length) h += `<details style="margin-top:8px"><summary class="small muted">Riwayat klaim (${state.claims.length})</summary>${state.claims.slice().reverse().map((c) => `<div class="frozen"><span>${esc(c.name)}</span><span class="tiny muted">Lv ${c.level} · ${fmtDate(c.date, { year: true })}</span></div>`).join('')}</details>`;
+  return h + '</section>';
+}
+
+/* =========================================================
+   LAYAR 3 — BOSS & MILESTONE
+   ========================================================= */
+function renderBoss() {
+  const F = state.finance;
+  const fin = financeInfo();
+  const t = todayKey();
+  let h = `<header class="hdr"><h1>Boss & Milestone</h1><div class="small muted">Lag measure: hasil, bukan sumber XP harian.</div></header>`;
+  // Boss utang
+  h += `<section class="card" id="bossCard"><div class="row between"><h2>Boss: Utang</h2><span class="chip">target HP 0 · ${fmtMY(F.debtTargetDate)}</span></div>`;
+  if (fin.maxHP == null) {
+    h += `<p class="small muted">Sisa utang belum diisi.</p><button class="btn block" data-act="goto" data-tab="set" data-sec="fin">Isi sisa utang di Setelan</button>`;
+  } else {
+    const hpPct = fin.maxHP > 0 ? clamp((fin.curDebt || 0) / fin.maxHP, 0, 1) * 100 : 0;
+    h += `<div class="row between" style="margin:8px 0 6px"><span class="big">${rpS(fin.curDebt)}</span><span class="small muted">HP awal ${rpS(fin.maxHP)}</span></div>
+      <div class="hp" aria-label="HP boss"><i style="width:${hpPct}%"></i></div>
+      <div class="small" style="margin-top:8px">${fin.paidOff ? '<b class="good">Boss kalah. Utang lunas.</b>' : fin.lastDmg != null ? `Damage minggu terakhir: <b>${rpS(fin.lastDmg)}</b>` : 'Belum ada data damage (butuh ≥2 data mingguan).'}</div>`;
+    if (!fin.paidOff) {
+      h += `<div class="small" style="margin-top:4px">${fin.lunas ? `Proyeksi lunas: <b class="${fin.onTrack ? 'good' : 'bad'}">${fmtMonthYear(fin.lunas)}</b> (rata-rata ${rpS(fin.avg)}/minggu) — ${fin.onTrack ? 'sebelum target' : 'melewati target ' + Math.ceil(diffDays(fin.lunas, F.debtTargetDate) / 7) + ' minggu'}` : 'Proyeksi lunas: belum bisa dihitung (rata-rata pembayaran ≤ 0 atau data < 2 minggu).'}</div>
+        ${fin.needPerWeek ? `<div class="small muted" style="margin-top:4px">Agar lunas ${fmtMY(F.debtTargetDate)}: ${rpS(fin.needPerWeek)}/minggu.</div>` : ''}`;
+    }
+    if (fin.history.length) {
+      const maxD = Math.max(1, ...fin.history.map((x) => Math.abs(x.dmg)));
+      h += `<div class="subhead">Riwayat damage</div>${fin.history.slice(-6).map((x) => `<div class="dmg"><span>${fmtDate(x.w, { wd: false })}</span><span><i style="width:${(Math.max(0, x.dmg) / maxD) * 100}%"></i></span><span style="text-align:right">${rpS(x.dmg)}</span></div>`).join('')}`;
+    }
+  }
+  h += `<button class="btn block" data-act="finWeek">Perbarui angka minggu ini (2 angka)</button></section>`;
+  // Shield Dana Jembatan
+  h += `<section class="card" id="bridgeCard"><div class="row between"><h2>Shield: Dana Jembatan</h2><span class="chip">${fmtDate(F.bridgeTargetDate, { wd: false, year: true })}</span></div>`;
+  if (F.bridgeTarget == null) h += `<p class="small muted">Target belum diisi.</p><button class="btn block" data-act="goto" data-tab="set" data-sec="fin">Isi target di Setelan</button>`;
+  else {
+    const pct = clamp((fin.curBridge || 0) / F.bridgeTarget, 0, 1) * 100;
+    h += `<div class="row between" style="margin:8px 0 6px"><span class="big">${rpS(fin.curBridge || 0)}</span><span class="small muted">target ${rpS(F.bridgeTarget)}</span></div><div class="sh"><i style="width:${pct}%"></i></div>
+      <div class="small" style="margin-top:8px">${fin.bridgeReached ? '<b class="good">Shield penuh. Hadiah berbiaya terbuka.</b>' : `${nf(pct)}% · butuh ${rpS(fin.bNeed)}/minggu sampai ${fmtDate(F.bridgeTargetDate, { wd: false })}`}</div>`;
+  }
+  h += `</section>`;
+  // Milestone
+  const ML = milestoneList();
+  h += `<section class="card" id="milestones"><h2>Milestone</h2>${ML.list.map((m) => `<div class="ms ${m.done ? 'done' : ''}"><span class="msb">${m.done ? ICON.check : ''}</span><div style="flex:1;min-width:0"><div style="font-weight:620">${esc(m.label)}</div><div class="tiny muted">${m.done ? 'Tercapai ' + fmtDate(m.done, { wd: false, year: true }) : esc(m.prog)}</div></div>${m.manual === 'sr' ? `<button class="btn sm" data-act="srToggle">${m.done ? 'Batal' : 'Tandai'}</button>` : ''}${m.manual === 'ielts' ? '<button class="btn sm" data-act="ieltsAdd">+ Mock</button>' : ''}</div>`).join('')}</section>`;
+  // kalkulator
+  h += `<section class="card calc"><h2>Kalkulator</h2>
+    <div class="subhead">e1RM Epley = beban × (1 + rep/30)</div>
+    <div class="grid2"><label class="small muted">Beban (kg)<input data-input="calc" id="cKg" inputmode="decimal" value="${ML.lastKg != null ? ML.lastKg : 60}" placeholder="60"></label><label class="small muted">Rep<input data-input="calc" id="cRep" inputmode="numeric" value="${ML.lastReps != null ? ML.lastReps : 5}"></label></div>
+    <p class="small">e1RM: <output id="e1rmOut">–</output> <span class="tiny muted">${ML.bestE ? '· terbaik dari log ' + nfl(ML.bestE, 1) + ' kg' : ''}</span></p>
+    <div class="subhead">Prediksi 10K (Riegel) = waktu 5K × 2^1,06</div>
+    <label class="small muted">Waktu 5K (mm:ss)<input data-input="calc" id="c5k" value="${secStr(ML.best5 || state.targets.run5kBaselineSec)}"></label>
+    <p class="small">10K: <output id="riegelOut">–</output></p>
+    <p class="tiny muted">Bench 1 rep dihitung sebagai beban aktual (Epley melebih-lebihkan single).</p></section>`;
+  // countdown
+  h += `<section class="card"><div class="kv"><div class="kvi"><b>${Math.max(0, diffDays(state.targets.koasEnd, t))}</b><span>hari ke koas selesai (${fmtMY(state.targets.koasEnd)})</span></div><div class="kvi"><b>${Math.max(0, diffDays(state.targets.ukmppd, t))}</b><span>hari ke UKMPPD (${fmtMY(state.targets.ukmppd)})</span></div></div></section>`;
+  setTimeout(updateCalc, 0);
+  return h;
+}
+function updateCalc() {
+  const kg = num(($('#cKg') || {}).value), rep = parseInt(($('#cRep') || {}).value, 10);
+  const o1 = $('#e1rmOut');
+  if (o1) o1.textContent = kg > 0 && rep > 0 && rep <= 30 ? nfl(e1rm(kg, rep), 1) + ' kg' : '–';
+  const s5 = parseTime(($('#c5k') || {}).value);
+  const o2 = $('#riegelOut');
+  if (o2) o2.textContent = s5 ? secStr(riegel10k(s5)) + ' (pace ' + secStr(riegel10k(s5) / 10) + '/km)' : '–';
+}
+
+/* =========================================================
+   LAYAR 4 — WEEKLY RAID
+   ========================================================= */
+function tileHTML(label, value, sub, cls) {
+  return `<div class="tile ${cls || ''}"><div class="tl">${label}</div><div class="tv">${value}</div>${sub ? `<div class="ts">${sub}</div>` : ''}</div>`;
+}
+function delta(cur, prev, invert) {
+  if (cur == null || prev == null) return '';
+  const d = cur - prev;
+  if (!d) return 'tetap';
+  const good = invert ? d < 0 : d > 0;
+  return `<span class="${good ? 'good' : 'bad'}">${d > 0 ? '+' : '−'}${rpS(Math.abs(d)).replace('Rp ', 'Rp ')}</span>`;
+}
+function raidTiles(m) {
+  const s = S();
+  const tCls = m.tJam > s.tentirMax ? 'ko' : (m.tJam >= s.tentirMin ? 'ok' : '');
+  return `<div class="tiles" id="raidTiles">
+    ${tileHTML('Tidur malam non-jaga', m.avgSleep != null ? nfl(m.avgSleep, 2) + ' j' : '–', m.sleepN + ' malam', m.avgSleep == null ? '' : m.avgSleep >= 6 ? 'ok' : 'ko')}
+    ${tileHTML('Dana Jembatan', rpS(m.bridge), m.bridge == null ? 'belum diisi minggu ini' : delta(m.bridge, m.bridgePrev))}
+    ${tileHTML('Tentir', nfl(m.tJam, 1) + ' j', `${m.tOk}/${m.tSesi} sesi ≤21.00 · kapasitas ${s.tentirMin}–${s.tentirMax} j${m.tJam > s.tentirMax ? ' · <b class="bad">lewat kapasitas</b>' : ''}`, tCls)}
+    ${tileHTML('Lead dari konten', m.leads != null ? nf(m.leads) : '–', (m.leads == null ? 'belum diisi · ' : '') + m.konten + ' post minggu ini')}
+    ${tileHTML('Jam karier', nfl(m.karier, 2) + ' j', 'target ≥' + nfl(s.careerMinHours) + ' j', m.karier >= s.careerMinHours ? 'ok' : 'ko')}
+    ${tileHTML('Sesi latihan', m.latDone + '/' + m.latPlan, 'selesai vs rencana', m.latPlan && m.latDone >= m.latPlan ? 'ok' : '')}
+    ${tileHTML('Proyek aktif', m.proyek + '/' + s.wipLimit, 'Main Quest (WIP)')}
+    ${tileHTML('Sisa utang', rpS(m.debt), m.debt == null ? 'belum diisi minggu ini' : delta(m.debt, m.debtPrev, true))}
+  </div>`;
+}
+function renderRaid() {
+  const R = raidWindow();
+  const ws = R.ws;
+  const w = state.weekly[ws] || newWeek();
+  const done = !!w.raidDone;
+  const m = done && w.snapshot ? w.snapshot : weekMetrics(ws);
+  const s = S();
+  if (R.open && !done && !ui.raidOpenedAt) ui.raidOpenedAt = Date.now();
+  let h = `<header class="hdr"><div class="row between"><h1>Weekly Raid</h1>${R.open && !done ? '<span class="timer" id="raidTimer"></span>' : ''}</div><div class="small muted">Minggu ${weekRange(ws)}${R.catchup ? ' · susulan (Senin)' : ''} · ≤30 menit</div></header>`;
+  if (!R.open && !done) h += `<div class="notice info"><span>Raid dibuka hari Minggu (susulan Senin). Pratinjau minggu berjalan:</span></div>`;
+  if (done) h += `<div class="notice info" id="raidDoneNote"><span><b>Raid selesai</b> · +${w.raidXP != null ? w.raidXP : s.raidXP} XP</span></div>`;
+  h += `<section class="card"><div class="lbl" style="margin-bottom:8px">Dashboard 8 angka</div>${raidTiles(m)}<p class="tiny muted" style="margin-top:8px">${m.rec} hari tercatat · ${m.lolos} lolos · ${m.ot} overtime · ${m.xp} XP harian</p></section>`;
+  if (R.open && !done) {
+    const fmt = (v) => (v != null ? Number(v).toLocaleString('id-ID') : '');
+    h += `<section class="card form"><div class="lbl">Angka mingguan (data, 0 XP)</div>
+      <label>Saldo Dana Jembatan (Rp)<input inputmode="numeric" data-change="raidNum" data-ws="${ws}" data-k="bridge" value="${fmt(w.bridge)}" placeholder="contoh 3.000.000"></label>
+      <label>Sisa utang (Rp)<input inputmode="numeric" data-change="raidNum" data-ws="${ws}" data-k="debt" value="${fmt(w.debt)}" placeholder="contoh 23.500.000"></label>
+      <label>Lead dari konten (jumlah)<input inputmode="numeric" data-change="raidNum" data-ws="${ws}" data-k="leads" value="${w.leads != null ? w.leads : ''}" placeholder="0"></label></section>`;
+    h += `<section class="card form"><div class="lbl">3 prioritas minggu depan</div>${[0, 1, 2].map((i) => `<label>Prioritas ${i + 1}<input data-input="prio" data-ws="${ws}" data-i="${i}" maxlength="90" value="${esc((w.priorities || [])[i] || '')}"></label>`).join('')}<div id="prioPhi">${phiWarn((w.priorities || []).some((x) => PHI_RE.test(x || '')))}</div></section>`;
+    h += `<section class="card"><div class="row between"><div><div class="lbl">Backup</div><div class="small muted">Terakhir: ${lastExportText()}</div></div><button class="btn sm" data-act="export">Export JSON</button></div></section>`;
+    h += `<button class="btn primary block" data-act="raidDone" id="raidDoneBtn">Selesaikan Raid +${s.raidXP} XP</button><div class="err" id="raidErr"></div>`;
+  } else if (done) {
+    h += `<section class="card"><div class="lbl">Prioritas minggu depan</div><ol class="small" style="margin:8px 0 0 18px">${(w.priorities || []).filter(Boolean).map((x) => `<li>${esc(x)}</li>`).join('')}</ol></section>`;
+    h += `<section class="card"><div class="row between"><div><div class="lbl">Pengingat backup</div><div class="small muted">Terakhir: ${lastExportText()}</div></div><button class="btn sm" data-act="export">Export JSON</button></div></section>`;
+  }
+  const past = Object.keys(state.weekly).filter((k) => state.weekly[k].raidDone && k !== ws).sort().reverse().slice(0, 6);
+  if (past.length) h += `<section class="card"><div class="lbl">Raid sebelumnya</div>${past.map((k) => { const x = state.weekly[k]; return `<div class="frozen"><span>${weekRange(k)}</span><span class="tiny muted" style="text-align:right">${(x.priorities || []).filter(Boolean).map(esc).join(' · ')}</span></div>`; }).join('')}</section>`;
+  return h;
+}
+
+/* =========================================================
+   LAYAR 5 — RIWAYAT
+   ========================================================= */
+function renderHistory() {
+  const t = todayKey();
+  if (!ui.histMonth) ui.histMonth = t.slice(0, 7);
+  const month = ui.histMonth;
+  const [y, mo] = month.split('-').map(Number);
+  const first = month + '-01';
+  const dim = new Date(Date.UTC(y, mo, 0)).getUTCDate();
+  const lead = (weekday(first) + 6) % 7;
+  let h = `<header class="hdr"><h1>Riwayat</h1></header>`;
+  h += `<section class="card"><div class="row between"><button class="nav" data-act="histPrev" aria-label="Bulan sebelumnya">‹</button><h2>${MON_LONG[mo - 1]} ${y}</h2><button class="nav" data-act="histNext" ${month >= t.slice(0, 7) ? 'disabled' : ''} aria-label="Bulan berikutnya">›</button></div>`;
+  h += `<div class="cal" id="cal">${['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'].map((d) => `<div class="dh">${d}</div>`).join('')}`;
+  for (let i = 0; i < lead; i++) h += '<div></div>';
+  let rec = 0, lolos = 0, xp = 0;
+  for (let d = 1; d <= dim; d++) {
+    const k = `${month}-${pad(d)}`;
+    const r = dayResult(k);
+    let cls = 'c';
+    if (k > t) cls += ' future';
+    else if (r.empty) cls += ' empty';
+    else { cls += ` t-${r.effType} ${r.pass ? 'pass' : 'fail'}`; rec++; if (r.pass) lolos++; xp += r.xp; }
+    if (k === t) cls += ' today';
+    h += `<button class="${cls}" data-act="dayDetail" data-key="${k}" ${k > t ? 'disabled' : ''} aria-label="${fmtDate(k)}${r.empty ? '' : ', ' + TYPE_INFO[r.effType].label + (r.pass ? ', lolos' : ', tidak lolos')}"><span>${d}</span>${r.shield ? `<i class="shi">${ICON.shield}</i>` : ''}</button>`;
+  }
+  h += `</div><div class="legend">${TYPES.map((tp) => `<span><i class="sw" style="background:var(--${tp})"></i>${TYPE_INFO[tp].label}</span>`).join('')}<span><i class="sw" style="border:1.5px solid var(--muted)"></i>garis = tidak lolos</span><span>${ICON.shield.replace('<svg', '<svg width="12" height="12"')} shield</span></div>
+    <p class="small muted" style="margin-top:8px">Bulan ini: ${rec} hari tercatat · ${lolos} lolos · ${nf(xp)} XP</p></section>`;
+  // log latihan
+  h += woSectionHTML();
+  // mutaba'ah
+  if (state.mutabaah.length) {
+    h += `<section class="card"><div class="row between"><div class="lbl">Mutaba'ah · 30 hari</div><span class="tiny muted">catatan konsistensi, bukan skor</span></div>`;
+    state.mutabaah.forEach((m) => {
+      let c = 0;
+      const dots = [];
+      for (let i = 29; i >= 0; i--) { const r = state.days[addDays(t, -i)]; const on = !!(r && r.mut && r.mut[m.id]); if (on) c++; if (i < 14) dots.push(on); }
+      h += `<div class="rw"><div><div>${esc(m.name)}</div><div class="dots">${dots.map((o) => `<i class="${o ? 'on' : ''}"></i>`).join('')}</div></div><span class="small muted">${c}/30</span></div>`;
+    });
+    h += '</section>';
+  }
+  // chapter
+  const chs = state.chapters.slice().sort((a, b) => (a.start < b.start ? 1 : -1)).filter((c) => c.start <= t);
+  if (chs.length) h += `<section class="card"><div class="lbl">Chapter</div>${chs.map((c) => `<details class="chs" style="border-top:1px solid var(--line);padding:8px 0"><summary style="cursor:pointer"><b>${esc(c.name)}</b> <span class="tiny muted">${fmtDate(c.start, { wd: false })} – ${fmtDate(c.end, { wd: false, year: true })} · ${WEIGHTS[c.weight]}${c.end < t ? ' · selesai' : ' · berjalan'}</span></summary>${chapterSummaryHTML(c, true)}</details>`).join('')}</section>`;
+  return h;
+}
+function chapterSummaryHTML(c, compact) {
+  const o = chapterSummary(c);
+  return `${compact ? '' : `<h2 style="margin:6px 0 2px">${esc(c.name)}</h2><div class="small muted">${fmtDate(c.start, { wd: false })} – ${fmtDate(c.end, { wd: false, year: true })} · ${WEIGHTS[c.weight]}</div>`}
+    <div class="kv" style="margin-top:10px"><div class="kvi"><b>${o.lolos}/${o.days}</b><span>hari lolos (dari ${o.span} hari)</span></div><div class="kvi"><b>${nf(o.xp)}</b><span>XP harian</span></div>
+    <div class="kvi"><b>${o.avgSleep != null ? nfl(o.avgSleep, 2) + ' j' : '–'}</b><span>rata-rata tidur non-jaga</span></div><div class="kvi"><b>${o.best}</b><span>streak terbaik</span></div>
+    <div class="kvi"><b>${o.jaga}</b><span>hari JAGA</span></div><div class="kvi"><b>${o.ot}</b><span>malam overtime</span></div>
+    <div class="kvi"><b>${o.latD}/${o.latP}</b><span>sesi latihan</span></div><div class="kvi"><b>${o.mutPct != null ? nf(o.mutPct * 100) + '%' : '–'}</b><span>mutaba'ah (catatan, tanpa skor)</span></div></div>`;
+}
+function woSectionHTML() {
+  const k = ui.woKind;
+  const t = todayKey();
+  let h = `<section class="card" id="woCard"><div class="row between"><h2>Log latihan</h2><div class="seg"><button class="${k === 'bench' ? 'on' : ''}" data-act="woKind" data-kind="bench">Bench</button><button class="${k === 'run' ? 'on' : ''}" data-act="woKind" data-kind="run">Lari</button></div></div>
+    <form data-form="wo" class="form" data-kind="${k}">
+    <div class="grid2"><label>Tanggal<input type="date" name="date" value="${t}" max="${t}"></label>${k === 'bench' ? `<label>Beban (kg)<input name="kg" inputmode="decimal" required placeholder="60"></label></div><div class="grid2"><label>Rep<input name="reps" inputmode="numeric" required placeholder="5"></label><label>Set<input name="sets" inputmode="numeric" placeholder="3"></label></div>` : `<label>Jarak (km)<input name="km" inputmode="decimal" required placeholder="5"></label></div><div class="grid2"><label>Waktu (mm:ss / h:mm:ss)<input name="time" required placeholder="30:40"></label><label>Jenis<select name="runType"><option value="easy">Easy</option><option value="kualitas">Kualitas</option><option value="tes">Tes waktu</option></select></label></div>`}
+    <label>Catatan<input name="note" maxlength="120" placeholder="opsional" data-input="phiInline"></label><div class="phiBox">${phiWarn(false)}</div>
+    <div class="err" id="woErr"></div><button class="btn primary block" type="submit">Simpan log (data, 0 XP)</button></form>`;
+  const list = state.workouts.slice().sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)).slice(0, 25);
+  h += `<div class="subhead">Terakhir</div>`;
+  h += list.length ? list.map((w) => `<div class="wo"><div><b>${w.kind === 'bench' ? `Bench ${nfl(w.kg, 1)} kg × ${w.reps}${w.sets ? ' × ' + w.sets + ' set' : ''}` : `Lari ${nfl(w.km, 2)} km · ${secStr(w.sec)}`}</b><div class="tiny muted">${fmtDate(w.date, { year: true })} · ${w.kind === 'bench' ? 'e1RM ' + nfl(e1rm(w.kg, w.reps), 1) + ' kg' : 'pace ' + secStr(w.sec / w.km) + '/km · ' + esc(w.runType)}${w.note ? ' · ' + esc(w.note) : ''}</div></div><button class="ico" data-act="woDel" data-id="${w.id}" aria-label="Hapus log">${ICON.trash}</button></div>`).join('') : '<p class="small muted">Belum ada log.</p>';
+  return h + '</section>';
+}
+function dayDetailHTML(k) {
+  const r = state.days[k];
+  const res = dayResult(k);
+  const t = todayKey();
+  let h = `<div class="row between"><div><div class="eyebrow">${relDay(k)}</div><h2>${fmtDate(k, { year: true })}</h2></div><button class="x" data-act="closeSheet" aria-label="Tutup">✕</button></div>`;
+  if (res.empty) h += `<p class="small muted">Tidak ada catatan untuk hari ini.</p>`;
+  else {
+    const ch = state.chapters.find((c) => c.id === res.chapterId);
+    h += `<div class="row wrap" style="margin:8px 0"><span class="chip tc-${res.effType}" style="background:var(--card2)">${TYPE_INFO[res.effType].label.toUpperCase()}</span><span class="chip ${res.pass ? 'good' : 'bad'}">${res.pass ? 'LOLOS' : 'TIDAK LOLOS'} ${res.doneCount}/${res.total}</span><span class="chip">${res.xp} XP</span>${res.frozen ? '<span class="chip">FINAL</span>' : ''}${ch ? `<span class="chip">${esc(ch.name)}</span>` : ''}</div>`;
+    h += `<p class="small muted">${res.effType === 'PASCA' ? `${S().pascaXP} × ${res.doneCount}/${res.total}` : `dasar ${res.capped} ${multStr(res.mult)}`}${res.penalty ? ` − ${res.penalty} overtime${res.autoLate ? ' (jam kerja kosong → dihitung lewat)' : ''}` : ''}${r && r.sleep != null ? ` · tidur ${nfl(r.sleep, 2)} j` : ''}</p>`;
+    h += `<div style="margin-top:6px">${res.items.map((i) => `<div class="det-item"><span class="ic ${i.d ? 'good' : 'dim'}">${i.d ? '✓' : '·'}</span><span class="${i.d ? '' : 'muted'}">${esc(i.n)}</span></div>`).join('')}${(res.weekly || []).filter((w) => w.d).map((w) => `<div class="det-item"><span class="ic good">✓</span><span>${esc(w.n)} <span class="tiny muted">(mingguan)</span></span></div>`).join('')}${(res.locked || []).map((l) => `<div class="det-item"><span class="ic dim">×</span><span class="muted">${esc(l.n)} — terkunci Sleep Debt</span></div>`).join('')}</div>`;
+    if (r && r.tentir && r.tentir.jam > 0) h += `<p class="small muted">Tentir ${nfl(r.tentir.jam, 1)} j · ${r.tentir.sesi} sesi · ${r.tentir.ok === true ? 'selesai ≤21.00' : r.tentir.ok === false ? 'lewat 21.00' : 'belum diisi'}</p>`;
+    if (r && r.mut && state.mutabaah.some((m) => r.mut[m.id])) h += `<p class="small muted">Mutaba'ah: ${state.mutabaah.filter((m) => r.mut[m.id]).map((m) => esc(m.name)).join(', ')}</p>`;
+    if (r && r.note) h += `<p class="small" style="background:var(--bg2);padding:8px 10px;border-radius:10px">${esc(r.note)}</p>`;
+  }
+  if (isEditable(k)) h += `<button class="btn primary block" data-act="gotoDay" data-key="${k}">Buka & edit di Hari Ini</button>`;
+  else h += `<p class="tiny muted" style="margin-top:8px">Terkunci: lewat jendela isi mundur (${S().backfillDays} hari). Hasil hari ini sudah final.</p>`;
+  const diff = diffDays(t, k);
+  if (r && r.shield) h += `<button class="btn block" data-act="toggleShield" data-key="${k}">Lepas shield</button>`;
+  else if (diff >= 0 && diff <= 7 && !res.pass && !(res.effType === 'JAGA' || res.effType === 'PASCA')) {
+    const left = S().shieldsPerWeek - countInWeek(weekStart(k), 'shield');
+    h += `<button class="btn block" data-act="toggleShield" data-key="${k}" ${left > 0 ? '' : 'disabled'}>${ICON.shield} Pakai shield (sakit/darurat) · sisa ${Math.max(0, left)}</button>`;
+  }
+  return h;
+}
+
+/* =========================================================
+   LAYAR 6 — SETELAN
+   ========================================================= */
+const MECH_FIELDS = [
+  ['dailyCap', 'Batas XP dasar harian', 40, 150, 1],
+  ['sleepQuestMin', 'Quest tidur: minimal jam', 5, 8, 0.25],
+  ['sleepDebtBelow', 'Sleep Debt bila tidur kurang dari (jam)', 3, 6, 0.25],
+  ['overtimePenalty', 'Debuff Overtime (XP)', 0, 50, 1],
+  ['overtimeTokensPerWeek', 'Token pengecualian overtime / minggu', 0, 2, 1],
+  ['passPct', 'Hari lolos bila quest selesai ≥ (%)', 40, 90, 5],
+  ['shieldsPerWeek', 'Shield / minggu', 0, 2, 1],
+  ['jagaMult', 'Pengali hari JAGA', 0.5, 1.2, 0.1],
+  ['pascaXP', 'XP PASCA-JAGA penuh', 0, 150, 5],
+  ['raidXP', 'XP Weekly Raid', 0, 100, 5],
+  ['levelBase', 'Level: XP dasar (150)', 50, 500, 10],
+  ['levelStep', 'Level: tambahan per level (50)', 0, 200, 5],
+  ['statDivisor', 'Level stat: pembagi', 1, 6, 1],
+  ['wipLimit', 'Batas Main Quest aktif (WIP)', 1, 3, 1],
+  ['backfillDays', 'Jendela isi mundur (hari)', 0, 3, 1],
+  ['heavyTargetPct', 'Target harian chapter berat (% dari batas)', 30, 100, 5],
+  ['tentirMin', 'Kapasitas tentir min (jam/minggu)', 0, 40, 1],
+  ['tentirMax', 'Kapasitas tentir maks (jam/minggu)', 0, 40, 1],
+  ['careerMinHours', 'Target jam karier / minggu', 0, 20, 0.5],
+];
+function renderSettings() {
+  let h = `<header class="hdr"><h1>Setelan</h1><div class="small muted">Mengedit = 0 XP. Hari yang sudah terkunci tidak ikut berubah.</div></header>`;
+  const sec = (id, title, body) => `<details class="set" data-sec="${id}" ${ui.openSec === id ? 'open' : ''}><summary>${title}</summary><div class="body">${body}</div></details>`;
+  h += sec('quest', 'Quest', questSettingsHTML());
+  h += sec('mech', 'Angka mekanika', mechFormHTML());
+  h += sec('chapter', 'Chapter (stase)', chapterSettingsHTML());
+  h += sec('fin', 'Keuangan & target', finFormHTML());
+  h += sec('reward', 'Hadiah', rewardSettingsHTML());
+  h += sec('mut', "Mutaba'ah", mutSettingsHTML());
+  h += sec('data', 'Data: export / import', dataSettingsHTML());
+  h += sec('rules', 'Ringkasan aturan', rulesHTML());
+  return h;
+}
+function questSettingsHTML() {
+  const groups = [
+    ['Harian · NORMAL / LIBUR', (q) => q.freq === 'daily' && (q.types.includes('NORMAL') || q.types.includes('LIBUR'))],
+    ['Mingguan', (q) => q.freq === 'weekly'],
+    ['JAGA', (q) => q.freq === 'daily' && q.types.includes('JAGA') && !isND(q.types[0])],
+    ['PASCA-JAGA (100 XP dibagi rata)', (q) => q.freq === 'daily' && q.types.includes('PASCA') && !q.types.some(isND)],
+    ['Pengganti Sleep Debt', (q) => q.tag === 'sdwalk'],
+  ];
+  const used = new Set();
+  let h = `<p class="tiny muted">★ = inti (tetap muncul di chapter berat). Kunci = ikut terkunci saat Sleep Debt.</p>`;
+  groups.forEach(([title, fn]) => {
+    const qs = state.quests.filter((q) => !used.has(q.id) && fn(q));
+    qs.forEach((q) => used.add(q.id));
+    h += `<div class="subhead">${title}</div>`;
+    h += qs.map((q) => {
+      const idx = state.quests.indexOf(q);
+      const days = q.freq === 'weekly' ? '1×/minggu' : q.days.length ? [1, 2, 3, 4, 5, 6, 0].filter((d) => q.days.includes(d)).map((d) => DOW[d]).join(' ') : 'setiap hari';
+      return `<div class="qs-row ${q.active ? '' : 'off'}"><div class="nm"><b>${q.core ? '★ ' : ''}${esc(q.name)}</b><span class="qm"><span class="chip s-${q.stat}">${q.stat}</span>${q.tag === 'tentir' ? 'kondisional' : q.size + ' · ' + sizeXP(q.size) + ' XP'} · ${days}${q.tag === 'heavy' || q.tag === 'interval' ? ' · kunci' : ''}${q.active ? '' : ' · nonaktif'}</span></div>
+        <button class="ico" data-act="qMove" data-id="${q.id}" data-d="-1" ${idx === 0 ? 'disabled' : ''} aria-label="Naik">${ICON.up}</button><button class="ico" data-act="qMove" data-id="${q.id}" data-d="1" ${idx === state.quests.length - 1 ? 'disabled' : ''} aria-label="Turun">${ICON.down}</button><button class="ico" data-act="qEdit" data-id="${q.id}" aria-label="Edit">${ICON.edit}</button></div>`;
+    }).join('') || '<p class="small muted">Kosong.</p>';
+  });
+  h += `<button class="btn block" data-act="qNew">+ Quest baru</button>`;
+  return h;
+}
+function questFormHTML(q, isNew) {
+  const sys = !!q.sys;
+  const opt = (v, cur, label) => `<option value="${v}" ${v === cur ? 'selected' : ''}>${label}</option>`;
+  return `<form data-form="quest" data-id="${isNew ? '' : esc(q.id)}" class="form">
+    <div class="row between"><h2>${isNew ? 'Quest baru' : 'Edit quest'}</h2><button type="button" class="x" data-act="closeSheet" aria-label="Tutup">✕</button></div>
+    <label>Nama<input name="name" required maxlength="60" value="${esc(q.name)}"></label>
+    <div class="grid2"><label>Stat<select name="stat">${STATS.map((s) => opt(s, q.stat, s + ' · ' + STAT_NAME[s])).join('')}</select></label>
+    <label>Ukuran<select name="size">${SIZES.map((z) => opt(z, q.size, z + ' (' + sizeXP(z) + ' XP)')).join('')}</select></label></div>
+    <fieldset ${sys ? 'disabled' : ''}><legend>Tipe hari${sys ? ' (quest sistem)' : ''}</legend><div class="grid2">${TYPES.map((tp) => `<label class="ck"><input type="checkbox" name="types" value="${tp}" ${q.types.includes(tp) ? 'checked' : ''}> ${TYPE_INFO[tp].label}</label>`).join('')}</div></fieldset>
+    <fieldset><legend>Hari dalam minggu (kosong = setiap hari)</legend><div class="dows">${[1, 2, 3, 4, 5, 6, 0].map((d) => `<label class="dw"><input type="checkbox" name="days" value="${d}" ${q.days.includes(d) ? 'checked' : ''}><span>${DOW[d]}</span></label>`).join('')}</div></fieldset>
+    <div class="grid2"><label>Frekuensi<select name="freq" ${sys ? 'disabled' : ''}>${opt('daily', q.freq, 'Harian')}${opt('weekly', q.freq, 'Mingguan (1×)')}</select></label>
+    <label>Kunci saat Sleep Debt<select name="tag" ${sys ? 'disabled' : ''}>${sys ? opt(q.tag, q.tag, 'sistem') : opt('', q.tag, 'Tidak') + opt('heavy', q.tag, 'Ya: beban') + opt('interval', q.tag, 'Ya: interval')}</select></label></div>
+    <div class="grid2"><label>Metrik raid<select name="metric">${opt('', q.metric, '—')}${opt('latihan', q.metric, 'Sesi latihan')}${opt('karier', q.metric, 'Jam karier')}${opt('konten', q.metric, 'Konten')}</select></label>
+    <label>Jam (untuk metrik)<input name="hours" type="number" step="0.25" min="0" max="8" inputmode="decimal" value="${q.hours || 0}"></label></div>
+    <label class="ck"><input type="checkbox" name="core" ${q.core ? 'checked' : ''}> Inti ★ — tetap muncul di chapter berat</label>
+    <label class="ck"><input type="checkbox" name="active" ${q.active ? 'checked' : ''}> Aktif</label>
+    <div class="err" id="qErr"></div>
+    <button class="btn primary block" type="submit">Simpan (0 XP)</button>
+    ${!isNew && !sys ? `<button type="button" class="btn danger block" data-act="qDel" data-id="${esc(q.id)}">Hapus quest</button>` : ''}
+  </form>`;
+}
+function mechFormHTML() {
+  const s = S();
+  const tiers = s.sleepTiers.slice().sort((a, b) => b.min - a.min);
+  let h = `<form data-form="mech" class="form"><div class="subhead">XP per quest</div><div class="grid3">${SIZES.map((z) => `<label>${z}<input name="xp_${z}" type="number" inputmode="numeric" min="1" max="50" step="1" value="${s.xpSize[z]}"></label>`).join('')}</div>
+    <div class="subhead">Pengali tidur (malam sebelumnya, NORMAL/LIBUR)</div>`;
+  tiers.forEach((tr, i) => {
+    h += `<div class="tier"><span>${i < 3 ? '≥' : '&lt;'}</span>${i < 3 ? `<input name="tmin_${i}" type="number" step="0.25" min="0" max="12" inputmode="decimal" value="${tr.min}" aria-label="Ambang jam tier ${i + 1}">` : `<span class="muted">ambang tier 3</span>`}<span class="muted">jam ×</span><input name="tmul_${i}" type="number" step="0.05" min="0.3" max="1.5" inputmode="decimal" value="${tr.mult}" aria-label="Pengali tier ${i + 1}"></div>`;
+  });
+  h += `<div class="subhead">Lainnya</div>`;
+  MECH_FIELDS.forEach(([k, label, min, max, step]) => { h += `<label>${label} <span class="dim">(${nfl(min)}–${nfl(max)})</span><input name="${k}" type="number" min="${min}" max="${max}" step="${step}" inputmode="decimal" value="${s[k]}"></label>`; });
+  h += `<label>Ukuran blok Main Quest<select name="mqSize">${SIZES.map((z) => `<option value="${z}" ${s.mqSize === z ? 'selected' : ''}>${z}</option>`).join('')}</select></label>
+    <label class="ck"><input type="checkbox" name="worstCaseEmpty" ${s.worstCaseEmpty ? 'checked' : ''}> Data kosong = skenario terburuk (tidur kosong → pengali terendah; jam kerja kosong saat hari terkunci → lewat 21.00)</label>
+    <div class="err" id="mechErr"></div><button class="btn primary block" type="submit">Simpan mekanika (0 XP)</button>
+    <button type="button" class="btn block" data-act="mechReset">Kembalikan default</button>
+    <p class="tiny muted" style="margin-top:8px">Pagar pengaman: pengali wajib naik seiring jam tidur, tier terpendek ≤ ×1,0, XP PASCA ≤ batas harian, WIP ≤ 3.</p></form>`;
+  return h;
+}
+function chapterSettingsHTML() {
+  const t = todayKey();
+  let h = state.chapters.length ? state.chapters.slice().sort((a, b) => (a.start < b.start ? 1 : -1)).map((c) => `<div class="qs-row"><div class="nm"><b>${esc(c.name)}</b><span class="qm">${fmtDate(c.start, { wd: false })} – ${fmtDate(c.end, { wd: false, year: true })} · ${WEIGHTS[c.weight]}${c.start <= t && t <= c.end ? ' · <b class="good">aktif</b>' : ''}</span></div><button class="ico" data-act="chEdit" data-id="${c.id}" aria-label="Edit">${ICON.edit}</button><button class="ico" data-act="chDel" data-id="${c.id}" aria-label="Hapus">${ICON.trash}</button></div>`).join('') : '<p class="small muted">Belum ada chapter.</p>';
+  h += `<button class="btn block" data-act="chNew">+ Chapter baru</button><p class="tiny muted" style="margin-top:8px">Chapter berat: hanya quest inti ★ + maksimal 1 blok Main Quest, target harian ${S().heavyTargetPct}% dari batas.</p>`;
+  return h;
+}
+function chapterFormHTML(c, isNew) {
+  const t = todayKey();
+  c = c || { name: '', start: t, end: addDays(t, 41), weight: 'sedang' };
+  return `<form data-form="chapter" data-id="${isNew ? '' : esc(c.id)}" class="form"><div class="row between"><h2>${isNew ? 'Chapter baru' : 'Edit chapter'}</h2><button type="button" class="x" data-act="closeSheet" aria-label="Tutup">✕</button></div>
+    <label>Nama stase<input name="name" required maxlength="50" value="${esc(c.name)}" placeholder="contoh: IPD Junior"></label>
+    <div class="grid2"><label>Mulai<input type="date" name="start" required value="${c.start}"></label><label>Selesai<input type="date" name="end" required value="${c.end}"></label></div>
+    <label>Bobot<select name="weight">${Object.keys(WEIGHTS).map((w) => `<option value="${w}" ${c.weight === w ? 'selected' : ''}>${WEIGHTS[w]}</option>`).join('')}</select></label>
+    <div class="err" id="chErr"></div><button class="btn primary block" type="submit">Simpan (0 XP)</button></form>`;
+}
+function finFormHTML() {
+  const F = state.finance, T = state.targets;
+  const fmt = (v) => (v != null ? Number(v).toLocaleString('id-ID') : '');
+  return `<form data-form="fin" class="form" id="finForm">
+    <label>Sisa utang saat mulai (HP boss, Rp)<input name="debtInitial" inputmode="numeric" value="${fmt(F.debtInitial)}" placeholder="isi sisa utang"></label>
+    <label>Target utang lunas<input type="date" name="debtTargetDate" value="${F.debtTargetDate}"></label>
+    <label>Target Dana Jembatan (Rp)<input name="bridgeTarget" inputmode="numeric" value="${fmt(F.bridgeTarget)}" placeholder="isi target"></label>
+    <label>Tenggat Dana Jembatan<input type="date" name="bridgeTargetDate" value="${F.bridgeTargetDate}"></label>
+    <div class="grid2"><label>Target mock IELTS (band)<input name="ieltsBand" inputmode="decimal" value="${T.ieltsBand != null ? T.ieltsBand : ''}" placeholder="contoh 7,0"></label><label>Target bench (kg)<input name="benchKg" inputmode="decimal" value="${T.benchKg}"></label></div>
+    <div class="grid2"><label>Baseline 5K (mm:ss)<input name="run5k" value="${secStr(T.run5kBaselineSec)}"></label><label>Koas selesai<input type="date" name="koasEnd" value="${T.koasEnd}"></label></div>
+    <label>UKMPPD<input type="date" name="ukmppd" value="${T.ukmppd}"></label>
+    <div class="err" id="finErr"></div><button class="btn primary block" type="submit">Simpan (0 XP)</button>
+    <p class="tiny muted" style="margin-top:8px">Angka mingguan (sisa utang & saldo) diisi di Weekly Raid atau Boss → "Perbarui angka minggu ini".</p></form>`;
+}
+function rewardSettingsHTML() {
+  let h = state.rewards.length ? state.rewards.map((r) => `<div class="qs-row"><div class="nm"><b>${esc(r.name)}</b><span class="qm">${r.cost > 0 ? rp(r.cost) : 'Gratis'}</span></div><button class="ico" data-act="rwDel" data-id="${r.id}" aria-label="Hapus">${ICON.trash}</button></div>`).join('') : '<p class="small muted">Belum ada hadiah.</p>';
+  h += `<form data-form="reward" class="form"><div class="grid2"><label>Nama hadiah<input name="name" required maxlength="60"></label><label>Biaya (Rp, 0 = gratis)<input name="cost" inputmode="numeric" value="0"></label></div><button class="btn block" type="submit">+ Tambah hadiah</button></form>`;
+  return h;
+}
+function mutSettingsHTML() {
+  let h = `<p class="tiny muted">Checklist pribadi. Tidak pernah dikonversi jadi XP, level, streak, atau skor apa pun.</p>`;
+  h += state.mutabaah.map((m) => `<div class="qs-row"><div class="nm"><input data-change="mutName" data-id="${m.id}" value="${esc(m.name)}" maxlength="40" aria-label="Nama item"></div><button class="ico" data-act="mutDel" data-id="${m.id}" aria-label="Hapus">${ICON.trash}</button></div>`).join('');
+  h += `<form data-form="mutAdd" class="form"><div class="row" style="margin-top:10px"><input name="name" required maxlength="40" placeholder="Item baru"><button class="btn" type="submit">Tambah</button></div></form>`;
+  return h;
+}
+function dataSettingsHTML() {
+  return `<p class="small muted">Penyimpanan: ${memoryMode ? '<b class="bad">memori saja (tidak tersimpan)</b>' : 'localStorage perangkat ini'} · schemaVersion ${state.schemaVersion} · backup terakhir: ${lastExportText()}</p>
+    <div class="grid2"><button class="btn" data-act="export" id="exportBtn">Export JSON</button><button class="btn" data-act="copyJson">Salin JSON</button></div>
+    <label class="btn block" style="cursor:pointer">Import file JSON<input type="file" accept="application/json,.json" data-change="importFile" id="importFile" style="display:none"></label>
+    <details style="margin-top:10px"><summary class="small muted">Import dengan tempel teks</summary><textarea id="importText" placeholder="Tempel isi file backup di sini" style="margin-top:8px"></textarea><button class="btn block" data-act="importPaste">Import teks</button></details>
+    <div class="subhead">Bahaya</div>
+    ${state.sampleLoaded ? '<button class="btn block" data-act="clearSample">Hapus data contoh</button>' : ''}
+    <button class="btn danger block" data-act="resetAll">Reset semua data</button>`;
+}
+function rulesHTML() {
+  const s = S();
+  return `<div class="small" style="line-height:1.6">
+    <p><b>NORMAL/LIBUR:</b> XP = min(Σ quest, ${s.dailyCap}) × pengali tidur − ${s.overtimePenalty} bila overtime tanpa token.</p>
+    <p><b>Pengali tidur:</b> ${tiersText()}. Kosong = terendah.</p>
+    <p><b>JAGA:</b> min(Σ, ${s.dailyCap}) × ${nfl(s.jagaMult, 1)} tetap. <b>PASCA-JAGA:</b> ${s.pascaXP} × selesai/total; hanya sah setelah JAGA.</p>
+    <p><b>Lolos:</b> ≥${s.passPct}% quest tipe hari itu. Streak = hari lolos berturut-turut; JAGA/PASCA & shield tidak memutus.</p>
+    <p><b>Sleep Debt</b> (&lt;${nfl(s.sleepDebtBelow)} j): beban berat & interval terkunci → jalan/mobilitas 20 menit.</p>
+    <p><b>Level:</b> L→L+1 butuh ${s.levelBase}+${s.levelStep}·L XP; stat ÷${s.statDivisor}. Raid +${s.raidXP} (1×/minggu).</p>
+    <p><b>0 XP:</b> mengedit quest, setelan, log data, melihat statistik, menyelesaikan Main Quest, mutaba'ah.</p>
+    <p><b>Hari terkunci</b> setelah ${s.backfillDays} hari: hasilnya dibekukan (final).</p></div>`;
+}
+
+/* =========================================================
+   HANDLER
+   ========================================================= */
+const ACT = {};
+const CHG = {};
+const INP = {};
+const FORM = {};
+
+ACT.tab = (el) => {
+  ui.tab = el.dataset.tab;
+  if (ui.tab !== 'raid') ui.raidOpenedAt = null;
+  if (ui.tab === 'today') ui.viewKey = todayKey();
+  render();
+  window.scrollTo(0, 0);
+};
+ACT.goto = (el) => { ui.tab = el.dataset.tab; if (el.dataset.sec) ui.openSec = el.dataset.sec; closeSheet(); render(); window.scrollTo(0, 0); };
+ACT.goRewards = () => { closeSheet(); ui.tab = 'char'; render(); const r = $('#rewards'); if (r) r.scrollIntoView(); };
+ACT.closeSheet = () => closeSheet();
+ACT.confirmOk = () => { const f = pendingConfirm; pendingConfirm = null; closeSheet(); if (f) f(); };
+ACT.dayPrev = () => { ui.viewKey = addDays(ui.viewKey, -1); render(); };
+ACT.dayNext = () => { ui.viewKey = addDays(ui.viewKey, 1); render(); };
+ACT.gotoDay = (el) => { closeSheet(); ui.tab = 'today'; ui.viewKey = el.dataset.key; render(); window.scrollTo(0, 0); };
+ACT.setType = (el) => {
+  const type = el.dataset.type;
+  const key = ui.viewKey;
+  const cur = state.days[key];
+  if (cur && cur.type === type) return;
+  if (type === 'PASCA') {
+    const prevK = addDays(key, -1);
+    const pr = state.days[prevK];
+    if (!pr || pr.type !== 'JAGA') {
+      if (!isEditable(prevK)) { toast('PASCA-JAGA hanya bisa dipilih setelah hari JAGA.'); return; }
+      const doIt = () => {
+        act(() => { const p = ensureDay(prevK); delete p.frozen; p.type = 'JAGA'; const r = ensureDay(key); delete r.frozen; r.type = 'PASCA'; });
+        toast('Kemarin ditandai JAGA.');
+      };
+      if (pr && pr.type) confirmSheet(`Kemarin tercatat ${TYPE_INFO[pr.type].label.toUpperCase()}. PASCA-JAGA hanya sah setelah JAGA. Ubah kemarin jadi JAGA?`, 'Ubah kemarin jadi JAGA', doIt);
+      else doIt();
+      return;
+    }
+  }
+  editDay((r) => { r.type = type; });
+};
+ACT.setSleep = (el) => { const v = parseFloat(el.dataset.v); editDay((r) => { r.sleep = v; }); };
+ACT.stepSleep = (el) => { const d = parseFloat(el.dataset.d); editDay((r) => { const c = r.sleep != null ? r.sleep : 6; r.sleep = clamp(Math.round((c + d) * 4) / 4, 0, 14); }); };
+ACT.toggleQ = (el) => {
+  const id = el.dataset.id;
+  editDay((r) => { if (r.done[id]) delete r.done[id]; else r.done[id] = true; });
+};
+ACT.setWorkEnd = (el) => {
+  const v = el.dataset.v;
+  editDay((r) => { r.workEnd = r.workEnd === v ? null : v; if (r.workEnd !== 'late') r.token = false; });
+};
+ACT.closeY = (el) => {
+  const v = el.dataset.v;
+  editDay((r) => { r.workEnd = v; if (v !== 'late') r.token = false; }, addDays(todayKey(), -1));
+  toast(v === 'ok' ? 'Kemarin ditutup: berhenti ≤21.00.' : 'Kemarin ditutup: lewat 21.00 (debuff).');
+};
+ACT.useToken = () => {
+  const key = ui.viewKey;
+  if (S().overtimeTokensPerWeek - countInWeek(weekStart(key), 'token') <= 0) { toast('Token minggu ini habis.'); return; }
+  editDay((r) => { r.token = true; });
+  toast('Token dipakai: debuff overtime dibatalkan.');
+};
+ACT.releaseToken = () => editDay((r) => { r.token = false; });
+ACT.stepTentir = (el) => {
+  const d = parseFloat(el.dataset.d);
+  editDay((r) => { r.tentir = r.tentir || { jam: 0, sesi: 1, ok: null }; r.tentir.jam = clamp(Math.round((r.tentir.jam + d) * 2) / 2, 0, 12); if (!r.tentir.jam) r.tentir.ok = null; });
+};
+ACT.stepSesi = (el) => { const d = parseInt(el.dataset.d, 10); editDay((r) => { r.tentir.sesi = clamp((r.tentir.sesi || 1) + d, 1, 5); }); };
+ACT.setTentirOk = (el) => {
+  const v = el.dataset.v === '1';
+  let msg = '';
+  editDay((r) => {
+    r.tentir.ok = r.tentir.ok === v ? null : v;
+    if (r.tentir.ok === false && r.type !== 'JAGA' && r.workEnd !== 'late') { r.workEnd = 'late'; r.token = false; msg = 'Tentir lewat 21.00 → Overtime tercatat.'; }
+  });
+  if (msg) toast(msg);
+};
+ACT.toggleMut = (el) => { const id = el.dataset.id; editDay((r) => { if (r.mut[id]) delete r.mut[id]; else r.mut[id] = true; }); };
+ACT.toggleShield = (el) => {
+  const key = el.dataset.key || ui.viewKey;
+  const r0 = state.days[key];
+  if (r0 && r0.shield) { act(() => { r0.shield = false; }); closeSheet(); toast('Shield dilepas.'); return; }
+  const diff = diffDays(todayKey(), key);
+  if (diff < 0 || diff > 7) { toast('Shield hanya untuk 7 hari terakhir.'); return; }
+  if (S().shieldsPerWeek - countInWeek(weekStart(key), 'shield') <= 0) { toast('Shield minggu itu sudah terpakai.'); return; }
+  act(() => { ensureDay(key).shield = true; });
+  closeSheet();
+  toast('Shield dipakai: streak terlindungi.');
+};
+ACT.clearSample = () => { act(clearSample); toast('Data contoh dihapus.'); };
+ACT.logWo = (el) => { ui.tab = 'hist'; ui.woKind = el.dataset.kind || 'bench'; render(); const c = $('#woCard'); if (c) c.scrollIntoView(); };
+ACT.woKind = (el) => { ui.woKind = el.dataset.kind; render(); const c = $('#woCard'); if (c) c.scrollIntoView(); };
+ACT.woDel = (el) => confirmSheet('Hapus log latihan ini?', 'Hapus', () => act(() => { state.workouts = state.workouts.filter((w) => w.id !== el.dataset.id); }), true);
+ACT.histPrev = () => { const [y, m] = ui.histMonth.split('-').map(Number); const d = new Date(Date.UTC(y, m - 2, 1)); ui.histMonth = d.toISOString().slice(0, 7); render(); };
+ACT.histNext = () => { const [y, m] = ui.histMonth.split('-').map(Number); const d = new Date(Date.UTC(y, m, 1)); ui.histMonth = d.toISOString().slice(0, 7); render(); };
+ACT.dayDetail = (el) => openSheet(dayDetailHTML(el.dataset.key));
+
+// Main Quest
+ACT.mqAdd = () => {
+  const full = state.mainQuests.filter((m) => m.status === 'aktif').length >= S().wipLimit;
+  openSheet(mqFormHTML(null, full));
+};
+ACT.mqEdit = (el) => openSheet(mqFormHTML(state.mainQuests.find((m) => m.id === el.dataset.id), false));
+ACT.mqDone = (el) => {
+  const m = state.mainQuests.find((x) => x.id === el.dataset.id);
+  confirmSheet(`Tandai "${m.name}" selesai? (0 XP — slot WIP terbuka)`, 'Selesai', () => { act(() => { m.status = 'selesai'; m.doneAt = todayKey(); }); toast('Main Quest selesai. Slot terbuka.'); });
+};
+ACT.mqFreeze = (el) => { act(() => { const m = state.mainQuests.find((x) => x.id === el.dataset.id); m.status = 'beku'; }); toast('Dibekukan. Slot WIP terbuka.'); };
+ACT.mqActivate = (el) => {
+  if (state.mainQuests.filter((m) => m.status === 'aktif').length >= S().wipLimit) { toast(`Terkunci: sudah ${S().wipLimit} Main Quest aktif. Selesaikan atau bekukan satu dulu.`); return; }
+  act(() => { const m = state.mainQuests.find((x) => x.id === el.dataset.id); m.status = 'aktif'; });
+};
+ACT.mqUp = (el) => {
+  act(() => {
+    const arr = state.mainQuests;
+    const i = arr.findIndex((m) => m.id === el.dataset.id);
+    let j = i - 1;
+    while (j >= 0 && arr[j].status !== 'aktif') j--;
+    if (j >= 0) { const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp; }
+  });
+};
+ACT.mqDel = (el) => confirmSheet('Hapus Main Quest beku ini?', 'Hapus', () => act(() => { state.mainQuests = state.mainQuests.filter((m) => m.id !== el.dataset.id); }), true);
+function mqFormHTML(m, full) {
+  const isNew = !m;
+  m = m || { name: '', stat: 'RSC', next: '' };
+  return `<form data-form="mq" data-id="${isNew ? '' : m.id}" class="form"><div class="row between"><h2>${isNew ? (full ? 'Simpan ide ke Beku' : 'Main Quest baru') : 'Edit Main Quest'}</h2><button type="button" class="x" data-act="closeSheet" aria-label="Tutup">✕</button></div>
+    ${isNew && full ? `<div class="notice warn">${ICON.lock}<span>Main Quest ke-${S().wipLimit + 1} terkunci (WIP ≤${S().wipLimit}). Proyek ini akan masuk daftar Beku.</span></div>` : ''}
+    <label>Nama proyek<input name="name" required maxlength="60" value="${esc(m.name)}"></label>
+    <label>Stat<select name="stat">${STATS.map((s) => `<option value="${s}" ${m.stat === s ? 'selected' : ''}>${s} · ${STAT_NAME[s]}</option>`).join('')}</select></label>
+    <label>Langkah berikut (muncul di Hari Ini)<input name="next" maxlength="70" value="${esc(m.next || '')}" data-input="phiInline" placeholder="contoh: screening 20 abstrak"></label><div class="phiBox">${phiWarn(false)}</div>
+    <button class="btn primary block" type="submit">${isNew && full ? 'Simpan ke Beku' : 'Simpan (0 XP)'}</button></form>`;
+}
+// Hadiah
+ACT.claim = (el) => {
+  const r = state.rewards.find((x) => x.id === el.dataset.id);
+  const lv = levelOf(totalXP()).level;
+  if (lv - 1 - state.claims.length <= 0) { toast('Belum ada token. Naik level dulu.'); return; }
+  if (r.cost > 0 && !financeInfo().bridgeReached) { toast('Terkunci sampai Dana Jembatan mencapai target.'); return; }
+  confirmSheet(`Klaim "${r.name}"${r.cost > 0 ? ' (' + rp(r.cost) + ')' : ''}? Pakai 1 token.`, 'Klaim', () => { act(() => { state.claims.push({ id: uid('cl'), rewardId: r.id, name: r.name, cost: r.cost, date: todayKey(), level: lv }); }); toast('Selamat menikmati.'); });
+};
+// Boss
+ACT.finWeek = () => {
+  const ws = weekStart(todayKey());
+  const w = state.weekly[ws] || newWeek();
+  const fmt = (v) => (v != null ? Number(v).toLocaleString('id-ID') : '');
+  openSheet(`<form data-form="finWeek" data-ws="${ws}" class="form"><div class="row between"><h2>Angka minggu ini</h2><button type="button" class="x" data-act="closeSheet" aria-label="Tutup">✕</button></div><p class="small muted">Minggu ${weekRange(ws)} · cukup 2 angka</p>
+    <label>Sisa utang (Rp)<input name="debt" inputmode="numeric" value="${fmt(w.debt)}"></label><label>Saldo Dana Jembatan (Rp)<input name="bridge" inputmode="numeric" value="${fmt(w.bridge)}"></label>
+    <button class="btn primary block" type="submit">Simpan (0 XP)</button></form>`);
+};
+ACT.srToggle = () => act(() => { state.milestones.srSubmittedAt = state.milestones.srSubmittedAt ? null : todayKey(); });
+ACT.ieltsAdd = () => openSheet(`<form data-form="ielts" class="form"><div class="row between"><h2>Hasil mock IELTS</h2><button type="button" class="x" data-act="closeSheet" aria-label="Tutup">✕</button></div><div class="grid2"><label>Band<input name="band" inputmode="decimal" required placeholder="6,5"></label><label>Tanggal<input type="date" name="date" value="${todayKey()}" max="${todayKey()}"></label></div><button class="btn primary block" type="submit">Simpan</button>
+  ${(state.milestones.ielts || []).length ? `<div class="subhead">Riwayat</div>${state.milestones.ielts.map((x) => `<div class="frozen"><span>Band ${nfl(x.band, 1)}</span><span class="tiny muted">${fmtDate(x.date, { year: true })}</span></div>`).join('')}` : ''}</form>`);
+// Raid
+ACT.raidDone = () => {
+  const R = raidWindow();
+  if (!R.open) { toast('Raid dibuka hari Minggu.'); return; }
+  const w = state.weekly[R.ws] || newWeek();
+  if (w.raidDone) return;
+  const errs = [];
+  if (!(w.priorities || []).every((x) => x && x.trim())) errs.push('Isi 3 prioritas minggu depan.');
+  if (w.bridge == null || w.debt == null) errs.push('Isi saldo Dana Jembatan & sisa utang.');
+  if ((w.priorities || []).some((x) => PHI_RE.test(x || ''))) errs.push('Hapus pola mirip identitas pasien dari prioritas.');
+  if (errs.length) { $('#raidErr').innerHTML = errs.map(esc).join('<br>'); return; }
+  const up = act(() => {
+    const ww = ensureWeek(R.ws);
+    ww.snapshot = weekMetrics(R.ws);
+    ww.raidDone = true; ww.raidXP = S().raidXP; ww.raidAt = todayKey();
+  }, { quietLevel: true });
+  ui.raidOpenedAt = null;
+  // Pengingat backup selalu tampil; level-up (bila ada) digabung di layar yang sama.
+  openSheet(`<div class="center"><div class="lbl">Raid selesai</div><div class="lvup" style="font-size:34px">+${S().raidXP} XP</div>${up ? `<p><b>Naik ke Level ${up}</b> · +1 token hadiah.</p>` : ''}<p>Backup data sekarang? Terakhir: ${lastExportText()}.</p><button class="btn primary block" data-act="export">Export JSON</button><button class="btn block" data-act="closeSheet">Nanti</button></div>`);
+};
+// Data
+function exportString() { return JSON.stringify(state, null, 2); }
+ACT.export = () => {
+  const s = exportString();
+  try {
+    const blob = new Blob([s], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `mbappe-os-${todayKey()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    meta.lastExportAt = nowMs();
+    saveMeta();
+    toast('Backup diunduh.');
+    if (ui.tab === 'set' || ui.tab === 'raid') { const sh = $('#sheet').classList.contains('open'); if (!sh) render(); }
+  } catch (e) {
+    toast('Unduhan gagal — pakai "Salin JSON".');
+  }
+};
+ACT.copyJson = () => {
+  const s = exportString();
+  const done = () => { meta.lastExportAt = nowMs(); saveMeta(); toast('JSON disalin. Simpan di tempat aman.'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(s).then(done, () => openSheet(`<h2>Salin manual</h2><textarea readonly style="min-height:260px;font-size:11px">${esc(s)}</textarea><button class="btn block" data-act="closeSheet">Tutup</button>`));
+  else openSheet(`<h2>Salin manual</h2><textarea readonly style="min-height:260px;font-size:11px">${esc(s)}</textarea><button class="btn block" data-act="closeSheet">Tutup</button>`);
+};
+function tryImport(text) {
+  let obj;
+  try {
+    obj = JSON.parse(text);
+    if (!obj || typeof obj !== 'object' || typeof obj.days !== 'object' || !Array.isArray(obj.quests)) throw new Error('Bukan file backup MBAPPE OS');
+    migrate(obj);
+    fillDefaults(obj);
+  } catch (e) { toast('Import gagal: ' + e.message); return; }
+  confirmSheet(`Timpa semua data dengan backup ini (${Object.keys(obj.days).length} hari)? Data sekarang akan hilang.`, 'Import & timpa', () => {
+    state = obj;
+    ui.viewKey = null;
+    dirty();
+    save();
+    render();
+    toast('Import berhasil.');
+  }, true);
+}
+CHG.importFile = (el) => {
+  const f = el.files && el.files[0];
+  if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => tryImport(String(rd.result));
+  rd.onerror = () => toast('File tidak bisa dibaca.');
+  rd.readAsText(f);
+  el.value = '';
+};
+ACT.importPaste = () => { const v = ($('#importText') || {}).value || ''; if (v.trim()) tryImport(v); };
+ACT.resetAll = () => confirmSheet('Reset SEMUA data? Tidak bisa dibatalkan. Export dulu kalau ragu.', 'Reset semua', () => { state = defaultState(); ui.viewKey = null; dirty(); save(); render(); toast('Data direset.'); }, true);
+ACT.mechReset = () => confirmSheet('Kembalikan semua angka mekanika ke default?', 'Kembalikan', () => { act(() => { state.settings = defaultSettings(); }); toast('Mekanika default.'); });
+// Quest settings
+ACT.qNew = () => openSheet(questFormHTML(normQuest({ id: '', name: '', types: ['NORMAL', 'LIBUR'] }), true));
+ACT.qEdit = (el) => openSheet(questFormHTML(questById(el.dataset.id), false));
+ACT.qMove = (el) => act(() => {
+  const i = state.quests.findIndex((q) => q.id === el.dataset.id);
+  const j = i + parseInt(el.dataset.d, 10);
+  if (j < 0 || j >= state.quests.length) return;
+  const tmp = state.quests[i]; state.quests[i] = state.quests[j]; state.quests[j] = tmp;
+});
+ACT.qDel = (el) => {
+  const q = questById(el.dataset.id);
+  if (q.types.includes('PASCA') && state.quests.filter((x) => x.types.includes('PASCA') && x.active).length <= 1) { toast('PASCA-JAGA butuh minimal 1 quest pemulihan.'); return; }
+  confirmSheet(`Hapus quest "${q.name}"? Hari yang sudah terkunci tidak berubah.`, 'Hapus', () => act(() => { state.quests = state.quests.filter((x) => x.id !== q.id); }), true);
+};
+ACT.chNew = () => openSheet(chapterFormHTML(null, true));
+ACT.chEdit = (el) => openSheet(chapterFormHTML(state.chapters.find((c) => c.id === el.dataset.id), false));
+ACT.chDel = (el) => confirmSheet('Hapus chapter ini?', 'Hapus', () => act(() => { state.chapters = state.chapters.filter((c) => c.id !== el.dataset.id); }), true);
+ACT.rwDel = (el) => act(() => { state.rewards = state.rewards.filter((r) => r.id !== el.dataset.id); });
+ACT.mutDel = (el) => confirmSheet("Hapus item mutaba'ah ini?", 'Hapus', () => act(() => { state.mutabaah = state.mutabaah.filter((m) => m.id !== el.dataset.id); }), true);
+
+CHG.raidNum = (el) => {
+  const ws = el.dataset.ws, k = el.dataset.k;
+  const v = parseRp(el.value);
+  act(() => { ensureWeek(ws)[k] = v; });
+};
+CHG.mutName = (el) => { const m = state.mutabaah.find((x) => x.id === el.dataset.id); const v = el.value.trim(); if (m && v) { m.name = v; save(); } };
+
+INP.note = (el) => {
+  const k = ui.viewKey;
+  if (!isEditable(k)) return;
+  const r = ensureDay(k);
+  r.note = el.value;
+  saveSoon();
+  const box = $('#notePhi');
+  if (box) box.innerHTML = phiWarn(PHI_RE.test(el.value));
+};
+INP.prio = (el) => {
+  const w = ensureWeek(el.dataset.ws);
+  w.priorities = (w.priorities || ['', '', '']).slice();
+  w.priorities[parseInt(el.dataset.i, 10)] = el.value;
+  saveSoon();
+  const box = $('#prioPhi');
+  if (box) box.innerHTML = phiWarn(w.priorities.some((x) => PHI_RE.test(x || '')));
+};
+INP.phiInline = (el) => { const box = el.closest('form').querySelector('.phiBox'); if (box) box.innerHTML = phiWarn(PHI_RE.test(el.value)); };
+INP.calc = () => updateCalc();
+
+FORM.quest = (f) => {
+  const fd = new FormData(f);
+  const id = f.dataset.id;
+  const existing = id ? questById(id) : null;
+  const errs = [];
+  const name = String(fd.get('name') || '').trim();
+  if (!name) errs.push('Nama wajib diisi.');
+  const q = existing ? JSON.parse(JSON.stringify(existing)) : normQuest({ id: uid('q'), name });
+  q.name = name; q.stat = fd.get('stat'); q.size = fd.get('size');
+  if (!q.sys) {
+    q.types = fd.getAll('types');
+    q.freq = fd.get('freq');
+    q.tag = fd.get('tag') || '';
+    if (!q.types.length) errs.push('Pilih minimal satu tipe hari.');
+  }
+  q.days = fd.getAll('days').map(Number);
+  q.metric = fd.get('metric') || '';
+  q.hours = clamp(num(fd.get('hours')) || 0, 0, 8);
+  q.core = fd.get('core') === 'on';
+  q.active = fd.get('active') === 'on';
+  if (existing && existing.types.includes('PASCA') && (!q.active || !q.types.includes('PASCA')) && state.quests.filter((x) => x.types.includes('PASCA') && x.active && x.id !== q.id).length === 0) errs.push('PASCA-JAGA butuh minimal 1 quest pemulihan aktif.');
+  if (errs.length) { $('#qErr').innerHTML = errs.map(esc).join('<br>'); return; }
+  act(() => { if (existing) Object.assign(existing, q); else state.quests.push(q); });
+  closeSheet();
+  toast('Quest disimpan (0 XP).');
+};
+FORM.mech = (f) => {
+  const fd = new FormData(f);
+  const s = JSON.parse(JSON.stringify(S()));
+  const errs = [];
+  SIZES.forEach((z) => { s.xpSize[z] = num(fd.get('xp_' + z)); });
+  const xs = s.xpSize;
+  if (!(xs.kecil >= 1 && xs.kecil <= xs.sedang && xs.sedang <= xs.besar && xs.besar <= 50)) errs.push('XP harus 1 ≤ kecil ≤ sedang ≤ besar ≤ 50.');
+  const tiers = [0, 1, 2, 3].map((i) => ({ min: i < 3 ? num(fd.get('tmin_' + i)) : 0, mult: num(fd.get('tmul_' + i)) }));
+  if (tiers.some((t) => isNaN(t.min) || isNaN(t.mult))) errs.push('Isi semua angka pengali tidur.');
+  else {
+    if (!(tiers[0].min > tiers[1].min && tiers[1].min > tiers[2].min && tiers[2].min > 0)) errs.push('Ambang jam tidur harus menurun dan > 0.');
+    if (!(tiers[0].mult >= tiers[1].mult && tiers[1].mult >= tiers[2].mult && tiers[2].mult >= tiers[3].mult)) errs.push('Pengali wajib naik seiring jam tidur — tidur lebih sedikit tidak boleh pernah lebih menguntungkan.');
+    if (tiers.some((t) => t.mult < 0.3 || t.mult > 1.5)) errs.push('Pengali tidur 0,3–1,5.');
+    if (tiers[3].mult > 1) errs.push('Pengali tidur terpendek tidak boleh > ×1,0.');
+  }
+  s.sleepTiers = tiers;
+  MECH_FIELDS.forEach(([k, label, min, max]) => { const v = num(fd.get(k)); if (isNaN(v) || v < min || v > max) errs.push(`${label}: ${nfl(min)}–${nfl(max)}.`); else s[k] = v; });
+  ['overtimeTokensPerWeek', 'shieldsPerWeek', 'wipLimit', 'backfillDays', 'statDivisor'].forEach((k) => { s[k] = Math.round(s[k]); });
+  if (s.pascaXP > s.dailyCap) errs.push('XP PASCA-JAGA tidak boleh melebihi batas harian.');
+  if (s.tentirMin > s.tentirMax) errs.push('Kapasitas tentir min harus ≤ maks.');
+  if (s.sleepQuestMin < s.sleepDebtBelow) errs.push('Minimal jam quest tidur harus ≥ ambang Sleep Debt.');
+  s.worstCaseEmpty = fd.get('worstCaseEmpty') === 'on';
+  s.mqSize = fd.get('mqSize');
+  if (errs.length) { $('#mechErr').innerHTML = errs.map(esc).join('<br>'); return; }
+  freezeLocked();
+  ui.openSec = 'mech';
+  act(() => { state.settings = s; });
+  toast('Mekanika disimpan (0 XP).');
+};
+FORM.chapter = (f) => {
+  const fd = new FormData(f);
+  const id = f.dataset.id;
+  const c = { name: String(fd.get('name') || '').trim(), start: fd.get('start'), end: fd.get('end'), weight: fd.get('weight') };
+  const errs = [];
+  if (!c.name) errs.push('Nama wajib diisi.');
+  if (!c.start || !c.end || c.end < c.start) errs.push('Tanggal selesai harus ≥ tanggal mulai.');
+  if (errs.length) { $('#chErr').innerHTML = errs.map(esc).join('<br>'); return; }
+  ui.openSec = 'chapter';
+  act(() => {
+    if (id) { const ex = state.chapters.find((x) => x.id === id); Object.assign(ex, c); if (ex.end >= todayKey()) ex.summarySeen = false; }
+    else state.chapters.push(Object.assign({ id: uid('ch'), summarySeen: false }, c));
+  });
+  closeSheet();
+  toast('Chapter disimpan (0 XP).');
+};
+FORM.fin = (f) => {
+  const fd = new FormData(f);
+  const errs = [];
+  const band = String(fd.get('ieltsBand') || '').trim() === '' ? null : num(fd.get('ieltsBand'));
+  if (band != null && (isNaN(band) || band < 1 || band > 9)) errs.push('Band IELTS 1–9.');
+  const bench = num(fd.get('benchKg'));
+  if (isNaN(bench) || bench < 20 || bench > 300) errs.push('Target bench 20–300 kg.');
+  const run5 = parseTime(fd.get('run5k'));
+  if (!run5) errs.push('Baseline 5K tidak valid (mm:ss).');
+  if (errs.length) { $('#finErr').innerHTML = errs.map(esc).join('<br>'); return; }
+  ui.openSec = 'fin';
+  act(() => {
+    const F = state.finance, T = state.targets;
+    F.debtInitial = parseRp(fd.get('debtInitial'));
+    F.bridgeTarget = parseRp(fd.get('bridgeTarget'));
+    F.debtTargetDate = fd.get('debtTargetDate') || F.debtTargetDate;
+    F.bridgeTargetDate = fd.get('bridgeTargetDate') || F.bridgeTargetDate;
+    delete F.sample;
+    T.ieltsBand = band; T.benchKg = bench; T.run5kBaselineSec = run5;
+    T.koasEnd = fd.get('koasEnd') || T.koasEnd; T.ukmppd = fd.get('ukmppd') || T.ukmppd;
+  });
+  toast('Disimpan (0 XP).');
+};
+FORM.finWeek = (f) => {
+  const fd = new FormData(f);
+  act(() => { const w = ensureWeek(f.dataset.ws); w.debt = parseRp(fd.get('debt')); w.bridge = parseRp(fd.get('bridge')); });
+  closeSheet();
+  toast('Angka minggu ini tersimpan.');
+};
+FORM.ielts = (f) => {
+  const fd = new FormData(f);
+  const band = num(fd.get('band'));
+  if (isNaN(band) || band < 1 || band > 9) { toast('Band 1–9.'); return; }
+  act(() => { state.milestones.ielts.push({ date: fd.get('date') || todayKey(), band }); });
+  closeSheet();
+};
+FORM.reward = (f) => {
+  const fd = new FormData(f);
+  const name = String(fd.get('name') || '').trim();
+  if (!name) return;
+  ui.openSec = 'reward';
+  act(() => { state.rewards.push({ id: uid('rw'), name, cost: parseRp(fd.get('cost')) || 0 }); });
+};
+FORM.mutAdd = (f) => {
+  const name = String(new FormData(f).get('name') || '').trim();
+  if (!name) return;
+  ui.openSec = 'mut';
+  act(() => { state.mutabaah.push({ id: uid('m'), name }); });
+};
+FORM.mq = (f) => {
+  const fd = new FormData(f);
+  const id = f.dataset.id;
+  const name = String(fd.get('name') || '').trim();
+  const next = String(fd.get('next') || '').trim();
+  if (!name) return;
+  if (PHI_RE.test(next) || PHI_RE.test(name)) { toast('Hapus pola mirip identitas pasien dulu.'); return; }
+  const full = state.mainQuests.filter((m) => m.status === 'aktif').length >= S().wipLimit;
+  act(() => {
+    if (id) { const m = state.mainQuests.find((x) => x.id === id); m.name = name; m.stat = fd.get('stat'); m.next = next; }
+    else state.mainQuests.push({ id: uid('mq'), name, stat: fd.get('stat'), next, status: full ? 'beku' : 'aktif', createdAt: todayKey(), doneAt: null });
+  });
+  closeSheet();
+  toast(!id && full ? 'WIP penuh — disimpan ke Beku.' : 'Main Quest disimpan (0 XP).');
+};
+FORM.wo = (f) => {
+  const fd = new FormData(f);
+  const kind = f.dataset.kind;
+  const date = fd.get('date') || todayKey();
+  const note = String(fd.get('note') || '').trim();
+  const errs = [];
+  if (date > todayKey()) errs.push('Tanggal tidak boleh di masa depan.');
+  if (PHI_RE.test(note)) errs.push('Hapus pola mirip identitas pasien dari catatan.');
+  let w;
+  if (kind === 'bench') {
+    const kg = num(fd.get('kg')), reps = parseInt(fd.get('reps'), 10), sets = parseInt(fd.get('sets'), 10) || null;
+    if (!(kg > 0 && kg <= 400)) errs.push('Beban 1–400 kg.');
+    if (!(reps >= 1 && reps <= 30)) errs.push('Rep 1–30.');
+    w = { id: uid('wo'), date, kind, kg, reps, sets, note };
+  } else {
+    const km = num(fd.get('km')), sec = parseTime(fd.get('time'));
+    if (!(km > 0 && km <= 100)) errs.push('Jarak 0–100 km.');
+    if (!sec) errs.push('Waktu tidak valid (mm:ss).');
+    w = { id: uid('wo'), date, kind, km, sec, runType: fd.get('runType'), note };
+  }
+  if (errs.length) { $('#woErr').innerHTML = errs.map(esc).join('<br>'); return; }
+  act(() => { state.workouts.push(w); });
+  toast(kind === 'bench' ? 'Log tersimpan · e1RM ' + nfl(e1rm(w.kg, w.reps), 1) + ' kg' : 'Log tersimpan · pace ' + secStr(w.sec / w.km) + '/km');
+};
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-act]');
+  if (!el || el.disabled) return;
+  const fn = ACT[el.dataset.act];
+  if (!fn) return;
+  e.preventDefault();
+  fn(el, e);
+});
+document.addEventListener('change', (e) => { const el = e.target.closest('[data-change]'); if (el && CHG[el.dataset.change]) CHG[el.dataset.change](el, e); });
+document.addEventListener('input', (e) => { const el = e.target.closest('[data-input]'); if (el && INP[el.dataset.input]) INP[el.dataset.input](el, e); });
+document.addEventListener('submit', (e) => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); if (FORM[f.dataset.form]) FORM[f.dataset.form](f); });
+document.addEventListener('toggle', (e) => { const d = e.target; if (d && d.matches && d.matches('details.set')) { if (d.open) ui.openSec = d.dataset.sec; else if (ui.openSec === d.dataset.sec) ui.openSec = null; } }, true);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && $('#sheet').classList.contains('open')) closeSheet(); });
+window.addEventListener('pagehide', save);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') save(); else render(); });
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function init() {
+  const qn = new URLSearchParams(location.search).get('now');
+  if (qn && !isNaN(Date.parse(qn))) nowOverride = Date.parse(qn);
+  let loaded = null;
+  try {
+    const probe = STORE_KEY + '-probe';
+    localStorage.setItem(probe, '1');
+    localStorage.removeItem(probe);
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      try { loaded = fillDefaults(migrate(JSON.parse(raw))); } catch (e) {
+        memoryMode = true;
+        storageNote = 'Data tersimpan tidak bisa dibaca (' + e.message + '). Berjalan di memori; data lama tidak ditimpa. Import backup di Setelan.';
+      }
+    }
+    try { const m = localStorage.getItem(META_KEY); if (m) meta = Object.assign(meta, JSON.parse(m)); } catch (e) { /* abaikan */ }
+  } catch (e) {
+    memoryMode = true;
+    storageNote = 'Penyimpanan lokal tidak tersedia. Aplikasi berjalan di memori — data hilang saat tab ditutup. Export JSON secara berkala.';
+  }
+  if (loaded) state = loaded;
+  else { state = defaultState(); makeSample(); }
+  save();
+  render();
+}
+
+// Hook untuk pengujian otomatis (tidak dipakai UI).
+window.MBAPPE = {
+  get state() { return state; },
+  get memoryMode() { return memoryMode; },
+  setNow(iso) { nowOverride = iso ? Date.parse(iso) : null; ui.viewKey = null; render(); },
+  todayKey, computeDay: (k) => { dirty(); return computeDay(k); }, streakInfo: () => { dirty(); return streakInfo(); },
+  totalXP: () => { dirty(); return totalXP(); }, exportString, render: () => render(), levelOf,
+};
+
+init();
+})();
+</script>
+</body>
+</html>
