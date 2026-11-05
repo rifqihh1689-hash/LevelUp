@@ -1,6 +1,6 @@
 # MBAPPE OS
 
-RPG kehidupan pribadi untuk satu pengguna: koas FK UB / RSSA → UKMPPD Feb 2028 → PPDS ortopedi.
+RPG kehidupan pribadi untuk satu pengguna: ritme pemulihan, kerja, ibadah, dan target jangka panjang.
 Game ini menghadiahi **pemulihan, bukan volume**. Tidur adalah pengali semua XP.
 
 Satu file: [`index.html`](index.html). Tanpa build step, tanpa server, tanpa akun, tanpa notifikasi.
@@ -24,7 +24,7 @@ Data tersimpan di localStorage perangkat itu saja. **Export JSON** tiap Weekly R
 
 ## Alur harian (≤2 menit)
 
-Mutaba'ah (tahajjud, Subuh) → tipe hari (1 tap) → jam tidur malam (1 tap) → centang quest. Setelah tidur siang/qailulah, tap jamnya: total tidur (malam + siang) yang menentukan pengali. Jam berhenti kerja diisi malam itu, atau besok pagi lewat kartu **Tutup kemarin**.
+Mutaba'ah (ibadah harian) → tipe hari (1 tap) → jam tidur malam (1 tap) → centang quest. Setelah tidur siang/qailulah, tap jamnya: total tidur (malam + siang) yang menentukan pengali. Jam berhenti kerja diisi malam itu, atau besok pagi lewat kartu **Tutup kemarin**.
 
 ## Uji
 

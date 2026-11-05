@@ -9,7 +9,7 @@
 | XP dari lead measure | Quest harian = tindakan hari ini. 1RM, waktu lari, saldo, utang = boss & milestone (0 XP). |
 | Edit / lihat statistik = 0 XP | Hari yang lewat jendela isi mundur **dibekukan**. Mengedit quest/mekanika tidak mengubah XP masa lalu. |
 | WIP ≤ 3 | Main Quest ke-4 hanya bisa disimpan ke Beku. Batas WIP di Setelan maksimal 3. |
-| Mutaba'ah tanpa skor | Disimpan terpisah, tampilan netral abu-abu, tidak masuk XP, level, streak, raid, atau heatmap. Tampil paling atas di Hari Ini karena tahajjud & Subuh adalah amal pertama hari itu. |
+| Mutaba'ah tanpa skor | Disimpan terpisah, tampilan netral abu-abu, tidak masuk XP, level, streak, raid, atau heatmap. Tampil paling atas di Hari Ini karena ibadah pagi adalah amal pertama hari itu. |
 | Tanpa sosial/notifikasi | Tidak ada jaringan sama sekali. Setiap kolom catatan bebas diberi peringatan identitas pasien + deteksi pola (No. RM, angka ≥6 digit, Tn./Ny./An. + nama). |
 
 ## Model data (`schemaVersion: 2`)
@@ -23,14 +23,14 @@
     "worstCaseEmpty":true, "passPct":60, "shieldsPerWeek":1, "levelBase":150, "levelStep":50,
     "statDivisor":3, "jagaMult":1.0, "pascaXP":100, "raidXP":50, "wipLimit":3, "mqSize":"sedang",
     "backfillDays":1, "heavyTargetPct":60, "napCounts":true, "tentirMin":9, "tentirMax":15, "careerMinHours":2 },
-  "finance":  { "debtInitial":null, "debtTargetDate":"2027-09-30", "bridgeTarget":null, "bridgeTargetDate":"2026-12-31" },
-  "targets":  { "benchKg":100, "run5kBaselineSec":1860, "ieltsBand":null, "koasEnd":"2027-12-31", "ukmppd":"2028-02-01" },
+  "finance":  { "debtInitial":null, "debtTargetDate":"YYYY-MM-DD", "bridgeTarget":null, "bridgeTargetDate":"YYYY-MM-DD" },
+  "targets":  { "benchKg":100, "run5kBaselineSec":1860, "ieltsBand":null, "koasEnd":"YYYY-MM-DD", "ukmppd":"YYYY-MM-DD" },
   "milestones": { "srSubmittedAt":null, "ielts":[{"date":"…","band":6.5}] },
   "quests": [{ "id":"q_lift", "name":"Beban sore", "stat":"STR", "size":"besar", "types":["NORMAL","LIBUR"],
                "days":[1,3,5], "freq":"daily|weekly", "tag":"heavy|interval|sleep|workend|tentir|sdwalk|",
                "core":true, "metric":"latihan|karier|konten|", "hours":0, "active":true, "sys":false }],
-  "mutabaah": [{ "id":"m_qiyam", "name":"Tahajjud sebelum Subuh" }],
-  "chapters": [{ "id":"…", "name":"IPD Junior", "start":"YYYY-MM-DD", "end":"YYYY-MM-DD", "weight":"ringan|sedang|berat", "summarySeen":false }],
+  "mutabaah": [{ "id":"m_qiyam", "name":"Ibadah pagi (contoh)" }],
+  "chapters": [{ "id":"…", "name":"Stase contoh", "start":"YYYY-MM-DD", "end":"YYYY-MM-DD", "weight":"ringan|sedang|berat", "summarySeen":false }],
   "mainQuests": [{ "id":"…", "name":"…", "stat":"RSC", "status":"aktif|beku|selesai", "next":"langkah berikut", "createdAt":"…", "doneAt":null }],
   "days": { "YYYY-MM-DD": { "type":"NORMAL", "sleep":5.25, "nap":1, "done":{"q_study":true,"MQ:<id>":true},
              "workEnd":"ok|late|null", "token":false, "shield":false, "tentir":{"jam":2,"sesi":1,"ok":true},
@@ -85,15 +85,13 @@ Meta yang tidak ikut export (`lastExportAt`) disimpan di kunci terpisah, supaya 
 5. **Riwayat** — heatmap bulanan (warna = tipe hari, isi penuh = lolos), detail hari, log latihan, mutaba'ah 30 hari, ringkasan chapter.
 6. **Setelan** — quest, mekanika, chapter, keuangan & target, hadiah, mutaba'ah, export/import, ringkasan aturan.
 
-## Jadwal tahajjud & qailulah (v2)
+## Jadwal malam & tidur siang (v2)
 
-Jadwal nyata: tidur pukul 22.00–23.00, bangun 15–30 menit sebelum Subuh untuk tahajjud. Itu berarti tidur malam ±4,5–5,5 jam (cocok dengan catatan Garmin: rata-rata ±4,5 jam).
+Pola umum: tidur malam bisa pendek karena bangun sebelum fajar untuk ibadah. Kalau pengali hanya memakai tidur malam, game menghukum ibadah itu setiap hari dan mengadu ibadah dengan poin. Itu bertentangan dengan alasan mutaba'ah dibuat tanpa XP. Karena itu sejak v2:
 
-Kalau pengali hanya memakai tidur malam, game menghukum tahajjud setiap hari dan mengadu ibadah dengan poin. Itu bertentangan dengan alasan mutaba'ah dibuat tanpa XP. Karena itu sejak v2:
-
-- Pengali dan Sleep Debt memakai **total tidur 24 jam** (malam + qailulah). Tidur siang setelah stase (±14.00) adalah lead measure yang bisa dikendalikan hari itu.
+- Pengali dan Sleep Debt memakai **total tidur 24 jam** (malam + qailulah). Tidur siang setelah jadwal pagi adalah lead measure yang bisa dikendalikan hari itu.
 - Kartu Tidur menunjukkan berapa jam tidur siang lagi untuk naik tier atau membuka beban: hadiah untuk pemulihan, bukan untuk tidur lebih sedikit.
-- Tahajjud tetap mutaba'ah: tanpa XP, tanpa streak, hanya catatan konsistensi 7 dan 30 hari.
+- Ibadah harian tetap mutaba'ah: tanpa XP, tanpa streak, hanya catatan konsistensi 7 dan 30 hari.
 - Prinsip 1 tetap utuh: tidak ada cara menang dengan tidur lebih sedikit. Yang berubah hanya *kapan* tidur dihitung.
 
 Migrasi v1 → v2 menambahkan `nap: 0` ke setiap hari dan memperbarui nama bawaan. Hari yang sudah terkunci tetap memakai hasil bekunya.
