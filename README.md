@@ -17,7 +17,7 @@ Data tersimpan di localStorage perangkat itu saja. **Export JSON** tiap Weekly R
 
 ## Alur harian (≤2 menit)
 
-Tipe hari (1 tap) → jam tidur (1 tap) → centang quest → mutaba'ah. Jam berhenti kerja diisi malam itu, atau besok pagi lewat kartu **Tutup kemarin**.
+Mutaba'ah (tahajjud, Subuh) → tipe hari (1 tap) → jam tidur malam (1 tap) → centang quest. Setelah tidur siang/qailulah, tap jamnya: total tidur (malam + siang) yang menentukan pengali. Jam berhenti kerja diisi malam itu, atau besok pagi lewat kartu **Tutup kemarin**.
 
 ## Uji
 
@@ -26,6 +26,6 @@ node tests/e2e.js          # butuh paket playwright + Chromium
 SHOT_DIR=/tmp node tests/e2e.js   # sekalian simpan screenshot
 ```
 
-82 pemeriksaan: tipe hari, XP × pengali, Sleep Debt, overtime + token, batas 100, streak saat JAGA/PASCA, jawaban kosong saat hari terkunci, Main Quest ke-4 terkunci, Raid, reload, export → import identik, localStorage gagal, chapter berat, kunci hadiah. Browser sengaja dijalankan di zona waktu Los Angeles untuk membuktikan aplikasi tetap memakai WIB.
+93 pemeriksaan: tipe hari, XP × pengali, Sleep Debt, overtime + token, batas 100, streak saat JAGA/PASCA, jawaban kosong saat hari terkunci, Main Quest ke-4 terkunci, tidur siang & migrasi skema, Raid, reload, export → import identik, localStorage gagal, chapter berat, kunci hadiah. Browser sengaja dijalankan di zona waktu Los Angeles untuk membuktikan aplikasi tetap memakai WIB.
 
 Desain lengkap (model data, rumus, celah & penutupnya): [`DESIGN.md`](DESIGN.md).

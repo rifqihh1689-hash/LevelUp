@@ -94,6 +94,9 @@ p{margin:6px 0}
 .step{width:54px;height:54px;border-radius:14px;background:var(--card2);border:1px solid var(--line2);font-size:28px;line-height:1;flex:none}
 .sv{font-size:14px;color:var(--muted);text-align:center}.sv b{display:block;font-size:30px;line-height:1.1;color:var(--text);font-variant-numeric:tabular-nums}
 .chips{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.chips.c7{grid-template-columns:repeat(7,1fr);gap:5px}.chips.c7 .cp{font-size:13.5px}
+.sleeptot{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13.5px}
+.sleeptot .hint{font-size:12px;color:var(--info);text-align:right}
 .cp{min-height:42px;border-radius:10px;background:var(--bg2);border:1px solid var(--line2);font-weight:650;font-size:14px}
 .cp.on{background:var(--accent);color:#0a0e14;border-color:transparent}
 .pill{font-weight:800;font-size:13px;padding:4px 10px;border-radius:999px;background:var(--card2);white-space:nowrap}
@@ -290,7 +293,7 @@ pre.json{max-height:240px;overflow:auto;background:var(--bg2);border:1px solid v
    ========================================================= */
 const STORE_KEY = 'mbappe-os';
 const META_KEY = 'mbappe-os-meta';
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 const WIB_MS = 7 * 3600e3;   // WIB = UTC+7, tidak bergantung zona waktu HP
 const ROLL_H = 3;            // hari berganti pukul 03.00 WIB
 const TYPES = ['NORMAL', 'JAGA', 'PASCA', 'LIBUR'];
@@ -429,6 +432,7 @@ function defaultSettings() {
     mqSize: 'sedang',
     backfillDays: 1,
     heavyTargetPct: 60,
+    napCounts: true,
     tentirMin: 9,
     tentirMax: 15,
     careerMinHours: 2,
@@ -439,7 +443,7 @@ function Q(id, name, stat, size, types, extra) {
 }
 function defaultQuests() {
   return [
-    Q('q_sleep', 'Tidur malam ≥6 jam', 'VIT', 'sedang', ND, { tag: 'sleep', core: true, sys: true }),
+    Q('q_sleep', 'Total tidur ≥6 jam', 'VIT', 'sedang', ND, { tag: 'sleep', core: true, sys: true }),
     Q('q_workend', 'Berhenti kerja ≤21.00', 'VIT', 'sedang', ND, { tag: 'workend', core: true, sys: true }),
     Q('q_run_easy', 'Lari pagi easy 30 mnt', 'STR', 'sedang', ND, { days: [2, 4], metric: 'latihan' }),
     Q('q_run_q', 'Lari kualitas (interval/tempo)', 'STR', 'besar', ND, { days: [6], tag: 'interval', metric: 'latihan' }),
@@ -468,7 +472,7 @@ function defaultState() {
     targets: { benchKg: 100, run5kBaselineSec: 1860, ieltsBand: null, koasEnd: '2027-12-31', ukmppd: '2028-02-01' },
     milestones: { srSubmittedAt: null, ielts: [] },
     quests: defaultQuests(),
-    mutabaah: [{ id: 'm_qiyam', name: 'Qiyamul lail' }, { id: 'm_subuh', name: 'Subuh berjamaah' }, { id: 'm_tadabbur', name: 'Tadabbur 10 ayat' }],
+    mutabaah: [{ id: 'm_qiyam', name: 'Tahajjud sebelum Subuh' }, { id: 'm_subuh', name: 'Subuh berjamaah' }, { id: 'm_tadabbur', name: 'Tadabbur 10 ayat' }],
     chapters: [],
     mainQuests: [],
     days: {},
@@ -480,7 +484,7 @@ function defaultState() {
   };
 }
 function newDay() {
-  return { type: null, sleep: null, done: {}, workEnd: null, token: false, shield: false, tentir: { jam: 0, sesi: 1, ok: null }, mut: {}, note: '' };
+  return { type: null, sleep: null, nap: 0, done: {}, workEnd: null, token: false, shield: false, tentir: { jam: 0, sesi: 1, ok: null }, mut: {}, note: '' };
 }
 function newWeek() {
   return { debt: null, bridge: null, leads: null, priorities: ['', '', ''], raidDone: false };
@@ -498,7 +502,15 @@ function normDay(r) {
 
 /* ---------- migrasi skema ---------- */
 // MIGRATIONS[n] mengubah data dari schemaVersion n ke n+1. Tambahkan di sini saat skema berubah.
-const MIGRATIONS = {};
+const MIGRATIONS = {
+  // v1 → v2: tidur siang (qailulah) ikut total tidur & pengali; nama bawaan disesuaikan (nama yang sudah diedit tidak disentuh).
+  1: (d) => {
+    for (const k of Object.keys(d.days || {})) if (d.days[k].nap === undefined) d.days[k].nap = 0;
+    if (d.settings && d.settings.napCounts === undefined) d.settings.napCounts = true;
+    (d.quests || []).forEach((q) => { if (q.id === 'q_sleep' && q.name === 'Tidur malam ≥6 jam') q.name = 'Total tidur ≥6 jam'; });
+    (d.mutabaah || []).forEach((m) => { if (m.id === 'm_qiyam' && m.name === 'Qiyamul lail') m.name = 'Tahajjud sebelum Subuh'; });
+  },
+};
 function migrate(d) {
   if (!d || typeof d !== 'object') throw new Error('Format tidak dikenal');
   if (typeof d.schemaVersion !== 'number') d.schemaVersion = 1;
@@ -567,6 +579,11 @@ function chapterFor(k) {
   for (const c of state.chapters) if (c.start <= k && k <= c.end && (!best || c.start > best.start)) best = c;
   return best;
 }
+// Total tidur = malam + tidur siang (qailulah) bila diaktifkan. Pengali & Sleep Debt memakai total ini.
+function sleepTotal(rec) {
+  if (!rec || rec.sleep == null) return null;
+  return rec.sleep + (S().napCounts ? rec.nap || 0 : 0);
+}
 function sleepMult(h) {
   const tiers = S().sleepTiers.slice().sort((a, b) => b.min - a.min);
   const low = tiers[tiers.length - 1].mult;
@@ -613,7 +630,8 @@ function buildList(key, rec, type) {
     const ids = new Set(act.map((m) => m.id));
     for (const m of state.mainQuests) if (!ids.has(m.id) && done['MQ:' + m.id]) { act.push(m); ids.add(m.id); }
     act.forEach((m) => out.items.push(mqQuest(m)));
-    if (rec.sleep != null && rec.sleep < S().sleepDebtBelow) {
+    const tot = sleepTotal(rec);
+    if (tot != null && tot < S().sleepDebtBelow) {
       out.sleepDebt = true;
       const keep = [];
       let insertAt = -1;
@@ -639,8 +657,9 @@ function computeLive(key, rec, final) {
   const nd = isND(type);
   const L = buildList(key, rec, type);
   const done = rec.done || {};
+  const tot = sleepTotal(rec);
   const isDone = (q) => {
-    if (q.tag === 'sleep') return rec.sleep != null && rec.sleep >= s.sleepQuestMin - 1e-9;
+    if (q.tag === 'sleep') return tot != null && tot >= s.sleepQuestMin - 1e-9;
     if (q.tag === 'workend') return rec.workEnd === 'ok';
     if (q.tag === 'tentir') return !!(rec.tentir && rec.tentir.ok === true);
     return !!done[q.id];
@@ -670,7 +689,7 @@ function computeLive(key, rec, final) {
     base = doneQs.reduce((a, q) => a + sizeXP(q.size), 0);
     capped = Math.min(base, s.dailyCap);
     if (type === 'JAGA') mult = s.jagaMult;
-    else { const sm = sleepMult(rec.sleep); mult = sm.mult; multMissing = sm.missing; }
+    else { const sm = sleepMult(tot); mult = sm.mult; multMissing = sm.missing; }
     gross = Math.round(capped * mult);
     const scale = base ? capped / base : 0;
     doneQs.forEach((q) => { stat[q.stat] += sizeXP(q.size) * scale * mult; });
@@ -692,7 +711,9 @@ function computeLive(key, rec, final) {
   const tj = rec.tentir && rec.tentir.jam > 0 ? rec.tentir.jam : 0;
   const ts = tj ? (rec.tentir.sesi || 1) : 0;
   const metrics = {
-    sleepNJ: prevType !== 'JAGA' && rec.sleep != null ? rec.sleep : null,
+    sleepNJ: prevType !== 'JAGA' && tot != null ? tot : null,
+    nightNJ: prevType !== 'JAGA' && rec.sleep != null ? rec.sleep : null,
+    nap: rec.nap || 0,
     tJam: tj, tSesi: ts, tOk: tj && rec.tentir.ok === true ? ts : 0,
     karier, latPlan, latDone, konten, ot: overtime ? 1 : 0,
   };
@@ -789,7 +810,7 @@ const dailyTarget = (res) => (res.heavy ? Math.round(S().dailyCap * S().heavyTar
 
 /* ---------- agregat mingguan ---------- */
 function weekMetrics(ws) {
-  let sleepSum = 0, sleepN = 0, tJam = 0, tSesi = 0, tOk = 0, karier = 0, latPlan = 0, latDone = 0, konten = 0, lolos = 0, rec = 0, ot = 0, xp = 0;
+  let sleepSum = 0, sleepN = 0, nightSum = 0, napSum = 0, splitN = 0, tJam = 0, tSesi = 0, tOk = 0, karier = 0, latPlan = 0, latDone = 0, konten = 0, lolos = 0, rec = 0, ot = 0, xp = 0;
   for (let i = 0; i < 7; i++) {
     const k = addDays(ws, i);
     const r = dayResult(k);
@@ -797,12 +818,14 @@ function weekMetrics(ws) {
     rec++; if (r.pass) lolos++; xp += r.xp;
     const m = r.metrics;
     if (m.sleepNJ != null) { sleepSum += m.sleepNJ; sleepN++; }
+    if (m.nightNJ != null) { nightSum += m.nightNJ; napSum += m.nap || 0; splitN++; }
     tJam += m.tJam; tSesi += m.tSesi; tOk += m.tOk; karier += m.karier; latPlan += m.latPlan; latDone += m.latDone; konten += m.konten; ot += m.ot;
   }
   const w = state.weekly[ws] || newWeek();
   const prevW = prevWeekWith(ws, 'debt'), prevB = prevWeekWith(ws, 'bridge');
   return {
     avgSleep: sleepN ? sleepSum / sleepN : null, sleepN,
+    avgNight: splitN ? nightSum / splitN : null, avgNap: splitN ? napSum / splitN : null,
     bridge: w.bridge, bridgePrev: prevB, debt: w.debt, debtPrev: prevW, leads: w.leads,
     tJam, tSesi, tOk, karier, latPlan, latDone, konten, lolos, rec, ot, xp,
     proyek: state.mainQuests.filter((m) => m.status === 'aktif').length,
@@ -939,19 +962,19 @@ function makeSample() {
     { id: 'rw_s3', name: 'Sepatu lari baru', cost: 1200000, sample: true }
   );
   const plan = [
-    { o: -7, type: 'NORMAL', sleep: 6.5, ratio: 0.85, workEnd: 'ok', mut: 3, tentir: { jam: 2, sesi: 1, ok: true }, weekly: ['q_deposit'] },
+    { o: -7, type: 'NORMAL', sleep: 5.5, nap: 1, ratio: 0.85, workEnd: 'ok', mut: 3, tentir: { jam: 2, sesi: 1, ok: true }, weekly: ['q_deposit'] },
     { o: -6, type: 'NORMAL', sleep: 5.5, ratio: 0.3, workEnd: 'late', token: true, mut: 2, tentir: { jam: 2.5, sesi: 2, ok: false } },
     { o: -5, type: 'JAGA', sleep: 6, ratio: 1, mut: 1 },
     { o: -4, type: 'PASCA', ratio: 1, workEnd: 'ok', mut: 2 },
     { o: -3, type: 'NORMAL', sleep: 4.5, ratio: 0.75, workEnd: 'ok', mut: 3 },
     { o: -2, type: 'LIBUR', sleep: 7, ratio: 0.9, workEnd: 'ok', mut: 3, tentir: { jam: 3, sesi: 2, ok: true }, weekly: ['q_post'] },
-    { o: -1, type: 'NORMAL', sleep: 6.25, ratio: 0.8, workEnd: null, mut: 2, tentir: { jam: 1.5, sesi: 1, ok: true } },
+    { o: -1, type: 'NORMAL', sleep: 5.25, nap: 1, ratio: 0.8, workEnd: null, mut: 2, tentir: { jam: 1.5, sesi: 1, ok: true } },
   ];
   const notes = { '-2': 'Long run santai, lalu belajar fraktur ekstremitas atas.', '-4': 'Tidur 2,5 jam setelah jaga, badan jauh lebih enak.' };
   for (const p of plan) {
     const k = addDays(t, p.o);
     const r = newDay();
-    r.type = p.type; r.sleep = p.sleep != null ? p.sleep : null; r.workEnd = p.workEnd || null; r.token = !!p.token;
+    r.type = p.type; r.sleep = p.sleep != null ? p.sleep : null; r.nap = p.nap || 0; r.workEnd = p.workEnd || null; r.token = !!p.token;
     if (p.tentir) r.tentir = Object.assign({}, p.tentir);
     st.mutabaah.slice(0, p.mut).forEach((m) => { r.mut[m.id] = true; });
     r.note = notes[String(p.o)] || '';
@@ -1132,6 +1155,7 @@ function renderToday() {
   if (state.sampleLoaded) h += `<div class="notice info"><span>Ini data contoh 7 hari (termasuk JAGA & PASCA-JAGA).</span><button class="btn sm" data-act="clearSample">Hapus data contoh</button></div>`;
 
   if (key === t) h += closeYesterdayHTML(t);
+  h += mutCardHTML(key, rec, editable);
 
   // tipe hari
   const prev = state.days[addDays(key, -1)];
@@ -1149,7 +1173,6 @@ function renderToday() {
     if (isND(et) && res.weekly.length) h += weeklyCardHTML(res, editable);
     if (et === 'PASCA') h += nightCardHTML(rec, res, editable);
   }
-  h += mutCardHTML(key, rec, editable);
   h += noteCardHTML(key, rec, editable);
   h += shieldRowHTML(key, rec, res);
   h += prioritiesHTML(t);
@@ -1192,16 +1215,40 @@ function closeYesterdayHTML(t) {
   }
   return '';
 }
+function napHint(rec, res) {
+  const s = S();
+  const tot = sleepTotal(rec);
+  if (!s.napCounts || tot == null || !isND(res.effType)) return '';
+  const q4 = (x) => Math.ceil(x * 4 - 1e-9) / 4;
+  const asc = s.sleepTiers.slice().sort((a, b) => a.min - b.min);
+  const next = asc.find((t) => t.min > tot + 1e-9 && t.mult > res.mult + 1e-9);
+  const parts = [];
+  if (next && q4(next.min - tot) <= 2) parts.push(multStr(next.mult));
+  if (tot < s.sleepDebtBelow - 1e-9) parts.push('beban & interval terbuka');
+  if (!parts.length) return '';
+  const need = next ? q4(next.min - tot) : q4(s.sleepDebtBelow - tot);
+  return `Tidur siang ${nfl(need, 2)} j lagi → ${parts.join(', ')}`;
+}
 function sleepCardHTML(rec, res, dis) {
+  const s = S();
   const jaga = res.effType === 'JAGA';
   const v = rec.sleep;
-  const pill = jaga ? `<span class="pill mid">${multStr(S().jagaMult)} tetap</span>` : `<span class="pill ${multClass(res.mult)}" id="multPill">${multStr(res.mult)}</span>`;
-  return `<section class="card"><div class="row between"><div class="lbl">Tidur semalam</div>${pill}</div>
+  const nap = rec.nap || 0;
+  const tot = sleepTotal(rec);
+  const pill = jaga ? `<span class="pill mid">${multStr(s.jagaMult)} tetap</span>` : `<span class="pill ${multClass(res.mult)}" id="multPill">${multStr(res.mult)}</span>`;
+  let h = `<section class="card" id="sleepCard"><div class="row between"><div class="lbl">Tidur</div>${pill}</div>
+    <div class="subhead" style="margin-top:8px">Malam (semalam)</div>
     <div class="sleep"><button class="step" data-act="stepSleep" data-d="-0.25" ${dis} aria-label="Kurangi 15 menit">−</button>
       <div class="sv"><b id="sleepVal">${v == null ? '—' : nfl(v, 2)}</b>jam</div>
       <button class="step" data-act="stepSleep" data-d="0.25" ${dis} aria-label="Tambah 15 menit">+</button></div>
-    <div class="chips">${[4.5, 5, 5.5, 6, 6.5, 7].map((x) => `<button class="cp ${v === x ? 'on' : ''}" data-act="setSleep" data-v="${x}" ${dis}>${nfl(x, 1)}</button>`).join('')}</div>
-    <div class="tiny muted" style="margin-top:8px">${jaga ? 'Hari JAGA: pengali tetap. Jam tidur tetap dicatat untuk rata-rata malam non-jaga.' : 'Pengali: ' + tiersText()}</div></section>`;
+    <div class="chips c7">${[4, 4.5, 5, 5.5, 6, 6.5, 7].map((x) => `<button class="cp ${v === x ? 'on' : ''}" data-act="setSleep" data-v="${x}" ${dis}>${nfl(x, 1)}</button>`).join('')}</div>`;
+  if (s.napCounts) {
+    h += `<div class="subhead">Siang / qailulah (hari ini)</div>
+    <div class="chips">${[0, 0.25, 0.5, 1, 1.5, 2].map((x) => `<button class="cp ${nap === x ? 'on' : ''}" data-act="setNap" data-v="${x}" ${dis}>${nfl(x, 2)}</button>`).join('')}</div>
+    <div class="sleeptot"><span>Total <b id="sleepTotal">${tot == null ? '—' : nfl(tot, 2) + ' j'}</b></span><span class="hint" id="napHint">${esc(napHint(rec, res))}</span></div>`;
+  }
+  h += `<div class="tiny muted" style="margin-top:8px">${jaga ? 'Hari JAGA: pengali tetap. Jam tidur tetap dicatat untuk rata-rata non-jaga.' : 'Pengali dari ' + (s.napCounts ? 'total tidur (malam + siang)' : 'tidur malam') + ': ' + tiersText()}</div></section>`;
+  return h;
 }
 function effectsHTML(res, rec) {
   const e = [];
@@ -1497,7 +1544,7 @@ function raidTiles(m) {
   const s = S();
   const tCls = m.tJam > s.tentirMax ? 'ko' : (m.tJam >= s.tentirMin ? 'ok' : '');
   return `<div class="tiles" id="raidTiles">
-    ${tileHTML('Tidur malam non-jaga', m.avgSleep != null ? nfl(m.avgSleep, 2) + ' j' : '–', m.sleepN + ' malam', m.avgSleep == null ? '' : m.avgSleep >= 6 ? 'ok' : 'ko')}
+    ${tileHTML('Tidur non-jaga (total)', m.avgSleep != null ? nfl(m.avgSleep, 2) + ' j' : '–', m.sleepN + ' hari' + (m.avgNight != null ? ' · malam ' + nfl(m.avgNight, 2) + ' + siang ' + nfl(m.avgNap, 2) : ''), m.avgSleep == null ? '' : m.avgSleep >= 6 ? 'ok' : 'ko')}
     ${tileHTML('Dana Jembatan', rpS(m.bridge), m.bridge == null ? 'belum diisi minggu ini' : delta(m.bridge, m.bridgePrev))}
     ${tileHTML('Tentir', nfl(m.tJam, 1) + ' j', `${m.tOk}/${m.tSesi} sesi ≤21.00 · kapasitas ${s.tentirMin}–${s.tentirMax} j${m.tJam > s.tentirMax ? ' · <b class="bad">lewat kapasitas</b>' : ''}`, tCls)}
     ${tileHTML('Lead dari konten', m.leads != null ? nf(m.leads) : '–', (m.leads == null ? 'belum diisi · ' : '') + m.konten + ' post minggu ini')}
@@ -1613,7 +1660,7 @@ function dayDetailHTML(k) {
   else {
     const ch = state.chapters.find((c) => c.id === res.chapterId);
     h += `<div class="row wrap" style="margin:8px 0"><span class="chip tc-${res.effType}" style="background:var(--card2)">${TYPE_INFO[res.effType].label.toUpperCase()}</span><span class="chip ${res.pass ? 'good' : 'bad'}">${res.pass ? 'LOLOS' : 'TIDAK LOLOS'} ${res.doneCount}/${res.total}</span><span class="chip">${res.xp} XP</span>${res.frozen ? '<span class="chip">FINAL</span>' : ''}${ch ? `<span class="chip">${esc(ch.name)}</span>` : ''}</div>`;
-    h += `<p class="small muted">${res.effType === 'PASCA' ? `${S().pascaXP} × ${res.doneCount}/${res.total}` : `dasar ${res.capped} ${multStr(res.mult)}`}${res.penalty ? ` − ${res.penalty} overtime${res.autoLate ? ' (jam kerja kosong → dihitung lewat)' : ''}` : ''}${r && r.sleep != null ? ` · tidur ${nfl(r.sleep, 2)} j` : ''}</p>`;
+    h += `<p class="small muted">${res.effType === 'PASCA' ? `${S().pascaXP} × ${res.doneCount}/${res.total}` : `dasar ${res.capped} ${multStr(res.mult)}`}${res.penalty ? ` − ${res.penalty} overtime${res.autoLate ? ' (jam kerja kosong → dihitung lewat)' : ''}` : ''}${r && r.sleep != null ? ` · tidur malam ${nfl(r.sleep, 2)} j${r.nap ? ' + siang ' + nfl(r.nap, 2) + ' j' : ''}` : ''}</p>`;
     h += `<div style="margin-top:6px">${res.items.map((i) => `<div class="det-item"><span class="ic ${i.d ? 'good' : 'dim'}">${i.d ? '✓' : '·'}</span><span class="${i.d ? '' : 'muted'}">${esc(i.n)}</span></div>`).join('')}${(res.weekly || []).filter((w) => w.d).map((w) => `<div class="det-item"><span class="ic good">✓</span><span>${esc(w.n)} <span class="tiny muted">(mingguan)</span></span></div>`).join('')}${(res.locked || []).map((l) => `<div class="det-item"><span class="ic dim">×</span><span class="muted">${esc(l.n)} — terkunci Sleep Debt</span></div>`).join('')}</div>`;
     if (r && r.tentir && r.tentir.jam > 0) h += `<p class="small muted">Tentir ${nfl(r.tentir.jam, 1)} j · ${r.tentir.sesi} sesi · ${r.tentir.ok === true ? 'selesai ≤21.00' : r.tentir.ok === false ? 'lewat 21.00' : 'belum diisi'}</p>`;
     if (r && r.mut && state.mutabaah.some((m) => r.mut[m.id])) h += `<p class="small muted">Mutaba'ah: ${state.mutabaah.filter((m) => r.mut[m.id]).map((m) => esc(m.name)).join(', ')}</p>`;
@@ -1723,6 +1770,7 @@ function mechFormHTML() {
   h += `<div class="subhead">Lainnya</div>`;
   MECH_FIELDS.forEach(([k, label, min, max, step]) => { h += `<label>${label} <span class="dim">(${nfl(min)}–${nfl(max)})</span><input name="${k}" type="number" min="${min}" max="${max}" step="${step}" inputmode="decimal" value="${s[k]}"></label>`; });
   h += `<label>Ukuran blok Main Quest<select name="mqSize">${SIZES.map((z) => `<option value="${z}" ${s.mqSize === z ? 'selected' : ''}>${z}</option>`).join('')}</select></label>
+    <label class="ck"><input type="checkbox" name="napCounts" ${s.napCounts ? 'checked' : ''}> Hitung tidur siang (qailulah) dalam total tidur, pengali, dan Sleep Debt</label>
     <label class="ck"><input type="checkbox" name="worstCaseEmpty" ${s.worstCaseEmpty ? 'checked' : ''}> Data kosong = skenario terburuk (tidur kosong → pengali terendah; jam kerja kosong saat hari terkunci → lewat 21.00)</label>
     <div class="err" id="mechErr"></div><button class="btn primary block" type="submit">Simpan mekanika (0 XP)</button>
     <button type="button" class="btn block" data-act="mechReset">Kembalikan default</button>
@@ -1782,7 +1830,7 @@ function rulesHTML() {
   const s = S();
   return `<div class="small" style="line-height:1.6">
     <p><b>NORMAL/LIBUR:</b> XP = min(Σ quest, ${s.dailyCap}) × pengali tidur − ${s.overtimePenalty} bila overtime tanpa token.</p>
-    <p><b>Pengali tidur:</b> ${tiersText()}. Kosong = terendah.</p>
+    <p><b>Pengali tidur</b> dari ${s.napCounts ? 'total tidur (malam + siang/qailulah)' : 'tidur malam'}: ${tiersText()}. Kosong = terendah.</p>
     <p><b>JAGA:</b> min(Σ, ${s.dailyCap}) × ${nfl(s.jagaMult, 1)} tetap. <b>PASCA-JAGA:</b> ${s.pascaXP} × selesai/total; hanya sah setelah JAGA.</p>
     <p><b>Lolos:</b> ≥${s.passPct}% quest tipe hari itu. Streak = hari lolos berturut-turut; JAGA/PASCA & shield tidak memutus.</p>
     <p><b>Sleep Debt</b> (&lt;${nfl(s.sleepDebtBelow)} j): beban berat & interval terkunci → jalan/mobilitas 20 menit.</p>
@@ -1835,6 +1883,7 @@ ACT.setType = (el) => {
   editDay((r) => { r.type = type; });
 };
 ACT.setSleep = (el) => { const v = parseFloat(el.dataset.v); editDay((r) => { r.sleep = v; }); };
+ACT.setNap = (el) => { const v = parseFloat(el.dataset.v); editDay((r) => { r.nap = v; }); };
 ACT.stepSleep = (el) => { const d = parseFloat(el.dataset.d); editDay((r) => { const c = r.sleep != null ? r.sleep : 6; r.sleep = clamp(Math.round((c + d) * 4) / 4, 0, 14); }); };
 ACT.toggleQ = (el) => {
   const id = el.dataset.id;
@@ -2115,6 +2164,7 @@ FORM.mech = (f) => {
   if (s.tentirMin > s.tentirMax) errs.push('Kapasitas tentir min harus ≤ maks.');
   if (s.sleepQuestMin < s.sleepDebtBelow) errs.push('Minimal jam quest tidur harus ≥ ambang Sleep Debt.');
   s.worstCaseEmpty = fd.get('worstCaseEmpty') === 'on';
+  s.napCounts = fd.get('napCounts') === 'on';
   s.mqSize = fd.get('mqSize');
   if (errs.length) { $('#mechErr').innerHTML = errs.map(esc).join('<br>'); return; }
   freezeLocked();

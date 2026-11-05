@@ -129,11 +129,27 @@ function serve() {
   const lockedTxt = await page.$$eval('.q.locked .qn', (e) => e.map((x) => x.textContent));
   ok(!q.includes('q_lift') && q.includes('sd_walk') && lockedTxt.some((t) => t.includes('Beban')), 'Sleep Debt: beban terkunci, diganti jalan/mobilitas 20 mnt', { q, lockedTxt });
   ok((await page.textContent('#effects')).includes('Sleep Debt'), 'status effect Sleep Debt tampil');
+  ok((await page.textContent('#napHint')).includes('0,5 j lagi'), 'petunjuk: tidur siang 0,5 j lagi membuka beban', await page.textContent('#napHint'));
+  await page.click('[data-act=setNap][data-v="0.5"]');
+  q = await qids();
+  ok(q.includes('q_lift') && !q.includes('sd_walk') && (await page.textContent('#sleepTotal')) === '5 j', 'qailulah 0,5 j → total 5 j, Sleep Debt hilang, beban terbuka');
+  await page.click('[data-act=setNap][data-v="0"]');
   await page.click('[data-act=setSleep][data-v="6.5"]');
   q = await qids();
   ok(q.includes('q_lift') && !q.includes('sd_walk'), 'tidur 6,5 jam: beban terbuka lagi');
   await page.click('[data-act=dayNext]');
+  // jadwal tahajjud: tidur malam pendek + qailulah
+  await page.click('[data-act=setSleep][data-v="5"]');
+  ok((await xpToday()) === 16, 'malam 5 j tanpa tidur siang: 20 × 0,8 = 16', await xpToday());
+  await page.click('[data-act=setNap][data-v="1"]');
+  ok((await xpToday()) === 30 && (await page.textContent('#sleepTotal')) === '6 j', 'malam 5 j + qailulah 1 j = 6 j: quest tidur ✓, 30 × 1,0 = 30', await xpToday());
+  await page.click('[data-act=setNap][data-v="1.5"]');
+  ok((await page.textContent('#multPill')).trim() === '×1,2', 'malam 5 j + siang 1,5 j = 6,5 j → ×1,2');
+  await page.click('[data-act=setNap][data-v="0"]');
   await page.click('[data-act=setSleep][data-v="7"]');
+  const order = await ev(() => !!(document.querySelector('#mutCard').compareDocumentPosition(document.querySelector('.types')) & Node.DOCUMENT_POSITION_FOLLOWING));
+  ok(order, "mutaba'ah tampil sebelum tipe hari (tahajjud & Subuh lebih dulu)");
+  ok((await page.textContent('#mutCard')).includes('Tahajjud sebelum Subuh') && !(await page.textContent('#mutCard')).includes('XP '), "Tahajjud tercatat sebagai mutaba'ah, tanpa XP");
 
   section('5. Debuff Overtime & token');
   const before = await xpToday();
@@ -245,7 +261,7 @@ function serve() {
   await page.fill('[data-k=leads]', '2'); await page.press('[data-k=leads]', 'Tab');
   for (let i = 0; i < 3; i++) await page.fill(`[data-input=prio][data-i="${i}"]`, 'Prioritas ' + (i + 1));
   const tilesTxt = await page.textContent('#raidTiles');
-  ok(tilesTxt.includes('Tidur malam non-jaga') && tilesTxt.includes('Rp 3,2 jt') && tilesTxt.includes('Rp 23 jt'), 'dashboard 8 angka terisi', tilesTxt.slice(0, 120));
+  ok(tilesTxt.includes('Tidur non-jaga (total)') && tilesTxt.includes('Rp 3,2 jt') && tilesTxt.includes('Rp 23 jt'), 'dashboard 8 angka terisi', tilesTxt.slice(0, 120));
   const tBefore = await ev(() => MBAPPE.totalXP());
   await page.click('#raidDoneBtn');
   ok((await ev(() => MBAPPE.totalXP())) === tBefore + 50, 'raid selesai = +50 XP');
@@ -288,6 +304,31 @@ function serve() {
   ok(fs.readFileSync(file2, 'utf8') === exported, 'export ulang setelah import = identik');
   await page.goto(urlAt('2026-11-08T10:00:00+07:00'));
   ok((await ev(() => MBAPPE.exportString())) === exported, 'tetap identik setelah reload');
+
+  section('13b. Migrasi skema v1 → v2');
+  const v1 = await ev(() => {
+    const d = JSON.parse(MBAPPE.exportString());
+    d.schemaVersion = 1;
+    for (const k of Object.keys(d.days)) delete d.days[k].nap;
+    delete d.settings.napCounts;
+    d.quests.find((q) => q.id === 'q_sleep').name = 'Tidur malam ≥6 jam';
+    d.mutabaah.find((m) => m.id === 'm_qiyam').name = 'Qiyamul lail';
+    return JSON.stringify(d);
+  });
+  const xpBeforeMig = await ev(() => MBAPPE.totalXP());
+  await tab('set');
+  await page.click('details[data-sec=data] summary');
+  await page.click('details[data-sec=data] summary.small');
+  await page.fill('#importText', v1);
+  await page.click('[data-act=importPaste]');
+  await page.click('[data-act=confirmOk]');
+  const mig = await ev(() => ({ v: MBAPPE.state.schemaVersion, nap: Object.values(MBAPPE.state.days).every((d) => d.nap === 0), nc: MBAPPE.state.settings.napCounts, q: MBAPPE.state.quests.find((q) => q.id === 'q_sleep').name, m: MBAPPE.state.mutabaah.find((m) => m.id === 'm_qiyam').name, xp: MBAPPE.totalXP() }));
+  ok(mig.v === 2 && mig.nap && mig.nc === true, 'file v1 dimigrasi ke v2 (kolom tidur siang ditambahkan)', mig);
+  ok(mig.q === 'Total tidur ≥6 jam' && mig.m === 'Tahajjud sebelum Subuh', 'nama bawaan ikut diperbarui', mig);
+  ok(mig.xp === xpBeforeMig, 'migrasi tidak mengubah XP riwayat', [xpBeforeMig, mig.xp]);
+  await page.setInputFiles('#importFile', file);
+  await page.click('[data-act=confirmOk]');
+  ok((await ev(() => MBAPPE.exportString())) === exported, 'kembali ke backup v2 asli');
 
   section('14. localStorage gagal → jalan di memori + banner');
   const ctx2 = await browser.newContext({ viewport: { width: 375, height: 812 } });
