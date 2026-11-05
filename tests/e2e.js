@@ -382,7 +382,35 @@ function serve() {
   ok(lvNow >= 2 && claims.some(([paid, dis]) => paid && dis) && claims.some(([paid, dis]) => !paid && !dis), 'hadiah berbiaya terkunci (Dana Jembatan belum tercapai), hadiah gratis bisa diklaim', { lvNow, claims });
   await shot('char-final');
 
-  section('16. Tanpa error JS');
+  section('16. iPhone (emulasi iPhone 13)');
+  const { devices } = require('playwright');
+  const ctx3 = await browser.newContext({ ...devices['iPhone 13'], timezoneId: 'Asia/Jakarta' });
+  await ctx3.addInitScript(() => {
+    window.__shared = null;
+    navigator.canShare = (d) => !!(d && d.files && d.files.length);
+    navigator.share = async (d) => { const f = d.files[0]; window.__shared = { name: f.name, type: f.type, text: await f.text() }; };
+  });
+  const p3 = await ctx3.newPage();
+  const err3 = [];
+  p3.on('pageerror', (e) => err3.push(e.message));
+  await p3.goto(urlAt(T0));
+  ok((await p3.getAttribute('meta[name=apple-mobile-web-app-status-bar-style]', 'content')) === 'black', 'status bar iPhone tidak menutupi header');
+  ok(((await p3.getAttribute('link[rel=apple-touch-icon]', 'href')) || '').startsWith('data:image/png;base64,'), 'ikon layar utama tertanam di file');
+  ok((await p3.evaluate(() => document.documentElement.scrollWidth)) <= 390, 'tidak ada scroll horizontal di lebar iPhone 13');
+  await p3.click('#tabs [data-tab=set]');
+  await p3.click('details[data-sec=data] summary');
+  await p3.click('#exportBtn');
+  await p3.waitForFunction(() => window.__shared !== null);
+  const shared = await p3.evaluate(() => window.__shared);
+  const exp3 = await p3.evaluate(() => MBAPPE.exportString());
+  ok(shared.name === 'mbappe-os-2026-11-03.json' && shared.type === 'application/json' && shared.text === exp3, 'Export di iPhone membuka lembar Bagikan dengan file backup utuh', { name: shared.name, type: shared.type });
+  ok((await p3.textContent('#toast')).includes('dibagikan'), 'tanggal backup terakhir tercatat');
+  ok((await p3.getAttribute('#importFile', 'accept')) === null, 'pemilih file import tidak memfilter .json (iPhone)');
+  if (OUT) await p3.screenshot({ path: path.join(OUT, 'iphone-today.png') });
+  ok(err3.length === 0, 'tanpa error JS di emulasi iPhone', err3);
+  await ctx3.close();
+
+  section('17. Tanpa error JS');
   ok(errors.length === 0, 'tidak ada error di console', errors);
 
   console.log(`\n${pass} lulus, ${fail} gagal`);

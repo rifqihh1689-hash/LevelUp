@@ -13,6 +13,13 @@ Satu file: [`index.html`](index.html). Tanpa build step, tanpa server, tanpa aku
 4. Isi angka pribadi di **Setelan → Keuangan & target**: sisa utang (HP boss), target Dana Jembatan, target band IELTS.
 5. Isi 3 proyek aktif di **Karakter → Main Quest**.
 
+### iPhone
+
+- Buka lewat **Safari** dari alamat https (hosting). Membuka file langsung dari app File tidak bisa menyimpan data.
+- Bagikan → **Tambahkan ke Layar Utama** (Add to Home Screen). Selalu buka dari ikon itu: data di ikon terpisah dari tab Safari.
+- Jangan pakai Mode Pribadi (Private): datanya hilang saat tab ditutup.
+- **Export JSON** membuka lembar Bagikan → **Simpan ke File** (iCloud Drive) atau Google Drive. **Import file JSON** mengambil dari app File.
+
 Data tersimpan di localStorage perangkat itu saja. **Export JSON** tiap Weekly Raid (ada pengingatnya), karena menghapus data browser akan menghapus semuanya.
 
 ## Alur harian (≤2 menit)
@@ -26,6 +33,6 @@ node tests/e2e.js          # butuh paket playwright + Chromium
 SHOT_DIR=/tmp node tests/e2e.js   # sekalian simpan screenshot
 ```
 
-93 pemeriksaan: tipe hari, XP × pengali, Sleep Debt, overtime + token, batas 100, streak saat JAGA/PASCA, jawaban kosong saat hari terkunci, Main Quest ke-4 terkunci, tidur siang & migrasi skema, Raid, reload, export → import identik, localStorage gagal, chapter berat, kunci hadiah. Browser sengaja dijalankan di zona waktu Los Angeles untuk membuktikan aplikasi tetap memakai WIB.
+100 pemeriksaan: tipe hari, XP × pengali, Sleep Debt, overtime + token, batas 100, streak saat JAGA/PASCA, jawaban kosong saat hari terkunci, Main Quest ke-4 terkunci, tidur siang & migrasi skema, Raid, reload, export → import identik, localStorage gagal, chapter berat, kunci hadiah, emulasi iPhone (lembar Bagikan). Browser sengaja dijalankan di zona waktu Los Angeles untuk membuktikan aplikasi tetap memakai WIB.
 
 Desain lengkap (model data, rumus, celah & penutupnya): [`DESIGN.md`](DESIGN.md).
